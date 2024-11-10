@@ -1,7 +1,13 @@
+using Learning_System.EndPoint.Infrastructure;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.InjectServices();
+
+
 
 var app = builder.Build();
 

@@ -1,3 +1,5 @@
+using BLL.Interfaces;
+using DAL.Repositories.Users;
 using Learning_System.EndPoint.Infrastructure;
 
 
@@ -5,8 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.InjectServices();
-
+builder.Services.InjectServices(builder.Configuration);
 
 
 var app = builder.Build();
@@ -23,7 +24,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

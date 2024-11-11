@@ -1,4 +1,5 @@
 ﻿using BLL.Dtos.Users;
+using BLL.Dtos.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace BLL.Interfaces
 {
     public interface IUserManager
     {
-        Task<bool> RegisterStudentAsync(StudentDto student);
+        Task<ResultDto> RegisterStudentAsync(StudentDto student);
     }
 }

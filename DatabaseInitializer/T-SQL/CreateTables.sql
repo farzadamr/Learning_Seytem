@@ -14,20 +14,22 @@ CREATE TABLE Person (
 CREATE TABLE Student (
     Id INT PRIMARY KEY,
     Lockout BIT,
-    FOREIGN KEY (Id) REFERENCES Person(Id)
+    PersonId INT,
+    FOREIGN KEY (PersonId) REFERENCES Person(Id)
 );
 
 CREATE TABLE Teacher (
     Id INT PRIMARY KEY,
     Resume NVARCHAR(MAX),
-    FOREIGN KEY (Id) REFERENCES Person(Id)
+    PersonId INT,
+    FOREIGN KEY (PersonId) REFERENCES Person(Id)
 );
 
 CREATE TABLE Admin (
     Id INT PRIMARY KEY,
     Username NVARCHAR(50),
-    FOREIGN KEY (Id) REFERENCES Person(Id)
-);
+    PersonId INT,
+    FOREIGN KEY (PersonId) REFERENCES Person(Id));
 
 CREATE TABLE Courses (
     Id INT PRIMARY KEY,

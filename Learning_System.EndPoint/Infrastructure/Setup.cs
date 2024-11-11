@@ -1,5 +1,6 @@
 ﻿using BLL.Interfaces;
 using DAL.Repositories.Users;
+using Learning_System.EndPoint.Mapper;
 using Microsoft.AspNetCore.Identity;
 
 namespace Learning_System.EndPoint.Infrastructure
@@ -15,6 +16,7 @@ namespace Learning_System.EndPoint.Infrastructure
                 var connectionString = configuration.GetConnectionString("DefaultConnection");
                 return new UserManager(connectionString);
             });
+            services.AddAutoMapper(typeof(AuthMappingProfile)); 
             return services;
         }
     }

@@ -1,5 +1,3 @@
-using BLL.Interfaces;
-using DAL.Repositories.Users;
 using Learning_System.EndPoint.Infrastructure;
 
 

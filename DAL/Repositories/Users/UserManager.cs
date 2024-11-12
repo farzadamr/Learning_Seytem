@@ -20,7 +20,6 @@ namespace DAL.Repositories.Users
             this._connectionString = _connectionString;
 
         }
-
         public async Task<ResultDto> RegisterStudentAsync(StudentDto student)
         {
             using var connection = new SqlConnection(_connectionString);
@@ -100,5 +99,6 @@ namespace DAL.Repositories.Users
         {
             throw new NotImplementedException();
         }
+
     }
 }

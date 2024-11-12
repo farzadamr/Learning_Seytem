@@ -9,138 +9,161 @@
 
 <head>
 
-	<!-- META ============================================= -->
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<!-- OG -->
-	<meta name="robots" content="index, follow">
+    <!-- META ============================================= -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- OG -->
+    <meta name="robots" content="index, follow">
 
-	<meta name="keywords" content="Web Design, Education, Institute, Study" />
-	<meta name="author" content="ThemeTrades" />
-	<meta name="description"
-		  content="EduChamp is a Fully Creative Mobile Responsive HTML Template. It is designed specifically for University, College, School, Training centre or other educational institute." />
+    <meta name="keywords" content="Web Design, Education, Institute, Study" />
+    <meta name="author" content="ThemeTrades" />
+    <meta name="description"
+          content="EduChamp is a Fully Creative Mobile Responsive HTML Template. It is designed specifically for University, College, School, Training centre or other educational institute." />
 
 
 
-	<meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="telephone=no">
 
-	<!-- FAVICONS ICON ============================================= -->
-	<link rel="icon" href="assets/images/loading.png" type="image/x-icon" />
-	<link rel="shortcut icon" type="image/x-icon" href="~/assets/images/logo-white.png" />
+    <!-- FAVICONS ICON ============================================= -->
+    <link rel="icon" href="assets/images/loading.png" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/assets/images/logo-white.png" />
 
-	<!-- PAGE TITLE HERE ============================================= -->
-	<title>کدیاد، آموزش برنامه‌نویسی</title>
+    <!-- PAGE TITLE HERE ============================================= -->
+    <title>کدیاد، آموزش برنامه‌نویسی</title>
 
-	<!-- MOBILE SPECIFIC ============================================= -->
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- MOBILE SPECIFIC ============================================= -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!--[if lt IE 9]>
-	<script src="assets/js/html5shiv.min.js"></script>
-	<script src="assets/js/respond.min.js"></script>
-	<![endif]-->
-	<!-- All PLUGINS CSS ============================================= -->
-	<link rel="stylesheet" type="text/css" href="~/assets/css/assets.css">
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.min.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+    <!-- All PLUGINS CSS ============================================= -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/assets.css">
 
-	<!-- TYPOGRAPHY ============================================= -->
-	<link rel="stylesheet" type="text/css" href="~/assets/css/typography.css">
+    <!-- TYPOGRAPHY ============================================= -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/typography.css">
 
-	<!-- SHORTCODES ============================================= -->
-	<link rel="stylesheet" type="text/css" href="~/assets/css/shortcodes/shortcodes.css">
+    <!-- SHORTCODES ============================================= -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/shortcodes/shortcodes.css">
 
-	<!-- STYLESHEETS ============================================= -->
-	<link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
-	<link class="skin" rel="stylesheet" type="text/css" href="~/assets/css/color/color.css">
+    <!-- STYLESHEETS ============================================= -->
+    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+    <link class="skin" rel="stylesheet" type="text/css" href="~/assets/css/color/color.css">
 
 </head>
 
 <body id="bg">
-	<div class="page-wraper">
-		<div id="loading-icon-bx"></div>
-		<div class="account-form">
-			<div class="account-head" style="background-image:url(~/assets/images/background/bg2.jpg);">
-				<a href="index.html"><img style="width: 50%;" src="~/assets/images/logo-white.png" alt=""></a>
-			</div>
-			<div class="account-form-inner">
-				<div class="account-container">
-					<div class="heading-bx left">
-						<h2 class="title-head"> همین حالا  <span> عضو شوید</span></h2>
-						<p> ورود  <a href="/account/login"> کلیک کنید </a></p>
-					</div>
-					<form asp-action="Register" asp-controller="Account" class="contact-bx">
-						<div class="row placeani">
-							<div class="col-lg-12">
-								<div class="form-group">
-									<div class="input-group">
-										<label>نام</label>
-										<input asp-for="FirstName" type="text" class="form-control">
-										<span asp-validation-for="FirstName" class="text-danger"></span>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<label>نام خانوادگی</label>
-										<input asp-for="LastName" type="text" class="form-control">
-										<span asp-validation-for="LastName" class="text-danger"></span>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<label>شماره تلفن</label>
-										<input asp-for="PhoneNumber" type="number"  class="form-control">
-										<span asp-validation-for="PhoneNumber" class="text-danger"></span>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-12">
-								<div class="form-group">
-									<div class="input-group">
-										<label>ایمیل</label>
-										<input asp-for="Email" type="email" class="form-control">
-										<span asp-validation-for="Email" class="text-danger"></span>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-12">
-								<div class="form-group">
-									<div class="input-group">
-										<label>رمزعبور</label>
-										<input asp-for="Password" type="password" class="form-control" >
-										<span asp-validation-for="Password" class="text-danger"></span>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="input-group">
-										<label>تکرار رمزعبور</label>
-										<input asp-for="Repassword" type="password" class="form-control">
-										<span asp-validation-for="Repassword" class="text-danger"></span>
-									</div>
-								</div>
-							</div>
-							<div class="col-lg-12 m-b30">
-								<button type="submit" class="btn button-md">عضویت</button>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- External JavaScripts -->
-	<script src="~/assets/js/jquery.min.js"></script>
-	<script src="~/assets/vendors/bootstrap/js/popper.min.js"></script>
-	<script src="~/assets/vendors/bootstrap/js/bootstrap.min.js"></script>
-	<script src="~/assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
-	<script src="~/assets/vendors/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
-	<script src="~/assets/vendors/magnific-popup/magnific-popup.js"></script>
-	<script src="~/assets/vendors/counter/waypoints-min.js"></script>
-	<script src="~/assets/vendors/counter/counterup.min.js"></script>
-	<script src="~/assets/vendors/imagesloaded/imagesloaded.js"></script>
-	<script src="~/assets/vendors/masonry/masonry.js"></script>
-	<script src="~/assets/vendors/masonry/filter.js"></script>
-	<script src="~/assets/vendors/owl-carousel/owl.carousel.js"></script>
-	<script src="~/assets/js/functions.js"></script>
-	<script src="~/assets/js/contact.js"></script>
-	<script src='~/assets/vendors/switcher/switcher.js'></script>
+    <div class="page-wraper">
+        <div id="loading-icon-bx"></div>
+        <div class="account-form">
+            <div class="account-head" style="background-image:url(~/assets/images/background/bg2.jpg);">
+                <a href="index.html"><img style="width: 50%;" src="~/assets/images/logo-white.png" alt=""></a>
+            </div>
+            <div class="account-form-inner">
+                <div class="account-container">
+                    <div class="heading-bx left">
+                        <h2 class="title-head"> همین حالا  <span> عضو شوید</span></h2>
+                        <p> ورود  <a href="/account/login"> کلیک کنید </a></p>
+                    </div>
+
+                    <form asp-action="Register" asp-controller="Account" class="contact-bx">
+                        <div class="row placeani">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>نام</label>
+                                        <input asp-for="FirstName" type="text" class="form-control">
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>نام خانوادگی</label>
+                                        <input asp-for="LastName" type="text" class="form-control">
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>شماره تلفن</label>
+                                        <input asp-for="PhoneNumber" type="number" class="form-control">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>ایمیل</label>
+                                        <input asp-for="Email" type="email" class="form-control">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>رمزعبور</label>
+                                        <input asp-for="Password" type="password" class="form-control">
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label>تکرار رمزعبور</label>
+                                        <input asp-for="Repassword" type="password" class="form-control">
+                                        <span asp-validation-for="Repassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 m-b30">
+                                <button type="submit" class="btn button-md">عضویت</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- External JavaScripts -->
+
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/vendors/bootstrap/js/popper.min.js"></script>
+    <script src="~/assets/vendors/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/vendors/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/assets/vendors/bootstrap-touchspin/jquery.bootstrap-touchspin.js"></script>
+    <script src="~/assets/vendors/magnific-popup/magnific-popup.js"></script>
+    <script src="~/assets/vendors/counter/waypoints-min.js"></script>
+    <script src="~/assets/vendors/counter/counterup.min.js"></script>
+    <script src="~/assets/vendors/imagesloaded/imagesloaded.js"></script>
+    <script src="~/assets/vendors/masonry/masonry.js"></script>
+    <script src="~/assets/vendors/masonry/filter.js"></script>
+    <script src="~/assets/vendors/owl-carousel/owl.carousel.js"></script>
+    <script src="~/assets/js/functions.js"></script>
+    <script src="~/assets/js/contact.js"></script>
+    <script src='~/assets/vendors/switcher/switcher.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            var responseModel = @Html.Raw(Json.Serialize(ViewBag.ResponseModel));
+            console.log(responseModel);
+            if (responseModel.isSuccess) {
+                Swal.fire({
+                    title: "عملیات موفق",
+                    text: responseModel.message,
+                    icon: "success"
+                });
+            }
+            else {
+                Swal.fire({
+                    title: "عملیات ناموفق",
+                    text: responseModel.message,
+                    icon: "error"
+                });
+            }
+        });
+    </script>
 </body>
 
 

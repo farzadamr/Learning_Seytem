@@ -35,15 +35,16 @@ namespace DAL.Repositories.Users
                     isSuccess = false
                 };
             }
+            await connection.CloseAsync();
 
             using var connection2 = new SqlConnection(_connectionString); 
-            await connection.OpenAsync();
-            using var transaction = connection.BeginTransaction(); 
+            await connection2.OpenAsync();
+            using var transaction = connection2.BeginTransaction(); 
             try
             { // Insert into Person table
                 var personSql = "INSERT INTO Person (FirstName, LastName, PhoneNumber,AvatarPath,Email,Password) VALUES (@FirstName, @LastName, @PhoneNumber,@AvatarPath,@Email,@Password);" +
                     "SELECT CAST(SCOPE_IDENTITY() as int)";
-                int personId = await connection.ExecuteScalarAsync<int>
+                int personId = await connection2.ExecuteScalarAsync<int>
                     (personSql,
                     new
                     {
@@ -58,7 +59,7 @@ namespace DAL.Repositories.Users
                     );
                 // Insert into Student table with the newly created PersonId
                 var studentSql = "INSERT INTO Student (PersonId, Lockout) VALUES (@PersonId, @Lockout)";
-                var rowsAffected = await connection.ExecuteAsync(studentSql,
+                var rowsAffected = await connection2.ExecuteAsync(studentSql,
                     new
                     {
                         PersonId = personId,

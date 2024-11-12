@@ -37,8 +37,10 @@ namespace Learning_System.EndPoint.Controllers
                 return View(viewModel);
             }
             var model = _mapper.Map<StudentDto>(viewModel);
-            await _userManager.RegisterStudentAsync(model);
-            return View();
+            var result = await _userManager.RegisterStudentAsync(model);
+            ViewBag.ResponseModel = result;
+
+			return View();
         }
     }
 }

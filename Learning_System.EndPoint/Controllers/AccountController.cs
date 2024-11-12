@@ -36,6 +36,8 @@ namespace Learning_System.EndPoint.Controllers
             {
                 return View(viewModel);
             }
+            viewModel.Email = viewModel.Email.ToLower();
+
             var model = _mapper.Map<StudentDto>(viewModel);
             var result = await _userManager.RegisterStudentAsync(model);
             ViewBag.ResponseModel = result;

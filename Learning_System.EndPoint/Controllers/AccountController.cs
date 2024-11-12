@@ -10,7 +10,7 @@ namespace Learning_System.EndPoint.Controllers
     {
         private readonly IUserManager _userManager;
         private readonly IMapper _mapper;
-        public AccountController(IUserManager _userManager,IMapper _mapper)
+        public AccountController(IUserManager _userManager, IMapper _mapper)
         {
             this._userManager = _userManager;
             this._mapper = _mapper;
@@ -20,8 +20,12 @@ namespace Learning_System.EndPoint.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel viewModel)
         {
+            if (!ModelState.IsValid) return View(viewModel);
+            viewModel.Email = viewModel.Email.ToLower();
+            
+
             return Redirect("Home/Index");
         }
         [HttpGet]
@@ -32,17 +36,14 @@ namespace Learning_System.EndPoint.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
-            viewModel.Email = viewModel.Email.ToLower();
+            if (!ModelState.IsValid) return View(viewModel);
 
+            viewModel.Email = viewModel.Email.ToLower();
             var model = _mapper.Map<StudentDto>(viewModel);
             var result = await _userManager.RegisterStudentAsync(model);
             ViewBag.ResponseModel = result;
 
-			return View();
+            return View();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 
 CREATE TABLE Person (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY IDENTITY,
     FirstName NVARCHAR(50),
     LastName NVARCHAR(50),
     PhoneNumber NVARCHAR(11),
@@ -12,27 +12,30 @@ CREATE TABLE Person (
 );
 
 CREATE TABLE Student (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY IDENTITY,
     Lockout BIT,
+    Major NVARCHAR(50) NOT NULL,
+    LinkedId NVARCHAR(128),
+    ActivityArea NVARCHAR(50),
     PersonId INT,
     FOREIGN KEY (PersonId) REFERENCES Person(Id)
 );
 
 CREATE TABLE Teacher (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY IDENTITY,
     Resume NVARCHAR(MAX),
     PersonId INT,
     FOREIGN KEY (PersonId) REFERENCES Person(Id)
 );
 
 CREATE TABLE Admin (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY IDENTITY,
     Username NVARCHAR(50),
     PersonId INT,
     FOREIGN KEY (PersonId) REFERENCES Person(Id));
 
 CREATE TABLE Courses (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY IDENTITY,
     TeacherId INT,
     Title NVARCHAR(255),
     Description NVARCHAR(MAX),
@@ -56,16 +59,14 @@ CREATE TABLE StudentCourses (
 );
 
 CREATE TABLE Category (
-    Id INT PRIMARY KEY,
-    CourseId INT,
+    Id INT PRIMARY KEY IDENTITY,
     Type NVARCHAR(50),
     ParentTypeId INT,
-    FOREIGN KEY (CourseId) REFERENCES Courses(Id),
     FOREIGN KEY (ParentTypeId) REFERENCES Category(Id)
 );
 
 CREATE TABLE Section (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY IDENTITY,
     CourseId INT,
     Title NVARCHAR(255),
     FOREIGN KEY (CourseId) REFERENCES Courses(Id)
@@ -79,7 +80,25 @@ CREATE TABLE Episodes (
     FilePath NVARCHAR(255),
     FileSize INT,
     Visit INT,
-    PRIMARY KEY (Number),
+    PRIMARY KEY (Number,SectionId),
     FOREIGN KEY (CourseId) REFERENCES Courses(Id),
     FOREIGN KEY (SectionId) REFERENCES Section(Id)
 );
+CREATE TABLE Wallet (
+    Id INT PRIMARY KEY IDENTITY,
+    Credit BIGINT,
+    ChargeTime DATETIME,
+    StudentId INT,
+    FOREIGN KEY (StudentId) REFERENCES Student(Id),
+    );
+CREATE TABLE Charge(
+    RefID BIGINT PRIMARY KEY,
+    Authority INT,
+    ispay BIT,
+    amount INT,
+    datepay DATETIME,
+    StudentId INT,
+    WalletId INT,
+    FOREIGN KEY (StudentId) REFERENCES Student(Id),
+    FOREIGN KEY (WalletId) REFERENCES Wallet(Id)
+    );

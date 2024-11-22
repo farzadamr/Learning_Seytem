@@ -8,7 +8,7 @@ namespace Learning_System.EndPoint.Mapper
 	{
         public AuthMappingProfile()
         {
-            CreateMap<RegisterViewModel, StudentDto>();
+            CreateMap<RegisterViewModel, PersonDto>();
                 
         }
     }

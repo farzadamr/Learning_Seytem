@@ -20,12 +20,12 @@ namespace DAL.Repositories.Users
             this._connectionString = _connectionString;
 
         }
-        public async Task<ResultDto> RegisterStudentAsync(StudentDto student)
+        public async Task<ResultDto> RegisterPersonAsync(PersonDto person)
         {
             using var connection = new SqlConnection(_connectionString);
             var existingUser = await connection.QuerySingleOrDefaultAsync<Student>(
                 "SELECT * FROM Person WHERE Email = @Email",
-                new { Email = student.Email }
+                new { Email = person.Email }
                 );
             if (existingUser != null)
             {
@@ -48,26 +48,17 @@ namespace DAL.Repositories.Users
                     (personSql,
                     new
                     {
-                        FirstName = student.FirstName,
-                        LastName = student.LastName,
-                        PhoneNumber = student.PhoneNumber,
-                        AvatarPath = student.AvatarPath,
-                        Email = student.Email,
-                        Password = student.Password
+                        FirstName = person.FirstName,
+                        LastName = person.LastName,
+                        PhoneNumber = person.PhoneNumber,
+                        AvatarPath = person.AvatarPath,
+                        Email = person.Email,
+                        Password = person.Password
                     },
                     transaction
                     );
-                // Insert into Student table with the newly created PersonId
-                var studentSql = "INSERT INTO Student (PersonId, Lockout) VALUES (@PersonId, @Lockout)";
-                var rowsAffected = await connection2.ExecuteAsync(studentSql,
-                    new
-                    {
-                        PersonId = personId,
-                        Lockout = false
-                    },
-                    transaction);
                 transaction.Commit();
-                if (rowsAffected > 0)
+                if (personId != null)
                 {
                     return new ResultDto()
                     {
@@ -77,10 +68,11 @@ namespace DAL.Repositories.Users
                 }
                 else
                 {
+                    transaction.Rollback();
                     return new ResultDto()
                     {
                         isSuccess =false,
-                        Message = $"خطای مقدار {rowsAffected}"
+                        Message = $"خطا در ارتباط با دیتابیس"
                     };
                 }
             }

@@ -33,10 +33,16 @@ CREATE TABLE Admin (
     Username NVARCHAR(50),
     PersonId INT,
     FOREIGN KEY (PersonId) REFERENCES Person(Id));
-
+CREATE TABLE Category (
+    Id INT PRIMARY KEY IDENTITY,
+    Type NVARCHAR(50),
+    ParentTypeId INT,
+    FOREIGN KEY (ParentTypeId) REFERENCES Category(Id)
+);
 CREATE TABLE Courses (
     Id INT PRIMARY KEY IDENTITY,
     TeacherId INT,
+    CategoryId INT,
     Title NVARCHAR(255),
     Description NVARCHAR(MAX),
     CreationDate DATETIME,
@@ -47,7 +53,8 @@ CREATE TABLE Courses (
     Time INT,
     Rate INT,
     Status NVARCHAR(50),
-    FOREIGN KEY (TeacherId) REFERENCES Teacher(Id)
+    FOREIGN KEY (TeacherId) REFERENCES Teacher(Id),
+    FOREIGN KEY (CategoryId) REFERENCES Category(Id)
 );
 
 CREATE TABLE StudentCourses (
@@ -56,13 +63,6 @@ CREATE TABLE StudentCourses (
     PRIMARY KEY (StudentId, CourseId),
     FOREIGN KEY (StudentId) REFERENCES Student(Id),
     FOREIGN KEY (CourseId) REFERENCES Courses(Id)
-);
-
-CREATE TABLE Category (
-    Id INT PRIMARY KEY IDENTITY,
-    Type NVARCHAR(50),
-    ParentTypeId INT,
-    FOREIGN KEY (ParentTypeId) REFERENCES Category(Id)
 );
 
 CREATE TABLE Section (

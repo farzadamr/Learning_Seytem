@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Dtos.Users
 {
-    public class StudentDto
+    public class PersonDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

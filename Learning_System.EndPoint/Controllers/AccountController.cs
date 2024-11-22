@@ -39,8 +39,8 @@ namespace Learning_System.EndPoint.Controllers
             if (!ModelState.IsValid) return View(viewModel);
 
             viewModel.Email = viewModel.Email.ToLower();
-            var model = _mapper.Map<StudentDto>(viewModel);
-            var result = await _userManager.RegisterStudentAsync(model);
+            var model = _mapper.Map<PersonDto>(viewModel);
+            var result = await _userManager.RegisterPersonAsync(model);
             ViewBag.ResponseModel = result;
 
             return View();

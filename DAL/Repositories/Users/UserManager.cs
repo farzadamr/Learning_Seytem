@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using BLL.Dtos.Users;
 using BLL.Dtos.Utils;
 using BLL.Interfaces;
+using DAL.Entities.Base;
 using DAL.Entities.Users;
 using Dapper;
 namespace DAL.Repositories.Users
@@ -22,11 +24,15 @@ namespace DAL.Repositories.Users
         }
         public async Task<ResultDto> RegisterPersonAsync(PersonDto person)
         {
+
             using var connection = new SqlConnection(_connectionString);
             var existingUser = await connection.QuerySingleOrDefaultAsync<Student>(
-                "SELECT * FROM Person WHERE Email = @Email",
-                new { Email = person.Email }
-                );
+                "GetPersonByEmail",
+                new { Email = person.Email },
+                commandType: CommandType.StoredProcedure
+            );
+
+
             if (existingUser != null)
             {
                 return new ResultDto()
@@ -37,15 +43,14 @@ namespace DAL.Repositories.Users
             }
             await connection.CloseAsync();
 
-            using var connection2 = new SqlConnection(_connectionString); 
+            using var connection2 = new SqlConnection(_connectionString);
             await connection2.OpenAsync();
-            using var transaction = connection2.BeginTransaction(); 
+            using var transaction = connection2.BeginTransaction();
             try
             { // Insert into Person table
-                var personSql = "INSERT INTO Person (FirstName, LastName, PhoneNumber,AvatarPath,Email,Password) VALUES (@FirstName, @LastName, @PhoneNumber,@AvatarPath,@Email,@Password);" +
-                    "SELECT CAST(SCOPE_IDENTITY() as int)";
-                int personId = await connection2.ExecuteScalarAsync<int>
-                    (personSql,
+
+                var personId = await connection2.ExecuteScalarAsync<int>(
+                    "InsertPerson",
                     new
                     {
                         FirstName = person.FirstName,
@@ -55,8 +60,9 @@ namespace DAL.Repositories.Users
                         Email = person.Email,
                         Password = person.Password
                     },
-                    transaction
-                    );
+                    transaction,
+                    commandType: CommandType.StoredProcedure
+                );
                 transaction.Commit();
                 if (personId != null)
                 {
@@ -71,7 +77,7 @@ namespace DAL.Repositories.Users
                     transaction.Rollback();
                     return new ResultDto()
                     {
-                        isSuccess =false,
+                        isSuccess = false,
                         Message = $"خطا در ارتباط با دیتابیس"
                     };
                 }

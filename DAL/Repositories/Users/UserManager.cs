@@ -26,7 +26,7 @@ namespace DAL.Repositories.Users
         {
 
             using var connection = new SqlConnection(_connectionString);
-            var existingUser = await connection.QuerySingleOrDefaultAsync<Student>(
+            var existingUser = await connection.QuerySingleOrDefaultAsync<Person>(
                 "GetPersonByEmail",
                 new { Email = person.Email },
                 commandType: CommandType.StoredProcedure
@@ -93,9 +93,26 @@ namespace DAL.Repositories.Users
             }
         }
 
-        public Task<ResultDto<LoginStudentDto>> LoginStudentAsync(string Email, string Password)
+        public async Task<ResultDto<LoginDto>> LoginStudentAsync(string Email, string Password)
         {
-            throw new NotImplementedException();
+            var connection = new SqlConnection(_connectionString);
+            var userExisted = await connection.QueryFirstOrDefaultAsync<Person>(
+                    "GetPersonByEmail",
+                    new { Email = Email },
+                    commandType: CommandType.StoredProcedure
+                );
+            if (userExisted == null)
+            {
+                return new ResultDto<LoginDto>()
+                {
+                    Data = new LoginDto()
+                    {
+                        FullName = userExisted.FirstName + " " + userExisted.LastName,
+                        Role = "Student",
+                        
+                    }
+                }
+            }
         }
 
     }

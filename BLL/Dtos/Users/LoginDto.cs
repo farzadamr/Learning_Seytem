@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace BLL.Dtos.Users
 {
-    public class LoginStudentDto
+    public class LoginDto
     {
-        public int studentId { get; set; }
         public string FullName { get; set; }
-        public string Role { get; set; } = "Student";
     }
 }

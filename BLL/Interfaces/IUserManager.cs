@@ -11,7 +11,7 @@ namespace BLL.Interfaces
     public interface IUserManager
     {
         Task<ResultDto> RegisterPersonAsync(PersonDto person);
-        Task<ResultDto<LoginDto>> LoginPersonAsync(string Email, string Password);
+        Task<ResultDto<LoginDto?>> LoginPersonAsync(string Email, string Password);
     }
 
 }

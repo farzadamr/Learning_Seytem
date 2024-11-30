@@ -93,7 +93,7 @@ namespace DAL.Repositories.Users
             }
         }
 
-        public async Task<ResultDto<LoginDto>> LoginStudentAsync(string Email, string Password)
+        public async Task<ResultDto<LoginDto?>> LoginStudentAsync(string Email, string Password)
         {
             var connection = new SqlConnection(_connectionString);
             var userExisted = await connection.QueryFirstOrDefaultAsync<Person>(
@@ -103,16 +103,21 @@ namespace DAL.Repositories.Users
                 );
             if (userExisted == null)
             {
-                return new ResultDto<LoginDto>()
+                return new ResultDto<LoginDto?>()
                 {
-                    Data = new LoginDto()
-                    {
-                        FullName = userExisted.FirstName + " " + userExisted.LastName,
-                        Role = "Student",
-                        
-                    }
-                }
+                    isSuccess = false,
+                    Message = "کاربری با این ایمیل وجود ندارد"
+                };
             }
+            if(userExisted.Password != Password)
+            {
+                return new ResultDto<LoginDto?>()
+                {
+                    isSuccess = false,
+                    Message = "کلمه عبور اشتباه است"
+                };
+            }
+
         }
 
     }

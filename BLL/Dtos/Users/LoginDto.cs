@@ -11,7 +11,7 @@ namespace BLL.Dtos.Users
     {
         public int Id { get; set; }
         public string FullName { get; set; }
-        public ClaimDto claims { get; set; }
+        public List<ClaimDto> claims { get; set; }
     }
     public class ClaimDto
     {

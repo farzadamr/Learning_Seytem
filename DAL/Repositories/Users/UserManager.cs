@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BLL.Dtos.Users;
@@ -93,7 +94,7 @@ namespace DAL.Repositories.Users
             }
         }
 
-        public async Task<ResultDto<LoginDto?>> LoginStudentAsync(string Email, string Password)
+        public async Task<ResultDto<LoginDto?>> LoginPersonAsync(string Email, string Password)
         {
             var connection = new SqlConnection(_connectionString);
             var userExisted = await connection.QueryFirstOrDefaultAsync<Person>(
@@ -117,7 +118,26 @@ namespace DAL.Repositories.Users
                     Message = "کلمه عبور اشتباه است"
                 };
             }
-
+            var claims = await connection.QueryAsync<Claim>(
+                "GetClaimsById",
+                new { Id = userExisted.Id },
+                commandType: CommandType.StoredProcedure
+                );
+            var claimDto = claims.Select(c => new ClaimDto()
+            {
+                Type = c.Type,
+                Value = c.Value
+            }).ToList();
+            return new ResultDto<LoginDto?>()
+            {
+                Data = new LoginDto()
+                {
+                    FullName = userExisted.FirstName + " " + userExisted.LastName,
+                    Id = userExisted.Id,
+                    claims = claimDto
+                },
+                isSuccess = true,
+            };
         }
 
     }

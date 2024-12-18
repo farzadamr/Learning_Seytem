@@ -1,0 +1,43 @@
+﻿
+@-webkit-keyframes chartjs-render-animation {
+    from
+
+{
+    opacity: 0.99
+}
+
+to {
+    opacity: 1
+}
+
+}
+
+@keyframes chartjs-render-animation {
+    from {
+        opacity: 0.99
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.chartjs-render-monitor {
+    -webkit-animation: chartjs-render-animation 0.001s;
+    animation: chartjs-render-animation 0.001s;
+}
+
+.fc-list-heading-alt {
+    display: none;
+}
+
+.fc-month-button.fc-button.fc-state-default.fc-corner-left, .fc-agendaWeek-button.fc-button.fc-state-default, .fc-agendaDay-button.fc-button.fc-state-default {
+    display: none;
+}
+
+.fc-listMonth-button.fc-button.fc-state-default.fc-corner-right {
+    pointer-events: none;
+    border-radius: 7px;
+}
+
+

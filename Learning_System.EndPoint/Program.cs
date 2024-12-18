@@ -1,10 +1,22 @@
 using Learning_System.EndPoint.Infrastructure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.Options;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddAuthentication(config =>
+{
+    config.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    config.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    config.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(config =>
+{
+    config.Cookie.Name = "CookieAuth";
+    config.LoginPath = "/Account/login";
+});
 builder.Services.InjectServices(builder.Configuration);
 
 

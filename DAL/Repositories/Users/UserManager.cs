@@ -118,7 +118,7 @@ namespace DAL.Repositories.Users
                     Message = "کلمه عبور اشتباه است"
                 };
             }
-            var claims = await connection.QueryAsync<Claim>(
+            var claims = await connection.QueryAsync<ClaimData>(
                 "GetClaimsById",
                 new { Id = userExisted.Id },
                 commandType: CommandType.StoredProcedure

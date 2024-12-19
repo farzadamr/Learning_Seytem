@@ -19,10 +19,10 @@ public class ImagesController : ControllerBase
 		}
 		try
 		{
-			var files = Request.Form.Files;
-			if (files != null)
+			var file = Request.Form.Files.FirstOrDefault();
+			if (file != null)
 			{
-				var result = await UploadFileAsync(files, category);
+				var result = await UploadFileAsync(file, category);
 				return Ok(result);
 			}
 			else
@@ -37,7 +37,7 @@ public class ImagesController : ControllerBase
 		}
 	}
 
-	private async Task<UploadDto> UploadFileAsync(IFormFileCollection files, string category)
+	private async Task<UploadDto> UploadFileAsync(IFormFile file, string category)
 	{
 		string newName = Guid.NewGuid().ToString();
 		var date = DateTime.Now;
@@ -48,20 +48,18 @@ public class ImagesController : ControllerBase
 		{
 			Directory.CreateDirectory(UploadsRootFolder);
 		}
-		List<string> address = new List<string>();
-		foreach (var file in files)
+		string address = "";
+		if (file != null && file.Length > 0)
 		{
-			if (file != null && file.Length > 0)
+			string filename = newName + file.FileName;
+			var filePath = Path.Combine(UploadsRootFolder, filename);
+			using (var fileStream = new FileStream(filePath, FileMode.Create))
 			{
-				string filename = newName + file.FileName;
-				var filePath = Path.Combine(UploadsRootFolder, filename);
-				using (var fileStream = new FileStream(filePath, FileMode.Create))
-				{
-					await file.CopyToAsync(fileStream);
-				}
-				address.Add(folder + filename);
+				await file.CopyToAsync(fileStream);
 			}
+			address = folder + filename;
 		}
+
 		return new UploadDto()
 		{
 			FileNameAddress = address,
@@ -74,6 +72,6 @@ public class ImagesController : ControllerBase
 	{
 
 		public bool Status { get; set; }
-		public List<string> FileNameAddress { get; set; }
+		public string FileNameAddress { get; set; }
 	}
 }

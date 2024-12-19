@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities.Users
 {
-    public class Teacher : Person
+    public class Teacher : Personn
     {
         public string Resume { get; set; }
     }

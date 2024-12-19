@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities.Base
 {
-    public class Person
+    public class Personn
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

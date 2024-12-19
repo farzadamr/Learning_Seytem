@@ -27,7 +27,7 @@ namespace DAL.Repositories.Users
         {
 
             using var connection = new SqlConnection(_connectionString);
-            var existingUser = await connection.QuerySingleOrDefaultAsync<Person>(
+            var existingUser = await connection.QuerySingleOrDefaultAsync<Personn>(
                 "GetPersonByEmail",
                 new { Email = person.Email },
                 commandType: CommandType.StoredProcedure
@@ -97,7 +97,7 @@ namespace DAL.Repositories.Users
         public async Task<ResultDto<LoginDto?>> LoginPersonAsync(string Email, string Password)
         {
             var connection = new SqlConnection(_connectionString);
-            var userExisted = await connection.QueryFirstOrDefaultAsync<Person>(
+            var userExisted = await connection.QueryFirstOrDefaultAsync<Personn>(
                     "GetPersonByEmail",
                     new { Email = Email },
                     commandType: CommandType.StoredProcedure

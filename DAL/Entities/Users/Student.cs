@@ -2,7 +2,7 @@
 
 namespace DAL.Entities.Users
 {
-    public class Student : Person
+    public class Student : Personn
     {
         public bool Lockout {  get; set; }
     }

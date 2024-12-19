@@ -18,7 +18,7 @@ namespace BLL.ExternalApi
 	{
 		public async Task<List<string>> UploadAsync(string Category, List<IFormFile> Files)
 		{
-			var options = new RestClientOptions("https://localhost:44309")
+			var options = new RestClientOptions("https://localhost:44373")
 			{
 				MaxTimeout = -1,
 			};

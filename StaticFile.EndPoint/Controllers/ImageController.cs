@@ -74,7 +74,6 @@ namespace EndPoint.StaticFile.Controllers
 			};
 
 		}
-	}
 
 	public class UploadDto
 	{

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminPanel.EndPoint", "Admi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EndPoints", "EndPoints", "{3498D0FF-0E16-4209-A494-45869AAB8159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticFile.EndPoint", "StaticFile.EndPoint\StaticFile.EndPoint.csproj", "{50E2414D-C445-4875-BB39-ED4F7E8EA1F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StaticFile.EndPoint", "StaticFile.EndPoint\StaticFile.EndPoint.csproj", "{50E2414D-C445-4875-BB39-ED4F7E8EA1F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

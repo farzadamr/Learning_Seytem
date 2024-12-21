@@ -1,0 +1,107 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Users.Person.editModel
+@{
+}
+
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>مدیریت کاربران</li>
+                <li>شخص</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title">
+                        <h4 id="edit-entity">ویرایش شخص</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <div class="search-box-container card">
+                                <div class="card-header">
+                                    <h5>مشخصات شخص مورد نظر</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-12 d-flex">
+                                        <label class="col-form-label cname">پست الکترونیک شخص: </label>
+                                        <input class="form-control col-4" type="email" placeholder="example@gmail.com">
+                                        <div>
+                                            <button id="search_person" class="btn btn-success"><i class="ti-search"></i> بازیابی شخص</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="edit-person-box" class="search-box-container card" style="display:none;">
+                                <div class="card-body">
+                                    <form class="edit-profile m-b30">
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <h3>1. ویرایش اطلاعات کاربر</h3>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">ویرایش نام</label>
+                                                <div>
+                                                    <input class="form-control" type="text" value="فرزاد">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">ویرایش نام خانوادگی</label>
+                                                <div>
+                                                    <input class="form-control" type="text" value="امیری">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">ویرایش شماره تلفن</label>
+                                                <div>
+                                                    <input class="form-control" type="number" value="09961902242">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">ویرایش پست الکترونیک</label>
+                                                <div>
+                                                    <input class="form-control" type="email" value="example@gmail.com">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">ویرایش کلمه عبور</label>
+                                                <div>
+                                                    <input class="form-control" type="password" value="0915...">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label class="col-form-label">تصویر پروفایل فعلی</label>
+                                                <div>
+                                                    <img class="profile-image" src="../assets/images/testimonials/pic3.jpg">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label edit-profile">ویرایش پروفایل شخص</label>
+                                                <div>
+                                                    <input class="form-control" type="file">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <button id="addnew" class="btn btn-success add-course" type="submit">ویرایش شخص</button>
+                                            </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>

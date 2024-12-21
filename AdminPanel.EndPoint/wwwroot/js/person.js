@@ -93,4 +93,8 @@ function addPersonValidation() {
     }
 }
 
+$('#search_person').click(function () {
+    $('#edit-person-box').css('display', 'block');
+});
+
 

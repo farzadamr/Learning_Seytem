@@ -1,5 +1,6 @@
 ﻿using BLL.ExternalApi;
 using BLL.Interfaces;
+using DAL.Repositories.Person;
 using DAL.Repositories.Users;
 
 namespace AdminPanel.EndPoint.Infrastructure
@@ -10,10 +11,10 @@ namespace AdminPanel.EndPoint.Infrastructure
 		this IServiceCollection services,
 		IConfiguration configuration)
 		{
-			services.AddTransient<IUserManager>(provider =>
+			services.AddTransient<IPersonService>(provider =>
 			{
 				var connectionString = configuration.GetConnectionString("DefaultConnection");
-				return new UserManager(connectionString);
+				return new PersonService(connectionString);
 			});
 			services.AddTransient<IFileUploadService, FileUploadService>();
 			return services;

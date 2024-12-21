@@ -19,16 +19,18 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
         }
         [BindProperty]
         public Add_PersonDto Person { get; set; }
+        [BindProperty]
+        public IFormFile Image { get; set; }
         public void OnGet()
         {
         }
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid) return Page();
             string avatarPath = "";
-            if(Person.Avatar != null)
+            if(Image != null)
             {
-                avatarPath = await uploadService.UploadAsync("Persons", Person.Avatar);
+                avatarPath = await uploadService.UploadAsync("Persons", Image);
             }
 
             PersonDto person = new PersonDto()
@@ -41,7 +43,6 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
                 AvatarPath = avatarPath,
             };
             var result = await personService.AddPerson(person);
-            TempData["isSuccess"] = result.isSuccess;
             TempData["message"] = result.Message;
             return Page();
         }

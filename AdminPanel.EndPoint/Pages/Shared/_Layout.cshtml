@@ -332,8 +332,9 @@
     <script src="~/assets/js/admin.js"></script>
     <script src="~/assets/vendors/counter/counterup.min.js"></script>
     <script src="~/assets/vendors/counter/waypoints-min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="~/assets/vendors/chart/chart.min.js"></script>
+  @RenderSection("Scripts",false);
   <script> 
     ClassicEditor
      .create(document.querySelector('#Description'), {

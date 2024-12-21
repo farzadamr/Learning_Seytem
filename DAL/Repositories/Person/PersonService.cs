@@ -22,13 +22,8 @@ namespace DAL.Repositories.Person
         }
         public async Task<ResultDto<int?>> AddPerson(PersonDto person)
         {
-            using var connection = new SqlConnection(_connectionString);
-            var existingUser = await connection.QuerySingleOrDefaultAsync<Personn>(
-                "GetPersonByEmail",
-                new { Email = person.Email },
-                commandType: CommandType.StoredProcedure
-            );
-            if (existingUser != null)
+            var existingUserResult = await GetPersonByEmail(person.Email);
+            if (existingUserResult.isSuccess)
             {
                 return new ResultDto<int?>()
                 {
@@ -36,8 +31,6 @@ namespace DAL.Repositories.Person
                     Message = "کاربری با این ایمیل موجود است"
                 };
             }
-            await connection.CloseAsync();
-
             using var connection2 = new SqlConnection(_connectionString);
             await connection2.OpenAsync();
             using var transaction = connection2.BeginTransaction();

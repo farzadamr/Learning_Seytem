@@ -25,73 +25,76 @@
 						<div class="row">
 							<div class="search-box-container card">
 								<div class="card-body">
-									<form id="personForm" asp-antiforgery="true" method="post" enctype="multipart/form-data" class="edit-profile m-b30">
-										@if (!string.IsNullOrWhiteSpace(message))
-										{
-											if (message.Contains("شناسه"))
-											{
-												<div class="col-4" style="background-color :rgba(45, 255, 0, 0.64);padding:10px;border-radius:10px;">
-													<h6 id="text" style="color:white"><i class="ti-alert"></i> @TempData["message"]</h6>
-												</div>
-											}
-											else
-											{
-												<div class="col-4" style="background-color :rgba(245, 0, 0, 0.64);padding:10px;border-radius:10px;">
-													<h6 id="text" style="color:white"><i class="ti-alert"></i> @TempData["message"]</h6>
-												</div>
-											}
-										}
-										<div class="row">
-											<div class="col-12">
-												<div class="ml-auto">
-													<h3>1. مشخصات کلی</h3>
-												</div>
-											</div>
-											<div class="form-group col-4">
-												<label class="col-form-label">نام</label>
-												<div>
-													<input asp-for="Person.FirstName" class="form-control" type="text" placeholder="فرزاد">
-												</div>
-											</div>
-											<div class="form-group col-4">
-												<label class="col-form-label">نام خانوادگی</label>
-												<div>
-													<input asp-for="Person.LastName" class="form-control" type="text" placeholder="امیری">
-												</div>
-											</div>
-											<div class="form-group col-4">
-												<label class="col-form-label">شماره تلفن</label>
-												<div>
-													<input asp-for="Person.PhoneNumber" class="form-control" type="number" placeholder="0915....">
+                                    <form id="personForm" asp-antiforgery="true" method="post" enctype="multipart/form-data" class="edit-profile m-b30">
+                                        @if (!string.IsNullOrWhiteSpace(message))
+                                        {
+                                            if (message.Contains("شناسه"))
+                                            {
+                                                <div class="col-4" style="background-color: rgba(45, 255, 0, 0.64); padding: 10px; border-radius: 10px;">
+                                                    <h6 id="text" style="color: white;"><i class="ti-alert"></i> @TempData["message"]</h6>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="col-4" style="background-color: rgba(245, 0, 0, 0.64); padding: 10px; border-radius: 10px;">
+                                                    <h6 id="text" style="color: white;"><i class="ti-alert"></i> @TempData["message"]</h6>
+                                                </div>
+                                            }
+                                        }
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="ml-auto">
+                                                    <h3>1. مشخصات کلی</h3>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">نام</label>
+                                                <div>
+                                                    <input id="firstname" asp-for="Person.FirstName" class="form-control" type="text" placeholder="فرزاد">
+                                                    <span class="text-danger" id="firstname-error"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">نام خانوادگی</label>
+                                                <div>
+                                                    <input id="lastname" asp-for="Person.LastName" class="form-control" type="text" placeholder="امیری">
+                                                    <span class="text-danger" id="lastname-error"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">شماره تلفن</label>
+                                                <div>
+                                                    <input id="phonenumber" asp-for="Person.PhoneNumber" class="form-control" type="number" placeholder="0915....">
+                                                    <span class="text-danger" id="phonenumber-error"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">پست الکترونیک</label>
+                                                <div>
+                                                    <input id="email" asp-for="Person.Email" class="form-control" type="email" placeholder="example@gmail.com">
+                                                    <span class="text-danger" id="email-error"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">کلمه عبور</label>
+                                                <div>
+                                                    <input id="password" asp-for="Person.Password" class="form-control" type="password">
+                                                    <span class="text-danger" id="password-error"></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">عکس پروفایل</label>
+                                                <div>
+                                                    <input id="person-profile" asp-for="Image" class="form-control" accept="Image/*" type="file">
+                                                    <span class="text-danger" id="image-error"></span>
+                                                </div>
+                                            </div>
 
-												</div>
-											</div>
-											<div class="form-group col-4">
-												<label class="col-form-label">پست الکترونیک</label>
-												<div>
-													<input asp-for="Person.Email" class="form-control" type="email" placeholder="example@gmail.com">
-												</div>
-											</div>
-											<div class="form-group col-4">
-												<label class="col-form-label">کلمه عبور</label>
-												<div>
-													<input asp-for="Person.Password" class="form-control" type="password">
-												</div>
-											</div>
-											<div class="form-group col-4">
-												<label class="col-form-label">عکس پروفایل</label>
-												<div>
-													<input id="person-profile" asp-for="Image" class="form-control" accept="Image/*" type="file">
-												</div>
-											</div>
+                                            <div class="seperator"></div>
+                                        </div>
+                                        <button id="addnew" type="button" onclick="addPersonValidation()" class="btn btn-success add-course">افزودن شخص جدید</button>
+                                    </form>
 
-
-											<div class="seperator"></div>
-
-
-										</div>
-										<button id="addnew" class="btn btn-success add-course">افزودن شخص جدید</button>
-									</form>
 								</div>
 							</div>
 
@@ -108,4 +111,5 @@
 @section Scripts {
 
     <partial name="_ValidationScriptsPartial" />
+	<script src="~/js/person.js"></script>
 }

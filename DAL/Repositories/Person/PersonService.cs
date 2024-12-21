@@ -87,5 +87,15 @@ namespace DAL.Repositories.Person
 				};
 			}
 		}
-	}
+
+        public async Task<ResultDto> EditPerson(PersonDto Person)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResultDto<PersonDto?>> GetPersonByEmail(string EmailAddress)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

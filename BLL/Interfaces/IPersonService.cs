@@ -11,5 +11,7 @@ namespace BLL.Interfaces
 	public interface IPersonService
 	{
 		Task<ResultDto<int?>> AddPerson(PersonDto person);
+		Task<ResultDto<PersonDto?>> GetPersonByEmail(string EmailAddress);
+		Task<ResultDto> EditPerson(PersonDto Person);
 	}
 }

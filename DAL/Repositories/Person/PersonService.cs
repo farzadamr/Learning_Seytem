@@ -90,12 +90,41 @@ namespace DAL.Repositories.Person
 
         public async Task<ResultDto> EditPerson(PersonDto Person)
         {
-            throw new NotImplementedException();
+			using(SqlConnection connection = new SqlConnection(_connectionString))
+			{
+				using (SqlCommand command = new SqlCommand("UpdatePerson", connection))
+				{
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue("@PersonID", Person.Id);
+					command.Parameters.AddWithValue("@FirstName", Person.FirstName);
+					command.Parameters.AddWithValue("@LastName", Person.LastName);
+					command.Parameters.AddWithValue("@Email", Person.Email);
+					command.Parameters.AddWithValue("@PhoneNumber", Person.PhoneNumber);
+					command.Parameters.AddWithValue("@Password", Person.Password);
+					command.Parameters.AddWithValue("@AvatarPath", Person.AvatarPath);
+					await connection.OpenAsync();
+					int rowsAffected = await command.ExecuteNonQueryAsync();
+					if (rowsAffected > 0)
+						return new ResultDto()
+						{
+							isSuccess = true,
+							Message = $"ویرایش کاربر با شناسه {Person.Id} با موفقیت انجام شد"
+						};
+					return new ResultDto()
+					{
+						isSuccess = false,
+						Message = "خطا در انجام ویرایش"
+					};
+				}
+			}
         }
 
         public async Task<ResultDto<PersonDto?>> GetPersonByEmail(string EmailAddress)
         {
-            throw new NotImplementedException();
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+			{
+
+			}
         }
     }
 }

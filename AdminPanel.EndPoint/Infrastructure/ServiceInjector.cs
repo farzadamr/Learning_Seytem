@@ -14,9 +14,8 @@ namespace AdminPanel.EndPoint.Infrastructure
 			services.AddTransient<IUriComposer, UriComposer>();
 			services.AddTransient<IPersonService>(provider =>
 			{
-				var composer = provider.GetService<IUriComposer>() ?? throw new Exception("uriComposer not registered!");
 				var connectionString = configuration.GetConnectionString("DefaultConnection");
-				return new PersonService(connectionString, composer);
+				return new PersonService(connectionString);
 			});
 			services.AddTransient<IFileUploadService, FileUploadService>();
 			return services;

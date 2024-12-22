@@ -17,7 +17,7 @@ namespace DAL.Repositories.Person
     public class PersonService : IPersonService
     {
         private readonly string _connectionString;
-        public PersonService(string _connectionString,IUriComposer uriComposer)
+        public PersonService(string _connectionString)
         {
             this._connectionString = _connectionString;
         }

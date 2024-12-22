@@ -12,10 +12,12 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
     {
         private readonly IPersonService personService;
         private readonly IFileUploadService uploadService;
-        public editModel(IPersonService personService, IFileUploadService uploadService)
+        private readonly IUriComposer uriComposer;
+        public editModel(IPersonService personService, IFileUploadService uploadService,IUriComposer uriComposer)
         {
             this.personService = personService;
             this.uploadService = uploadService;
+            this.uriComposer = uriComposer;
         }
 
 
@@ -57,7 +59,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
                 PhoneNumber = findResult.Data.PhoneNumber,
                 Email = findResult.Data.Email,
                 Password = findResult.Data.Password,
-                AvatarPath = findResult.Data.AvatarPath
+                AvatarPath = uriComposer.Compose(findResult.Data.AvatarPath)
             };
             ImageAddress = findResult.Data.AvatarPath;
             return Page();

@@ -82,6 +82,33 @@ namespace DAL.Repositories.Person
             }
         }
 
+        public async Task<ResultDto> DeletePerson(int PersonId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand command = new SqlCommand("DeletePersonById", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("PersonID", PersonId);
+                    await connection.OpenAsync();
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    if (rowsAffected > 0)
+                    {
+                        return new ResultDto()
+                        {
+                            isSuccess = true,
+                            Message = $"کاربر با شناسه {PersonId} با موفقیت حذف شد"
+                        };
+                    }
+                    return new ResultDto()
+                    {
+                        isSuccess = false,
+                        Message = "خطا در انجام عملیات"
+                    };
+                }
+            }
+        }
+
         public async Task<ResultDto> EditPerson(PersonDto Person)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))

@@ -13,5 +13,6 @@ namespace BLL.Interfaces
 		Task<ResultDto<int?>> AddPerson(PersonDto person);
 		Task<ResultDto<PersonDto?>> GetPersonByEmail(string EmailAddress);
 		Task<ResultDto> EditPerson(PersonDto Person);
+		Task<ResultDto> DeletePerson(int PersonId);
 	}
 }

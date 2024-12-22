@@ -63,7 +63,14 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
                 result = new ResultPageDto(false, "خطا در دریافت اطلاعات کاربر");
                 return Page();
             }
-
+            var deleteResult = await personService.DeletePerson(PersonId);
+            if (deleteResult.isSuccess)
+            {
+                result = new ResultPageDto(true, deleteResult.Message);
+                return Page();
+            }
+            result = new ResultPageDto(false, deleteResult.Message);
+            return Page();
         }
     }
 }

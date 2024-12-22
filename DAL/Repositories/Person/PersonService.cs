@@ -136,7 +136,8 @@ namespace DAL.Repositories.Person
                             Email = existPerson.Email,
                             Password = existPerson.Password,
                             AvatarPath = uriComposer.Compose(existPerson.AvatarPath)
-                        }
+                        },
+                        Message = "کاربر یافت شد"
                     };
 
                 else

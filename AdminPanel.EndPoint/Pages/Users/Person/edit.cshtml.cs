@@ -21,22 +21,28 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
         public PersonDto Person { get; set; }
         [BindProperty]
         public PersonDto PersonModel { get; set; }
-        public ResultDto result { get; set; }
+        public ResultPageDto result { get; set; }
         public IFormFile Image { get; set; }
 
         public void OnGet()
         {
-            
+            result = new ResultPageDto(false, " ");
         }
         public async Task<IActionResult> OnPostFindPerson()
         {
-            if (string.IsNullOrWhiteSpace(EmailAddress)) return Page();
+            if (string.IsNullOrWhiteSpace(EmailAddress))
+            {
+                result = new ResultPageDto(false, "مقدار ایمیل را وارد کنید");  
+                return Page();
+            }
             // find person
             var findResult = await personService.GetPersonByEmail(EmailAddress);
             if (!findResult.isSuccess)
             {
-
+                result = new ResultPageDto(false, findResult.Message);
+                return Page();
             }
+            result = new ResultPageDto(true, findResult.Message);
             Person = new PersonDto()
             {
                 FirstName = findResult.Data.FirstName,

@@ -33,10 +33,24 @@
                                         <div>
                                             <button id="search_person" class="btn btn-success"><i class="ti-search"></i> بازیابی شخص</button>
                                         </div>
+                                        @if (!string.IsNullOrWhiteSpace(Model.result.Message))
+                                        {
+                                            if (Model.result.isSuccess)
+                                            {
+                                                <h6 id="text" style="color: rgba(45, 255, 0, 1); margin : 10px;"><i class="fa fa-check-square"></i> @Model.result.Message</h6>
+                                            }
+                                            else
+                                            {
+
+                                                <h6 id="text" style="color: rgba(245, 0, 0, 0.64); margin : 10px;"><i class="ti-alert"></i> @Model.result.Message</h6>
+
+                                            }
+                                        }
+
                                     </form>
                                 </div>
                             </div>
-                            @if(Model.Person != null)
+                            @if (Model.Person != null)
                             {
                                 <div id="edit-person-box" class="search-box-container card">
                                     <div class="card-body">

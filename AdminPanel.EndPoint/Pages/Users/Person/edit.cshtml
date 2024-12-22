@@ -58,7 +58,8 @@
                                             <div class="row mb-3">
                                                 <div class="col-12">
                                                     <h3>1. ویرایش اطلاعات کاربر</h3>
-                                                    <input type="hidden" value="@Model.Person.Id" asp-for="PersonModel.Id" disabled/>
+                                                    <input type="hidden" value="@Model.Person.Id" asp-for="PersonModel.Id" readonly/>
+                                                    <input type="hidden" value="@Model.ImageAddress" asp-for="ImageAddress" readonly />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">

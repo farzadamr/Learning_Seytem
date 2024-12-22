@@ -27,6 +27,8 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
         public ResultPageDto result { get; set; }
         [BindProperty]
         public IFormFile Image { get; set; }
+        [BindProperty]
+        public string ImageAddress { get; set; }
 
         public void OnGet()
         {
@@ -57,7 +59,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
                 Password = findResult.Data.Password,
                 AvatarPath = findResult.Data.AvatarPath
             };
-
+            ImageAddress = findResult.Data.AvatarPath;
             return Page();
         }
         public async Task<IActionResult> OnPostEditPerson()
@@ -73,6 +75,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
                 return Page();
 
             }
+            PersonModel.AvatarPath = ImageAddress;
             var editResult = await personService.EditPerson(PersonModel);
             if (editResult.isSuccess)
             {

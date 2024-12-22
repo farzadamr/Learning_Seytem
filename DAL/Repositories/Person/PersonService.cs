@@ -17,11 +17,9 @@ namespace DAL.Repositories.Person
     public class PersonService : IPersonService
     {
         private readonly string _connectionString;
-        private readonly IUriComposer uriComposer;
         public PersonService(string _connectionString,IUriComposer uriComposer)
         {
             this._connectionString = _connectionString;
-            this.uriComposer = uriComposer;
         }
         public async Task<ResultDto<int?>> AddPerson(PersonDto person)
         {
@@ -135,7 +133,7 @@ namespace DAL.Repositories.Person
                             PhoneNumber = existPerson.PhoneNumber,
                             Email = existPerson.Email,
                             Password = existPerson.Password,
-                            AvatarPath = uriComposer.Compose(existPerson.AvatarPath)
+                            AvatarPath = existPerson.AvatarPath
                         },
                         Message = "کاربر یافت شد"
                     };

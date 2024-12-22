@@ -27,15 +27,15 @@
                                     <h5>مشخصات دانشجو مورد نظر</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="col-12 d-flex">
+                                    <form asp-page-handler="FindStudent" class="col-12 d-flex">
                                         <label class="col-form-label cname">شماره دانشجو: </label>
-                                        <input class="form-control col-4" type="number" placeholder="102">
+                                        <input class="form-control col-4" asp-for="Student.Id" type="number" placeholder="102">
                                         <div>
-                                            <button class="btn btn-success"><i class="ti-search"></i> بازیابی دانشجو</button>
+                                            <button class="btn btn-success" type="submit"><i class="ti-search"></i> بازیابی دانشجو</button>
                                         </div>
                                         <label class="col-form-label cname">نام دانشجو: </label>
                                         <input class="form-control col-3" type="text" value="فرزاد امیری" disabled>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="search-box-container card">

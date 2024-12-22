@@ -174,5 +174,40 @@ namespace DAL.Repositories.Person
 
             }
         }
+
+        public async Task<ResultDto<PersonDto?>> GetPersonById(int PersonId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var person = await connection.QuerySingleOrDefaultAsync<Personn>(
+                    "GetPersonById",
+                    new { Id = PersonId },
+                    commandType: CommandType.StoredProcedure
+                    );
+                if (person == null)
+                {
+                    return new ResultDto<PersonDto?>
+                    {
+                        isSuccess = false,
+                        Message = "کاربر یافت نشد"
+                    };
+                }
+                return new ResultDto<PersonDto?>
+                {
+                    Data = new PersonDto
+                    {
+                        Id = person.Id,
+                        FirstName = person.FirstName,
+                        LastName = person.LastName,
+                        Email = person.Email,
+                        PhoneNumber = person.PhoneNumber,
+                        AvatarPath = person.AvatarPath,
+                        Password = person.Password
+                    },
+                    isSuccess = true,
+                    Message = "کاربر یافت شد"
+                };
+            }
+        }
     }
 }

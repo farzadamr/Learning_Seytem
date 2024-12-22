@@ -77,9 +77,35 @@ namespace DAL.Repositories.Student
 
         public async Task<ResultDto> EditStudentById(StudentDto studentModel)
         {
-            
-            
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("UpdateStudent"))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
 
+                    command.Parameters.AddWithValue("Major", studentModel.Major);
+                    command.Parameters.AddWithValue("ActivityArea", studentModel.ActivityArea);
+                    command.Parameters.AddWithValue("LinkedIn", studentModel.LinkedId);
+                    command.Parameters.AddWithValue("StudentID", studentModel.Id);
+
+                    await connection.OpenAsync();
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    if(rowsAffected > 0)
+                    {
+                        return new ResultDto
+                        {
+                            isSuccess = false,
+                            Message = $"دانشجو با شناسه {studentModel.Id} با موفقیت ویرایش شد"
+                        };
+                    }
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
         }
 
         public async Task<ResultDto<StudentDto?>> GetStudentById(int studentId)

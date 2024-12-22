@@ -69,15 +69,18 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
             if (Image != null)
             {
                 var uploadImage = await uploadService.UploadAsync("Persons", Image);
-                if (uploadImage.Status)
+                if (!uploadImage.Status)
                 {
-                    PersonModel.AvatarPath = uploadImage.FileNameAddress;
+                    result = new ResultPageDto(false, "خطا در دریافت عکس");
+                    return Page();
                 }
-                result = new ResultPageDto(false, "خطا در دریافت عکس");
-                return Page();
 
+                PersonModel.AvatarPath = uploadImage.FileNameAddress;
             }
-            PersonModel.AvatarPath = ImageAddress;
+            else
+            {
+                PersonModel.AvatarPath = ImageAddress;
+            }
             var editResult = await personService.EditPerson(PersonModel);
             if (editResult.isSuccess)
             {

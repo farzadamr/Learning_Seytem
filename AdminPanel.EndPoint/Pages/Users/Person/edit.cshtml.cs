@@ -1,5 +1,6 @@
 ﻿using BLL.Dtos.Users;
 using BLL.Dtos.Utils;
+using BLL.ExternalApi;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -10,9 +11,11 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
     public class editModel : PageModel
     {
         private readonly IPersonService personService;
-        public editModel(IPersonService personService)
+        private readonly IFileUploadService uploadService;
+        public editModel(IPersonService personService, IFileUploadService uploadService)
         {
             this.personService = personService;
+            this.uploadService = uploadService;
         }
 
 
@@ -22,6 +25,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
         [BindProperty]
         public PersonDto PersonModel { get; set; }
         public ResultPageDto result { get; set; }
+        [BindProperty]
         public IFormFile Image { get; set; }
 
         public void OnGet()
@@ -32,7 +36,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
         {
             if (string.IsNullOrWhiteSpace(EmailAddress))
             {
-                result = new ResultPageDto(false, "مقدار ایمیل را وارد کنید");  
+                result = new ResultPageDto(false, "مقدار ایمیل را وارد کنید");
                 return Page();
             }
             // find person
@@ -45,6 +49,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
             result = new ResultPageDto(true, findResult.Message);
             Person = new PersonDto()
             {
+                Id = findResult.Data.Id,
                 FirstName = findResult.Data.FirstName,
                 LastName = findResult.Data.LastName,
                 PhoneNumber = findResult.Data.PhoneNumber,
@@ -53,15 +58,20 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
                 AvatarPath = findResult.Data.AvatarPath
             };
 
-
             return Page();
         }
         public async Task<IActionResult> OnPostEditPerson()
         {
-            if (!ModelState.IsValid)
+            if (Image != null)
             {
-                result = new ResultPageDto(false, "اطلاعات دریافتی ناقص است");
+                var uploadImage = await uploadService.UploadAsync("Persons", Image);
+                if (uploadImage.Status)
+                {
+                    PersonModel.AvatarPath = uploadImage.FileNameAddress;
+                }
+                result = new ResultPageDto(false, "خطا در دریافت عکس");
                 return Page();
+
             }
             var editResult = await personService.EditPerson(PersonModel);
             if (editResult.isSuccess)
@@ -71,6 +81,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
             }
             result = new ResultPageDto(false, editResult.Message);
             return Page();
+
         }
     }
 }

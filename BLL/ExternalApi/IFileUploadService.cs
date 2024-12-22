@@ -12,11 +12,11 @@ namespace BLL.ExternalApi
 {
 	public interface IFileUploadService
 	{
-		Task<string> UploadAsync(string Category, IFormFile file);
+		Task<UploadDto> UploadAsync(string Category, IFormFile file);
 	}
 	public class FileUploadService : IFileUploadService
 	{
-		public async Task<string> UploadAsync(string Category, IFormFile file)
+		public async Task<UploadDto> UploadAsync(string Category, IFormFile file)
 		{
 			var options = new RestClientOptions("https://localhost:44373")
 			{
@@ -37,7 +37,7 @@ namespace BLL.ExternalApi
 
 			RestResponse response = await client.ExecuteAsync(request);
 			UploadDto upload = JsonConvert.DeserializeObject<UploadDto>(response.Content);
-			return upload.FileNameAddress;
+			return upload;
 		}
 	}
 	public class UploadDto

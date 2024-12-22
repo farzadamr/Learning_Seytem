@@ -27,12 +27,18 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
         public async Task<IActionResult> OnPost()
         {
             if (!ModelState.IsValid) return Page();
-            string avatarPath = "";
-            if(Image != null)
-            {
-                avatarPath = await uploadService.UploadAsync("Persons", Image);
-            }
 
+            var uploadResult = await uploadService.UploadAsync("Persons", Image);
+            string avatarPath = "";
+            if (uploadResult.Status)
+            {
+                avatarPath = uploadResult.FileNameAddress;
+            }
+            else
+            {
+                //image error
+                return Page();
+            }
             PersonDto person = new PersonDto()
             {
                 FirstName = Person.FirstName,

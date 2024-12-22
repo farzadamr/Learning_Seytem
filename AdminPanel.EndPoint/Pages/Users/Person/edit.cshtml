@@ -58,38 +58,39 @@
                                             <div class="row mb-3">
                                                 <div class="col-12">
                                                     <h3>1. ویرایش اطلاعات کاربر</h3>
+                                                    <input type="hidden" value="@Model.Person.Id" asp-for="PersonModel.Id" disabled/>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label">ویرایش نام</label>
                                                     <div>
-                                                        <input asp-for="PersonModel.FirstName" class="form-control" type="text" value="@Model.Person.FirstName">
+                                                        <input asp-for="PersonModel.FirstName" id="firstname" class="form-control" type="text" value="@Model.Person.FirstName">
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label">ویرایش نام خانوادگی</label>
                                                     <div>
-                                                        <input class="form-control" type="text" asp-for="PersonModel.LastName" value="@Model.Person.LastName">
+                                                        <input class="form-control" type="text" id="lastname" asp-for="PersonModel.LastName" value="@Model.Person.LastName">
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label">ویرایش شماره تلفن</label>
                                                     <div>
-                                                        <input class="form-control" type="number" asp-for="PersonModel.PhoneNumber" value="@Model.Person.PhoneNumber">
+                                                        <input class="form-control" type="number" id="phonenumber" asp-for="PersonModel.PhoneNumber" value="@Model.Person.PhoneNumber">
 
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label">ویرایش پست الکترونیک</label>
                                                     <div>
-                                                        <input class="form-control" type="email" asp-for="PersonModel.Email" value="@Model.Person.Email">
+                                                        <input class="form-control" type="email" id="email" asp-for="PersonModel.Email" value="@Model.Person.Email">
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label">ویرایش کلمه عبور</label>
                                                     <div>
-                                                        <input class="form-control" type="password" asp-for="PersonModel.Password" value="@Model.Person.Password">
+                                                        <input class="form-control" type="password" id="password" asp-for="PersonModel.Password" value="@Model.Person.Password">
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-6">

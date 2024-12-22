@@ -1,4 +1,6 @@
-﻿function isNameValid(type) {
+﻿const { data } = require("jquery");
+
+function isNameValid(type) {
     if (type === "first") {
         var firstname = $('#firstname').val();
         return firstname.length > 2 && firstname.length < 15;

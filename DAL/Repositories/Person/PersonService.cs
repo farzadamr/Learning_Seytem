@@ -10,15 +10,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using DAL.Entities.Base;
+using BLL.ExternalApi;
 
 namespace DAL.Repositories.Person
 {
     public class PersonService : IPersonService
     {
         private readonly string _connectionString;
-        public PersonService(string _connectionString)
+        private readonly IUriComposer uriComposer;
+        public PersonService(string _connectionString,IUriComposer uriComposer)
         {
             this._connectionString = _connectionString;
+            this.uriComposer = uriComposer;
         }
         public async Task<ResultDto<int?>> AddPerson(PersonDto person)
         {
@@ -132,7 +135,7 @@ namespace DAL.Repositories.Person
                             PhoneNumber = existPerson.PhoneNumber,
                             Email = existPerson.Email,
                             Password = existPerson.Password,
-                            AvatarPath = existPerson.AvatarPath
+                            AvatarPath = uriComposer.Compose(existPerson.AvatarPath)
                         }
                     };
 

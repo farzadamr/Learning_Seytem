@@ -11,5 +11,6 @@ namespace BLL.Interfaces
     public interface IStudentService
     {
         Task<ResultDto<int?>> AddStudent(StudentDto student);
+        Task<ResultDto<StudentDto?>> GetStudentByPersonId(int PersonID);
     }
 }

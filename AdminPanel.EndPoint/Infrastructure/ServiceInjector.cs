@@ -20,7 +20,8 @@ namespace AdminPanel.EndPoint.Infrastructure
 			});
 			services.AddTransient<IStudentService>(provider =>
 			{
-				return new StudentService(connectionString);
+				var personService = provider.GetService<IPersonService>() ?? throw new Exception("service not registered");
+				return new StudentService(connectionString, personService);
 			});
 			services.AddTransient<IFileUploadService, FileUploadService>();
 			return services;

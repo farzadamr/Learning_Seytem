@@ -1,6 +1,7 @@
 ﻿using BLL.ExternalApi;
 using BLL.Interfaces;
 using DAL.Repositories.Person;
+using DAL.Repositories.Student;
 using DAL.Repositories.Users;
 
 namespace AdminPanel.EndPoint.Infrastructure
@@ -11,11 +12,15 @@ namespace AdminPanel.EndPoint.Infrastructure
 		this IServiceCollection services,
 		IConfiguration configuration)
 		{
-			services.AddTransient<IUriComposer, UriComposer>();
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddTransient<IUriComposer, UriComposer>();
 			services.AddTransient<IPersonService>(provider =>
 			{
-				var connectionString = configuration.GetConnectionString("DefaultConnection");
 				return new PersonService(connectionString);
+			});
+			services.AddTransient<IStudentService>(provider =>
+			{
+				return new StudentService(connectionString);
 			});
 			services.AddTransient<IFileUploadService, FileUploadService>();
 			return services;

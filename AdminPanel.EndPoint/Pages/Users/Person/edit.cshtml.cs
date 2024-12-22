@@ -58,7 +58,18 @@ namespace AdminPanel.EndPoint.Pages.Users.Person
         }
         public async Task<IActionResult> OnPostEditPerson()
         {
-           
+            if (!ModelState.IsValid)
+            {
+                result = new ResultPageDto(false, "اطلاعات دریافتی ناقص است");
+                return Page();
+            }
+            var editResult = await personService.EditPerson(PersonModel);
+            if (editResult.isSuccess)
+            {
+                result = new ResultPageDto(true, editResult.Message);
+                return Page();
+            }
+            result = new ResultPageDto(false, editResult.Message);
             return Page();
         }
     }

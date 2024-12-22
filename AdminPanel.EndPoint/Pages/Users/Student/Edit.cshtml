@@ -60,29 +60,30 @@
                             {
                                 <div class="search-box-container card">
                                     <div class="card-body">
-                                        <form class="edit-profile m-b30">
+                                        <form asp-page-handler="EditStudent" enctype="multipart/form-data" class="edit-profile m-b30">
                                             <div class="row mb-3">
                                                 <div class="col-12">
                                                     <h3>1. ویرایش اطلاعات دانشجو</h3>
+                                                    <input type="number" asp-for="Student.Id" value="@Model.Student.Id" readonly/>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label">ویرایش مقطع تحصیلی</label>
                                                     <div>
-                                                        <input class="form-control" type="text" value="کارشناسی">
+                                                        <input class="form-control" asp-for="Student.Major" type="text" value="@Model.Student.Major">
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label">ویرایش پروفایل لینکدین</label>
                                                     <div>
-                                                        <input class="form-control" type="text" value="">
+                                                        <input class="form-control" type="text" asp-for="Student.LinkedId" value="@Model.Student.LinkedId">
                                                     </div>
                                                 </div>
                                                 <div class="form-group col-4">
                                                     <label class="col-form-label">ویرایش حوزه فعالیت</label>
                                                     <div>
-                                                        <input class="form-control" type="text" value="برنامه نویسی">
+                                                        <input class="form-control" type="text" asp-for="Student.ActivityArea" value="@Model.Student.ActivityArea">
 
                                                     </div>
                                                 </div>

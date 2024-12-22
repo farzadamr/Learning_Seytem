@@ -79,7 +79,7 @@ namespace DAL.Repositories.Student
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using(SqlCommand command = new SqlCommand("UpdateStudent"))
+                using(SqlCommand command = new SqlCommand("UpdateStudent",connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
@@ -95,7 +95,7 @@ namespace DAL.Repositories.Student
                     {
                         return new ResultDto
                         {
-                            isSuccess = false,
+                            isSuccess = true,
                             Message = $"دانشجو با شناسه {studentModel.Id} با موفقیت ویرایش شد"
                         };
                     }

@@ -57,5 +57,21 @@ namespace AdminPanel.EndPoint.Pages.Users.Student
             FullName = person.Data.FirstName + " " + person.Data.LastName;
             return Page();
         }
+        public async Task<IActionResult> OnPostEditStudent()
+        {
+            if (!TryValidateModel(Student,nameof(Student)))
+            {
+                result = new ResultPageDto(false, "اطلاعات را به درستی وارد کنید");
+                return Page();
+            }
+            var editResult = await studentService.EditStudentById(Student);
+            if (!editResult.isSuccess)
+            {
+                result = new ResultPageDto(false, editResult.Message);
+                return Page();
+            }
+            result = new ResultPageDto(true, editResult.Message);
+            return Page();
+        }
     }
 }

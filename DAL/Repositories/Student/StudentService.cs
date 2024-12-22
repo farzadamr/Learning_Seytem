@@ -75,6 +75,47 @@ namespace DAL.Repositories.Student
             }
         }
 
+        public async Task<ResultDto> EditStudentById(StudentDto studentModel)
+        {
+            
+            
+
+        }
+
+        public async Task<ResultDto<StudentDto?>> GetStudentById(int studentId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var student = await connection.QuerySingleOrDefaultAsync<StudentDto>(
+                    "GetStudentById",
+                    new { Id = studentId },
+                    commandType: CommandType.StoredProcedure
+                    );
+                if(student == null)
+                {
+                    return new ResultDto<StudentDto?>
+                    {
+                        isSuccess = false,
+                        Message = "کاربر یافت نشد"
+                    };
+                }
+                return new ResultDto<StudentDto?>
+                {
+                    Data = new StudentDto
+                    {
+                        Id = student.Id,
+                        ActivityArea = student.ActivityArea,
+                        LinkedId = student.LinkedId,
+                        Lockout = student.Lockout,
+                        Major = student.Major,
+                        PersonId = student.PersonId
+                    },
+                    isSuccess = true,
+                    Message = "کاربر یافت شد"
+                };
+            }
+        }
+
         public async Task<ResultDto<StudentDto?>> GetStudentByPersonId(int PersonID)
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))

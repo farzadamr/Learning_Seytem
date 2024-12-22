@@ -33,46 +33,67 @@
                                         <div>
                                             <button class="btn btn-success" type="submit"><i class="ti-search"></i> بازیابی دانشجو</button>
                                         </div>
-                                        <label class="col-form-label cname">نام دانشجو: </label>
-                                        <input class="form-control col-3" type="text" value="فرزاد امیری" disabled>
+                                        @if (!string.IsNullOrWhiteSpace(Model.FullName))
+                                        {
+                                            <label class="col-form-label cname">نام دانشجو: </label>
+                                            <input class="form-control col-3" type="text" value="@Model.FullName" disabled>
+                                        }
+                                        
                                     </form>
+                                    @if (!string.IsNullOrWhiteSpace(Model.result.Message))
+                                    {
+                                        if (Model.result.isSuccess)
+                                        {
+                                            <h6 id="text" style="color: rgba(45, 255, 0, 1); margin : 10px;"><i class="fa fa-check-square"></i> @Model.result.Message</h6>
+                                        }
+                                        else
+                                        {
+
+                                            <h6 id="text" style="color: rgba(245, 0, 0, 0.64); margin : 10px;"><i class="ti-alert"></i> @Model.result.Message</h6>
+
+                                        }
+                                    }
                                 </div>
                             </div>
-                            <div class="search-box-container card">
-                                <div class="card-body">
-                                    <form class="edit-profile m-b30">
-                                        <div class="row mb-3">
-                                            <div class="col-12">
-                                                <h3>1. ویرایش اطلاعات دانشجو</h3>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="form-group col-4">
-                                                <label class="col-form-label">ویرایش مقطع تحصیلی</label>
-                                                <div>
-                                                    <input class="form-control" type="text" value="کارشناسی">
+                            
+                            @if(!string.IsNullOrWhiteSpace(Model.FullName))
+                            {
+                                <div class="search-box-container card">
+                                    <div class="card-body">
+                                        <form class="edit-profile m-b30">
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <h3>1. ویرایش اطلاعات دانشجو</h3>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-4">
-                                                <label class="col-form-label">ویرایش پروفایل لینکدین</label>
-                                                <div>
-                                                    <input class="form-control" type="text" value="">
+                                            <div class="row mb-3">
+                                                <div class="form-group col-4">
+                                                    <label class="col-form-label">ویرایش مقطع تحصیلی</label>
+                                                    <div>
+                                                        <input class="form-control" type="text" value="کارشناسی">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-4">
-                                                <label class="col-form-label">ویرایش حوزه فعالیت</label>
-                                                <div>
-                                                    <input class="form-control" type="text" value="برنامه نویسی">
+                                                <div class="form-group col-4">
+                                                    <label class="col-form-label">ویرایش پروفایل لینکدین</label>
+                                                    <div>
+                                                        <input class="form-control" type="text" value="">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <label class="col-form-label">ویرایش حوزه فعالیت</label>
+                                                    <div>
+                                                        <input class="form-control" type="text" value="برنامه نویسی">
 
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group col-12">
-                                                <button id="addnew" class="btn btn-success add-course" type="submit">ویرایش دانشجو</button>
-                                            </div>
+                                                <div class="form-group col-12">
+                                                    <button id="addnew" class="btn btn-success add-course" type="submit">ویرایش دانشجو</button>
+                                                </div>
 
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                         </div>
                     </div>

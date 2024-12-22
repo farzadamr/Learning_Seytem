@@ -29,7 +29,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Student
         }
         public async Task<IActionResult> OnPostFindStudent()
         {
-            if(Student.Id == null)
+            if(Student.Id == 0)
             {
                 result = new ResultPageDto(false, "شماره دانشجو را وارد نمایید");
                 return Page();
@@ -48,7 +48,14 @@ namespace AdminPanel.EndPoint.Pages.Users.Student
                 LinkedId = studentFindResult.Data.LinkedId
             };
             result = new ResultPageDto(true, studentFindResult.Message);
-            var person = await personService.
+            var person = await personService.GetPersonById(studentFindResult.Data.PersonId);
+            if(person == null)
+            {
+                result = new ResultPageDto(false, person.Message);
+                return Page();
+            }
+            FullName = person.Data.FirstName + " " + person.Data.LastName;
+            return Page();
         }
     }
 }

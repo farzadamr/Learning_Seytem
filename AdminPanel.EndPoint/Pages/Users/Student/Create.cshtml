@@ -39,7 +39,7 @@
                                             <div class="col-4">
                                                 <label class="col-form-label cname">نام شخص</label>
                                                 <input class="form-control" type="text" value="@Model.FullName" disabled>
-                                                <input type="hidden" value="@Model.PersonId" readonly>
+                                                
                                             </div>
                                         }
                                         @if (!string.IsNullOrWhiteSpace(Model.result.Message))
@@ -62,38 +62,43 @@
 
                                 </div>
                             </div>
-                            <div class="search-box-container card">
-                                <div class="card-body">
-                                    <form class="edit-profile m-b30">
-                                        <div class="row mb-3">
-                                            <div class="col-12">
-                                                <h3>مشخصات دانشجو</h3>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="form-group col-4">
-                                                <label class="col-form-label">مقطع تحصیلی</label>
-                                                <div>
-                                                    <input class="form-control" type="text" placeholder="کارشناسی">
+                            @if (!string.IsNullOrWhiteSpace(Model.FullName))
+                            {
+                                <div class="search-box-container card">
+                                    <div class="card-body">
+                                        <form asp-antiforgery=true asp-page-handler="AddStudent" class="edit-profile m-b30">
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <h3>مشخصات دانشجو</h3>
+                                                    <input type="hidden" asp-for="PersonId" value="@Model.PersonId" readonly>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-4">
-                                                <label class="col-form-label">پروفایل لینکدین</label>
-                                                <div>
-                                                    <input class="form-control" type="text">
+                                            <div class="row mb-3">
+                                                <div class="form-group col-4">
+                                                    <label class="col-form-label">مقطع تحصیلی</label>
+                                                    <div>
+                                                        <input asp-for="StudentModel.Major" class="form-control" type="text" placeholder="کارشناسی">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <label class="col-form-label">پروفایل لینکدین</label>
+                                                    <div>
+                                                        <input asp-for="StudentModel.LinkedId" class="form-control" type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-4">
+                                                    <label class="col-form-label">حوزه فعالیت</label>
+                                                    <div>
+                                                        <input asp-for="StudentModel.ActivityArea" class="form-control" type="text" placeholder="برنامه نویسی سایت">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-4">
-                                                <label class="col-form-label">حوزه فعالیت</label>
-                                                <div>
-                                                    <input class="form-control" type="text" placeholder="برنامه نویسی سایت">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button id="addnew" class="btn btn-warning add-course" type="submit">افزودن دانشجو</button>
-                                    </form>
+                                            <button id="addnew" class="btn btn-warning add-course" type="submit">افزودن دانشجو</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+
+                            }
 
                         </div>
                     </div>

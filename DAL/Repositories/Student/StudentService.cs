@@ -15,9 +15,11 @@ namespace DAL.Repositories.Student
     public class StudentService : IStudentService
     {
         private readonly string _connectionString;
-        public StudentService(string _connectionString)
+        private readonly IPersonService personService;
+        public StudentService(string _connectionString, IPersonService personService)
         {
             this._connectionString = _connectionString;
+            this.personService = personService;
         }
         public async Task<ResultDto<int?>> AddStudent(StudentDto student)
         {

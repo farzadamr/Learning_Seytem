@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Entities.Users;
+using System.Net.Http.Headers;
 
 namespace DAL.Repositories.Teacher
 {
@@ -23,6 +24,15 @@ namespace DAL.Repositories.Teacher
         }
         public async Task<ResultDto<int?>> AddTeacher(TeacherDto teacher)
         {
+            var existingTeacher = await GetTeacherByPersonId(teacher.PersonID);
+            if (existingTeacher.isSuccess)
+            {
+                return new ResultDto<int?>
+                {
+                    isSuccess = false,
+                    Message = "مدرس با این مشخصات در سیستم موجود است"
+                };
+            }
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
                 int TeacherID = await connection.ExecuteScalarAsync<int>(
@@ -76,5 +86,35 @@ namespace DAL.Repositories.Teacher
             }
         }
 
+        public async Task<ResultDto<TeacherDto?>> GetTeacherByPersonId(int personId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var findteacher = await connection.QuerySingleOrDefaultAsync<Teacherr>(
+                    "GetTeacherByPersonId",
+                    new { PersonId = personId },
+                    commandType: CommandType.StoredProcedure
+                    );
+                if(findteacher == null)
+                {
+                    return new ResultDto<TeacherDto?>
+                    {
+                        isSuccess = false,
+                        Message = "کاربر یافت نشد"
+                    };
+                }
+                return new ResultDto<TeacherDto?>
+                {
+                    Data = new TeacherDto
+                    {
+                        Id = findteacher.Id,
+                        PersonID = findteacher.PersonId,
+                        Resume = findteacher.Resume
+                    },
+                    isSuccess = true,
+                    Message = "کاربر یافت شد"
+                };
+            }
+        }
     }
 }

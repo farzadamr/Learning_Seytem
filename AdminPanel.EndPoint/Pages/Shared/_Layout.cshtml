@@ -22,7 +22,6 @@
   <!-- All PLUGINS CSS ============================================= -->
     <link rel="stylesheet" type="text/css" href="~/assets/css/assets.css">
     <link rel="stylesheet" type="text/css" href="~/assets/vendors/calendar/fullcalendar.css">
-  <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
 
   <!-- TYPOGRAPHY ============================================= -->
     <link rel="stylesheet" type="text/css" href="~/assets/css/typography.css">
@@ -334,44 +333,10 @@
     <script src="~/assets/vendors/counter/waypoints-min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="~/assets/vendors/chart/chart.min.js"></script>
-  <script src="~/js/person.js">
-  @RenderSection("Scripts",false);
-  <script> 
-    ClassicEditor
-     .create(document.querySelector('#Description'), {
-      toolbar: {
-      items: [
-          'undo', 'redo',
-          '|',
-          'heading',
-          '|',
-          'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-          '|',
-          'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-          '|',
-          'link', 'uploadImage', 'blockQuote', 'codeBlock',
-          '|',
-          'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
-      ],
-      shouldNotGroupWhenFull: false
-  },
-                 language: 'fa' 
-                 }) 
-                 .then(editor => { console.log(editor); }) 
-                 .catch(error => { console.error(error); });
-                  </script>
-  <script>
+  <script src="~/js/person.js"></script>
 
-  $('#checkbox').change(function(e){
-    if($('#upload').css('display') == 'block'){
-      $('#upload').css('display','none');
-    }
-    else{
-      $('#upload').css('display','block');
-    }
-  });
-    
-  </script>
+  @RenderSection("Scripts",false);
+  
 </body>
 
 </html>

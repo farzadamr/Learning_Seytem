@@ -14,5 +14,6 @@ namespace BLL.Interfaces
         Task<ResultDto<StudentDto?>> GetStudentByPersonId(int PersonID);
         Task<ResultDto<StudentDto?>> GetStudentById(int studentId);
         Task<ResultDto> EditStudentById(StudentDto studentModel);
+        Task<ResultDto> DeleteStudentById(int StudentID);
     }
 }

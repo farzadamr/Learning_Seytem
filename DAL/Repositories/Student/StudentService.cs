@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -72,6 +73,48 @@ namespace DAL.Repositories.Student
                     };
                 }
                 
+            }
+        }
+
+        public async Task<ResultDto> DeleteStudentById(int StudentID)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("DeleteStudent", connection))
+                {
+                    try
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("StudentID", StudentID);
+
+                        await connection.OpenAsync();
+
+                        int rowsAffected = await command.ExecuteNonQueryAsync();
+
+                        if (rowsAffected > 0)
+                        {
+                            return new ResultDto
+                            {
+                                isSuccess = true,
+                                Message = $"دانشجو با شناسه {StudentID} با موفقیت حذف شد"
+                            };
+                        }
+                        return new ResultDto
+                        {
+                            isSuccess = false,
+                            Message = "خطا در برقراری ارتباط با پایگاه داده"
+                        };
+                    }
+                    catch(Exception ex)
+                    {
+                        return new ResultDto
+                        {
+                            isSuccess = false,
+                            Message = $"خطایی در طول عملیات رخ داد {ex.Message}"
+                        };
+                    }
+                    
+                }
             }
         }
 

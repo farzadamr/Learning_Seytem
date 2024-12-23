@@ -97,36 +97,7 @@
 </main>
 <div class="ttr-overlay"></div>
 
-@section Scripts {
-    
-    <script src="~/js/CKE.js"></script>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#Description'), {
-            toolbar: {
-                items: [
-                    'undo', 'redo',
-                    '|',
-                    'heading',
-                    '|',
-                    'fontfamily', 'fontsize', 'fontColor', 'fontBackgroundColor',
-                    '|',
-                    'bold', 'italic', 'strikethrough', 'subscript', 'superscript', 'code',
-                    '|',
-                    'link', 'uploadImage', 'blockQuote', 'codeBlock',
-                    '|',
-                    'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
-                ],
-                shouldNotGroupWhenFull: false
-            },
-            language: 'fa'
-        })
-            .then(editor => { console.log(editor); })
-            .catch(error => { console.error(error); });
 
-    </script>
-
-    }
 
     
    

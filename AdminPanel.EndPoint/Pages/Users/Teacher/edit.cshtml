@@ -27,18 +27,17 @@
                                     <h5>مشخصات مدرس مورد نظر</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form asp-page-handler="ّFindTeacher" class="col-12 d-flex">
+                                    <form asp-page-handler="FindTeacher" class="col-12 d-flex">
                                         <label class="col-form-label cname">شماره مدرس: </label>
                                         <input class="form-control col-4" asp-for="Teacher.Id" type="number" placeholder="102">
                                         <div>
-                                            <button class="btn btn-success" type="submit"><i class="ti-search"></i> بازیابی دانشجو</button>
+                                            <button class="btn btn-success" type="submit"><i class="ti-search"></i> بازیابی مدرس</button>
                                         </div>
                                         @if (!string.IsNullOrWhiteSpace(Model.FullName))
                                         {
-                                            <label class="col-form-label cname">نام دانشجو: </label>
+                                            <label class="col-form-label cname">نام مدرس: </label>
                                             <input class="form-control col-3" type="text" value="@Model.FullName" disabled>
                                         }
-
                                     </form>
                                     @if (!string.IsNullOrWhiteSpace(Model.result.Message))
                                     {
@@ -48,11 +47,10 @@
                                         }
                                         else
                                         {
-
                                             <h6 id="text" style="color: rgba(245, 0, 0, 0.64); margin : 10px;"><i class="ti-alert"></i> @Model.result.Message</h6>
-
                                         }
                                     }
+                                    
                                 </div>
                             </div>
                             @if (!string.IsNullOrWhiteSpace(Model.FullName))
@@ -64,14 +62,15 @@
                                                 <div class="col-12">
                                                     <h3>1. ویرایش اطلاعات مدرس</h3>
                                                     <input type="hidden" asp-for="Teacher.Id" value="@Model.Teacher.Id"/>
+                                                    <input type="hidden" asp-for="Teacher.PersonID" value="@Model.Teacher.PersonID" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="form-group col-12">
                                                     <label class="col-form-label">ویرایش درباره مدرس</label>
                                                     <div>
-                                                        <textarea id="Description" class="form-control" rows="5">
-                                                        @Model.Teacher.Resume
+                                                        <textarea id="Description" class="form-control" rows="5" asp-for="Teacher.Resume">
+                                                        @Html.Raw(Model.Teacher.Resume)
                                                         </textarea>
                                                     </div>
                                                 </div>
@@ -94,3 +93,6 @@
     </div>
 </main>
 <div class="ttr-overlay"></div>
+@section Scripts {
+
+}

@@ -33,8 +33,14 @@ namespace AdminPanel.EndPoint.Pages.Users.Teacher
                 result = new ResultPageDto(false, "خطا در دریافت اطلاعات");
                 return Page();
             }
-            var editResult =
-
+            var editResult = await teacherService.EditTeacher(Teacher);
+            if (!editResult.isSuccess)
+            {
+                result = new ResultPageDto(false, editResult.Message);
+                return Page();
+            }
+            result = new ResultPageDto(true, editResult.Message);
+            return Page();
         }
         public async Task<IActionResult> OnPostFindTeacher()
         {

@@ -125,7 +125,7 @@ namespace DAL.Repositories.Teacher
                     {
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("Resume", teacher.Resume);
-
+                        command.Parameters.AddWithValue("Id", teacher.Id);
                         await connection.OpenAsync();
 
                         int rowsAffected = await command.ExecuteNonQueryAsync();

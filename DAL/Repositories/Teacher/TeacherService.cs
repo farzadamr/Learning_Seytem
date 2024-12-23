@@ -23,15 +23,6 @@ namespace DAL.Repositories.Teacher
         }
         public async Task<ResultDto<int?>> AddTeacher(TeacherDto teacher)
         {
-            var ExistingTeacher = await GetTeacherById(teacher.Id);
-            if (ExistingTeacher.isSuccess)
-            {
-                return new ResultDto<int?>
-                {
-                    isSuccess = false,
-                    Message = "مدرسی با این مشخصات در سیستم موجود است"
-                };
-            }
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
                 int TeacherID = await connection.ExecuteScalarAsync<int>(

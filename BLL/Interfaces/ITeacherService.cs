@@ -13,5 +13,7 @@ namespace BLL.Interfaces
         Task<ResultDto<int?>> AddTeacher(TeacherDto teacher);
         Task<ResultDto<TeacherDto?>> GetTeacherById(int teacherId);
         Task<ResultDto<TeacherDto?>> GetTeacherByPersonId(int personId);
+        Task<ResultDto> EditTeacher(TeacherDto teacher);
+
     }
 }

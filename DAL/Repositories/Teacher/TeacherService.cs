@@ -85,7 +85,6 @@ namespace DAL.Repositories.Teacher
                 };
             }
         }
-
         public async Task<ResultDto<TeacherDto?>> GetTeacherByPersonId(int personId)
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))
@@ -114,6 +113,46 @@ namespace DAL.Repositories.Teacher
                     isSuccess = true,
                     Message = "کاربر یافت شد"
                 };
+            }
+        }
+        public async Task<ResultDto> EditTeacher(TeacherDto teacher)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("UpdateTeacher", connection))
+                {
+                    try
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("Resume", teacher.Resume);
+
+                        await connection.OpenAsync();
+
+                        int rowsAffected = await command.ExecuteNonQueryAsync();
+                        if (rowsAffected > 0)
+                        {
+                            return new ResultDto
+                            {
+                                isSuccess = true,
+                                Message = $"مدرس با شناسه {teacher.Id} با موفقیت ویرایش شد"
+                            };
+                        }
+                        return new ResultDto
+                        {
+                            isSuccess = false,
+                            Message = "خطا در برقراری ارتباط با پایگاه داده"
+                        };
+                    }
+                    catch(Exception ex)
+                    {
+                        return new ResultDto
+                        {
+                            isSuccess = false,
+                            Message = $"خطایی در طول عملیات رخ داد {ex.Message}"
+                        };
+                    }
+                    
+                }
             }
         }
     }

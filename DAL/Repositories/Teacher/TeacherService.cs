@@ -155,5 +155,31 @@ namespace DAL.Repositories.Teacher
                 }
             }
         }
+        public async Task<ResultDto> DeleteTeacher(int teacherId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("DeleteTeacher", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("TeacherID", teacherId);
+
+                    await connection.OpenAsync();
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    if (rowsAffected > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = $"کاربر با شناسه {teacherId} با موفقیت حذف شد"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
+        }
     }
 }

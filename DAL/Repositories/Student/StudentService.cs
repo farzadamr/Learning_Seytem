@@ -80,7 +80,7 @@ namespace DAL.Repositories.Student
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using(SqlCommand command = new SqlCommand("DeleteStudent", connection))
+                using(SqlCommand command = new SqlCommand("DeleteStudentById", connection))
                 {
                     try
                     {

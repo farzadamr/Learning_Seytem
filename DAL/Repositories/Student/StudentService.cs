@@ -84,8 +84,8 @@ namespace DAL.Repositories.Student
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("Major", studentModel.Major);
-                    command.Parameters.AddWithValue("ActivityArea", studentModel.ActivityArea);
-                    command.Parameters.AddWithValue("LinkedIn", studentModel.LinkedId);
+                    command.Parameters.AddWithValue("ActivityArea", (object)studentModel.ActivityArea ?? DBNull.Value);
+                    command.Parameters.AddWithValue("LinkedIn", (object)studentModel.LinkedId ?? DBNull.Value);
                     command.Parameters.AddWithValue("StudentID", studentModel.Id);
 
                     await connection.OpenAsync();

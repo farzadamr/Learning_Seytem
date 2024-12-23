@@ -8,12 +8,12 @@ namespace AdminPanel.EndPoint.Pages.Users.Teacher
 {
     public class CreateModel : PageModel
     {
-        private readonly IStudentService studentService;
         private readonly IPersonService personService;
-        public CreateModel(IStudentService studentService, IPersonService personService)
+        private readonly ITeacherService teacherService;
+        public CreateModel(IPersonService personService,ITeacherService teacherService)
         {
-            this.studentService = studentService;
             this.personService = personService;
+            this.teacherService = teacherService;
         }
         public ResultPageDto result { get; set; }
         [BindProperty]
@@ -33,10 +33,17 @@ namespace AdminPanel.EndPoint.Pages.Users.Teacher
         {
             if(PersonId == null || string.IsNullOrWhiteSpace(teacherModel.Resume))
             {
-                //error
+                result = new ResultPageDto(false, "خطا در دریافت اطلاعات");
                 return Page();
             }
-            // add teacher
+            teacherModel.PersonID = PersonId;
+            var insertionResult = await teacherService.AddTeacher(teacherModel);
+            if (!insertionResult.isSuccess)
+            {
+                result = new ResultPageDto(false, insertionResult.Message);
+                return Page();
+            }
+            result = new ResultPageDto(true, insertionResult.Message);
             return Page();
         }
         public async Task<IActionResult> OnPostFindPerson()

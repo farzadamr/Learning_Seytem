@@ -2,6 +2,7 @@
 using BLL.Interfaces;
 using DAL.Repositories.Person;
 using DAL.Repositories.Student;
+using DAL.Repositories.Teacher;
 using DAL.Repositories.Users;
 
 namespace AdminPanel.EndPoint.Infrastructure
@@ -13,18 +14,23 @@ namespace AdminPanel.EndPoint.Infrastructure
 		IConfiguration configuration)
 		{
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            services.AddTransient<IUriComposer, UriComposer>();
+
 			services.AddTransient<IPersonService>(provider =>
 			{
 				return new PersonService(connectionString);
 			});
 			services.AddTransient<IStudentService>(provider =>
 			{
-				var personService = provider.GetService<IPersonService>() ?? throw new Exception("service not registered");
-				return new StudentService(connectionString, personService);
+				return new StudentService(connectionString);
 			});
+			services.AddTransient<ITeacherService>(provider =>
+			{
+				return new TeacherService(connectionString);
+			});
+			//file services
 			services.AddTransient<IFileUploadService, FileUploadService>();
-			return services;
+            services.AddTransient<IUriComposer, UriComposer>();
+            return services;
 		}
 	}
 }

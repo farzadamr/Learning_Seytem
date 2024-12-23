@@ -20,7 +20,7 @@ namespace AdminPanel.EndPoint.Pages.Users.Teacher
         public int PersonId { get; set; }
         public string FullName { get; set; }
         [BindProperty]
-        public StudentDto StudentModel { get; set; }
+        public TeacherDto teacherModel { get; set; }
         [BindProperty]
         public string EmailAddress { get; set; }
 
@@ -28,6 +28,16 @@ namespace AdminPanel.EndPoint.Pages.Users.Teacher
         {
             FullName = "";
             result = new ResultPageDto(false, " ");
+        }
+        public async Task<IActionResult> OnPostAddTeacher()
+        {
+            if(PersonId == null || string.IsNullOrWhiteSpace(teacherModel.Resume))
+            {
+                //error
+                return Page();
+            }
+            // add teacher
+            return Page();
         }
         public async Task<IActionResult> OnPostFindPerson()
         {

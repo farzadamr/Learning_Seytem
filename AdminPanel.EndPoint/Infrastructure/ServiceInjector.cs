@@ -4,6 +4,7 @@ using DAL.Repositories.Person;
 using DAL.Repositories.Student;
 using DAL.Repositories.Teacher;
 using DAL.Repositories.Users;
+using DAL.Repositories.Wallet;
 
 namespace AdminPanel.EndPoint.Infrastructure
 {
@@ -26,6 +27,10 @@ namespace AdminPanel.EndPoint.Infrastructure
 			services.AddTransient<ITeacherService>(provider =>
 			{
 				return new TeacherService(connectionString);
+			});
+			services.AddTransient<IWalletService>(provider =>
+			{
+				return new WalletService(connectionString);
 			});
 			//file services
 			services.AddTransient<IFileUploadService, FileUploadService>();

@@ -334,6 +334,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="~/assets/vendors/chart/chart.min.js"></script>
   <script src="~/js/person.js"></script>
+  <script src="~/js/site.js"></script>
 
   @RenderSection("Scripts",false);
     <script src="~/js/CKE.js"></script>
@@ -361,15 +362,6 @@
             .then(editor => { console.log(editor); })
             .catch(error => { console.error(error); });
 
-    </script>
-    <script>
-        $('#pay-gateway').on('click', function () {
-            swal.fire({
-                title: "هشدار",
-                text: "درگاه پرداخت در حال توسعه میباشد لطفا از گزینه های دیگر استفاده کنید",
-                icon: "warning"
-            });
-        });
     </script>
 </body>
 

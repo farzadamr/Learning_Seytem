@@ -1,0 +1,103 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Wallet.DeleteModel
+@{
+}
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>کیف پول</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title">
+                        <h4 id="delete-entity">حذف کیف پول</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <div class="search-box-container card">
+                                <div class="card-header">
+                                    <h5>مشخصات دانشجو مورد نظر</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <form asp-page-handler="FindStudent" class="col-6">
+                                            <label class="col-form-label cname">شماره دانشجو: </label>
+                                            <div class="d-flex">
+                                                <input asp-for="StudentId" class="form-control" type="number" placeholder="1006">
+                                                <button type="submit" class="btn btn-success"><i class="ti-search"></i> بازیابی دانشجو</button>
+                                            </div>
+                                        </form>
+                                        @if (!string.IsNullOrWhiteSpace(Model.FullName))
+                                        {
+                                            <div class="col-3">
+                                                <label class="col-form-label cname">نام دانشجو</label>
+                                                <input class="form-control" type="text" value="فرزاد امیری" disabled>
+                                            </div>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(Model.result.Message))
+                                        {
+                                            <div class="col-3">
+                                                @if (Model.result.isSuccess)
+                                                {
+                                                    <h6 id="text" style="color: rgba(45, 255, 0, 1); margin : 50px 10px;"><i class="fa fa-check-square"></i> @Model.result.Message</h6>
+                                                }
+                                                else
+                                                {
+
+                                                    <h6 id="text" style="color: rgba(245, 0, 0, 0.64); margin : 50px 10px;"><i class="ti-alert"></i> @Model.result.Message</h6>
+
+                                                }
+                                            </div>
+                                        }
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrWhiteSpace(Model.FullName) && Model.result.isSuccess)
+                            {
+                                <div class="search-box-container card">
+                                    <div class="card-body">
+                                        <form id="form-delete" asp-page-handler="DeleteWallet" class="edit-profile m-b30">
+                                            <input type="hidden" value="@Model.StudentId" asp-for="Wallet.StudentId" readonly/>
+                                            <div class="row mb-3">
+                                                <div class="form-group col-6">
+                                                    <label class="col-form-label">اعتبار فعلی کیف پول:(تومان)</label>
+                                                    <div>
+                                                        <input class="form-control col-4" value="@Model.Wallet.Credit" disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <h6 class="warn">
+                                                    <i class="ti-alert warm" id="warn"></i>
+                                                    توجه : با حذف شدن این کیف پول امکان بازگشت آن وجود ندارد، آیا از حذف این کیف پول اطمینان دارید؟
+                                                    <br>
+                                                    ضمنا توجه داشته باشید که با حذف این کیف پول، دانشجو مورد نظر دچار اختلال در خرید دوره خواهد شد.
+                                                </h6>
+                                            </div>
+                                            <button class="btn btn-danger" id="submit-btn" type="button">حذف کیف پول</button>
+
+
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>
+

@@ -27,37 +27,61 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row mb-3">
-                                        <div class="col-6">
+                                        <form asp-page-handler="FindStudent" class="col-6">
                                             <label class="col-form-label cname">شماره دانشجو: </label>
                                             <div class="d-flex">
-                                                <input class="form-control" type="number" placeholder="1006">
-                                                <button class="btn btn-success"><i class="ti-search"></i> بازیابی دانشجو</button>
+                                                <input asp-for="StudentId" class="form-control" type="number" placeholder="1006">
+                                                <button type="submit" class="btn btn-success"><i class="ti-search"></i> بازیابی دانشجو</button>
                                             </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="col-form-label cname">نام دانشجو</label>
-                                            <input class="form-control" type="text" value="فرزاد امیری" disabled>
-                                        </div>
+                                        </form>
+                                        @if (!string.IsNullOrWhiteSpace(Model.FullName))
+                                        {
+                                            <div class="col-3">
+                                                <label class="col-form-label cname">نام دانشجو</label>
+                                                <input class="form-control" type="text" value="فرزاد امیری" disabled>
+                                            </div>
+                                        }
+                                        @if (!string.IsNullOrWhiteSpace(Model.result.Message))
+                                        {
+                                            <div class="col-3">
+                                                @if (Model.result.isSuccess)
+                                                {
+                                                <h6 id="text" style="color: rgba(45, 255, 0, 1); margin : 50px 10px;"><i class="fa fa-check-square"></i> @Model.result.Message</h6>
+                                                }
+                                                else
+                                                {
+
+                                                <h6 id="text" style="color: rgba(245, 0, 0, 0.64); margin : 50px 10px;"><i class="ti-alert"></i> @Model.result.Message</h6>
+
+                                                }
+                                            </div>
+                                        }
+
                                     </div>
 
                                 </div>
                             </div>
-                            <div class="search-box-container card">
-                                <div class="card-body">
-                                    <form class="edit-profile m-b30">
-                                        <div class="row mb-3">
-                                            <div class="form-group col-6">
-                                                <label class="col-form-label">مبلغ شارژ کیف پول:(تومان)</label>
-                                                <div>
-                                                    <input class="form-control col-4" placeholder="100,000">
+                            @if (!string.IsNullOrWhiteSpace(Model.FullName))
+                            {
+                                <div class="search-box-container card">
+                                    <div class="card-body">
+                                        <form asp-page-handler="AddWallet" class="edit-profile m-b30">
+                                            <input type="hidden" value="@Model.StudentId" asp-for="Wallet.StudentId" readonly/>
+                                            <div class="row mb-3">
+                                                <div class="form-group col-6">
+                                                    <label class="col-form-label">مبلغ شارژ کیف پول:(تومان)</label>
+                                                    <div>
+                                                        <input asp-for="Wallet.Credit" class="form-control col-4" placeholder="100,000">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <button class="btn btn-warning" type="submit">درگاه پرداخت</button>
-                                        <button class="btn btn-warning" type="submit">پرداخت نقدی</button>
-                                    </form>
+                                            <button class="btn btn-warning" id="pay-gateway" type="button">درگاه پرداخت</button>
+                                            <button class="btn btn-warning" type="submit">پرداخت نقدی</button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            
 
                         </div>
                     </div>
@@ -68,3 +92,15 @@
     </div>
 </main>
 <div class="ttr-overlay"></div>
+
+@section Scripts {
+    <script>
+        $('#pay-gateway').on('click', function () {
+            swal.fire({
+                title: "هشدار",
+                text: "درگاه پرداخت در حال توسعه میباشد لطفا از گزینه های دیگر استفاده کنید",
+                icon: "warning"
+            });
+        });
+    </script>
+}

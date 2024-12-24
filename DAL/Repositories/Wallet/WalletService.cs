@@ -24,7 +24,7 @@ namespace DAL.Repositories.Wallet
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using(SqlCommand command = new SqlCommand("UpdateWaller", connection))
+                using(SqlCommand command = new SqlCommand("UpdateWallet", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("StudentID", StudentId);
@@ -47,6 +47,7 @@ namespace DAL.Repositories.Wallet
                         Message = "خطا در برقراری ارتباط با پایگاه داده"
                     };
                 }
+                
             }
         }
 

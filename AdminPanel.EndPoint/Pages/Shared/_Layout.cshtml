@@ -362,6 +362,15 @@
             .catch(error => { console.error(error); });
 
     </script>
+    <script>
+        $('#pay-gateway').on('click', function () {
+            swal.fire({
+                title: "هشدار",
+                text: "درگاه پرداخت در حال توسعه میباشد لطفا از گزینه های دیگر استفاده کنید",
+                icon: "warning"
+            });
+        });
+    </script>
 </body>
 
 </html>

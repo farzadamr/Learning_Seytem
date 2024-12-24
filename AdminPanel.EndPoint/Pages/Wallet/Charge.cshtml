@@ -1,8 +1,7 @@
 ﻿@page
-@model AdminPanel.EndPoint.Pages.Wallet.CreateModel
+@model AdminPanel.EndPoint.Pages.Wallet.ChargeModel
 @{
 }
-
 <main class="ttr-wrapper">
     <div class="container-fluid">
         <div class="db-breadcrumb">
@@ -16,7 +15,7 @@
             <div class="col-lg-12 m-b30">
                 <div class="widget-box">
                     <div class="wc-title">
-                        <h4>افزودن کیف پول جدید</h4>
+                        <h4 id="edit-entity">ویرایش کیف پول</h4>
                     </div>
                     <div class="widget-inner">
 
@@ -38,7 +37,7 @@
                                         {
                                             <div class="col-3">
                                                 <label class="col-form-label cname">نام دانشجو</label>
-                                                <input class="form-control" type="text" value="فرزاد امیری" disabled>
+                                                <input class="form-control" type="text" value="@Model.FullName" disabled>
                                             </div>
                                         }
                                         @if (!string.IsNullOrWhiteSpace(Model.result.Message))
@@ -46,12 +45,12 @@
                                             <div class="col-3">
                                                 @if (Model.result.isSuccess)
                                                 {
-                                                <h6 id="text" style="color: rgba(45, 255, 0, 1); margin : 50px 10px;"><i class="fa fa-check-square"></i> @Model.result.Message</h6>
+                                                    <h6 id="text" style="color: rgba(45, 255, 0, 1); margin : 50px 10px;"><i class="fa fa-check-square"></i> @Model.result.Message</h6>
                                                 }
                                                 else
                                                 {
 
-                                                <h6 id="text" style="color: rgba(245, 0, 0, 0.64); margin : 50px 10px;"><i class="ti-alert"></i> @Model.result.Message</h6>
+                                                    <h6 id="text" style="color: rgba(245, 0, 0, 0.64); margin : 50px 10px;"><i class="ti-alert"></i> @Model.result.Message</h6>
 
                                                 }
                                             </div>
@@ -65,18 +64,27 @@
                             {
                                 <div class="search-box-container card">
                                     <div class="card-body">
-                                        <form asp-page-handler="AddWallet" class="edit-profile m-b30">
-                                            <input type="hidden" value="@Model.StudentId" asp-for="Wallet.StudentId" readonly/>
+                                        <form asp-page-handler="ChargeWallet" class="edit-profile m-b30">
                                             <div class="row mb-3">
+                                                <input type="hidden" value="@Model.StudentId" asp-for="Wallet.StudentId" readonly/>
+                                                <div class="form-group col-6">
+                                                    <label class="col-form-label">اعتبار فعلی کیف پول:(تومان)</label>
+                                                    <div>
+                                                        <input class="form-control col-4" value="@Model.Wallet.Credit.ToString("n0")" disabled>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group col-6">
                                                     <label class="col-form-label">مبلغ شارژ کیف پول:(تومان)</label>
                                                     <div>
-                                                        <input asp-for="Wallet.Credit" class="form-control col-4" placeholder="100,000">
+                                                        <input asp-for="Wallet.Credit" class="form-control col-4" placeholder="1,000">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-warning" id="pay-gateway" type="button">درگاه پرداخت</button>
-                                            <button class="btn btn-warning" type="submit">پرداخت نقدی</button>
+                                            <div class="from-group col-4 add-course">
+                                                <button class="btn btn-warning" type="submit">درگاه پرداخت</button>
+                                                <button class="btn btn-warning" id="pay-gateway" type="submit">پرداخت نقدی</button>
+                                            </div>
+
                                         </form>
                                     </div>
                                 </div>
@@ -92,4 +100,3 @@
     </div>
 </main>
 <div class="ttr-overlay"></div>
-

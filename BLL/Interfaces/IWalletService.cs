@@ -10,7 +10,7 @@ namespace BLL.Interfaces
 {
     public interface IWalletService
     {
-        Task<ResultDto<int?>> CreateWalletAsync(int StudentId);
+        Task<ResultDto<int?>> CreateWalletAsync(WalletDto walletModel);
         Task<ResultDto<WalletDto?>> GetWalletAsync(int StudentId);
         Task<ResultDto> ChargeWallet(int StudentId, int ChargeCount); 
         Task<ResultDto> DeleteWalletAsync(int StudentId);

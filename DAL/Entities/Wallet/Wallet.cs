@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities.Wallet
 {
-    public class Wallet
+    public class wallet
     {
         public int Id { get; set; }
         public int Credit { get; set; }

@@ -1,0 +1,70 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Wallet.CreateModel
+@{
+}
+
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>کیف پول</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title">
+                        <h4>افزودن کیف پول جدید</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <div class="search-box-container card">
+                                <div class="card-header">
+                                    <h5>مشخصات دانشجو مورد نظر</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <label class="col-form-label cname">شماره دانشجو: </label>
+                                            <div class="d-flex">
+                                                <input class="form-control" type="number" placeholder="1006">
+                                                <button class="btn btn-success"><i class="ti-search"></i> بازیابی دانشجو</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="col-form-label cname">نام دانشجو</label>
+                                            <input class="form-control" type="text" value="فرزاد امیری" disabled>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="search-box-container card">
+                                <div class="card-body">
+                                    <form class="edit-profile m-b30">
+                                        <div class="row mb-3">
+                                            <div class="form-group col-6">
+                                                <label class="col-form-label">مبلغ شارژ کیف پول:(تومان)</label>
+                                                <div>
+                                                    <input class="form-control col-4" placeholder="100,000">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-warning" type="submit">درگاه پرداخت</button>
+                                        <button class="btn btn-warning" type="submit">پرداخت نقدی</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>

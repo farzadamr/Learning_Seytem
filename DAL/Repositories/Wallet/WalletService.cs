@@ -20,15 +20,47 @@ namespace DAL.Repositories.Wallet
         {
             this._connectionString = _connectionString;
         }
-        public Task<ResultDto> ChargeWallet(int StudentId, int ChargeCount)
+        public async Task<ResultDto> ChargeWallet(int StudentId, int ChargeCount)
         {
-            throw new NotImplementedException();
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("UpdateWaller", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("StudentID", StudentId);
+                    command.Parameters.AddWithValue("Credit", ChargeCount);
+                    command.Parameters.AddWithValue("ChargeTime", DateTime.Now);
+
+                    await connection.OpenAsync();
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+
+                    if (rowsAffected > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = "شارژ کیف پول با موفقیت انجام شد"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
         }
 
         public async Task<ResultDto<int?>> CreateWalletAsync(WalletDto walletModel)
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
+                var existingWallet = await GetWalletAsync(walletModel.StudentId);
+                if (existingWallet.isSuccess)
+                    return new ResultDto<int?>
+                    {
+                        isSuccess = false,
+                        Message = "کیف پول برای این کاربر موجود است. از گزینه شارژ استفاده کنید"
+                    };
                 try
                 {
                     var walletId = await connection.ExecuteScalarAsync<int>(
@@ -61,9 +93,31 @@ namespace DAL.Repositories.Wallet
             }
         }
 
-        public Task<ResultDto> DeleteWalletAsync(int StudentId)
+        public async Task<ResultDto> DeleteWalletAsync(int StudentId)
         {
-            throw new NotImplementedException();
+            using(SqlConnection  connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("DeleteWallet",connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("StudentID", StudentId);
+
+                    await connection.OpenAsync();
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    if (rowsAffected > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = "کیف پول با موفقیت حذف شد"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "حطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
         }
 
         public async Task<ResultDto<WalletDto?>> GetWalletAsync(int StudentId)

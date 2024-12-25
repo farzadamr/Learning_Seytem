@@ -1,0 +1,131 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Category.IndexModel
+@{
+
+}
+
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>مدیریت دسته بندی</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title">
+                        <h4 id="edit-entity">لیست دسته بندی</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <div class="search-box-container card">
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>شناسه</th>
+                                                <th>نام دسته بندی</th>
+                                                <th>نام پدر</th>
+                                                <th>عملیات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var category in Model.Categories)
+                                            {
+                                                <tr>
+                                                    <td>@category.Id</td>
+                                                    <td>@category.Type</td>
+                                                    <td>ندارد</td>
+                                                    <td>
+                                                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-id="@category.Id" data-type="@category.Type">ویرایش</button>
+                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="@category.Id">حذف</button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">ویرایش دسته‌بندی</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="EditCategory">
+                    <div class="form-group">
+                        <label for="editCategoryId">شناسه</label>
+                        <input type="number" class="form-control" id="editCategoryId" name="editCategoryId" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="editCategoryType">Type</label>
+                        <input type="text" class="form-control" id="editCategoryType" name="editCategoryType" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">حذف دسته‌بندی</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                آیا از حذف این دسته‌بندی اطمینان دارید؟
+                <form asp-page-handler="DeleteCategory">
+                    <input type="hidden" id="deleteCategoryId" name="deleteCategoryId" readonly/>
+                    <button type="submit" class="btn btn-danger">بله</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#editModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var type = button.data('type');
+            var modal = $(this);
+            modal.find('#editCategoryId').val(id);
+            modal.find('#editCategoryType').val(type);
+        });
+
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var modal = $(this);
+            modal.find('#deleteCategoryId').val(id);
+        });
+    </script>
+}

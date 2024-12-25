@@ -97,7 +97,7 @@ namespace DAL.Repositories.Category
                 }
             }
         }
-        public async Task<ResultDto<List<CategoryDto>?>> GetCategoryListAsync()
+        public async Task<ResultDto<List<CategoryDto>?>> GetParentCategoryListAsync()
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {

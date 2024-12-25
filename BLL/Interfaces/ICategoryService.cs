@@ -14,6 +14,6 @@ namespace BLL.Interfaces
         Task<ResultDto<CategoryDto?>> GetCategoryAsync(int categoryId);
         Task<ResultDto> EditCategoryAsync(CategoryDto category);
         Task<ResultDto> DeleteCategoryAsync(int categoryId);
-        Task<ResultDto<List<CategoryDto>?>> GetCategoryListAsync();
+        Task<ResultDto<List<CategoryDto>?>> GetParentCategoryListAsync();
     }
 }

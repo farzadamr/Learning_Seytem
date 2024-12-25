@@ -1,0 +1,220 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Users.IndexModel
+@{
+}
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>مدیریت کاربران</li>
+                <li>دریافت لیست کاربران</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title d-flex">
+                        <h4>لیست کاربران</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <div class="search-box-container card">
+                                <div class="card-header">
+                                    <h5>فیلتر های لیست</h5>
+                                </div>
+                                <form class="card-body col-12" method="post">
+                                    <div class="d-flex">
+                                        <div class="form-group col-4">
+                                            <label class="col-form-label cname">کاربران:</label>
+                                            <select class="form-control" name="typeList" id="select-users">
+                                                <option value="1">اشخاص</option>
+                                                <option value="2">دانشجویان</option>
+                                                <option value="3">مدرسان</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <label class="col-form-label cname">جستجو</label>
+                                            <input class="form-control" id="searchKey" name="SearchKey" type="email" placeholder="جستجو بر اساس پست الکترونیک">
+                                        </div>
+                                        <div class="form-group col-4">
+                                            <p id="warn"><i class="ti-alert"></i> در صورت تمایل نداشتن به جستجو مقدار فیلد آن را خالی بگذارید و دریافت لیست را کلیک کنید</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success add-course" id="search-users-list" type="submit"><i class="ti-search"></i> دریافت لیست</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="search-box-container card lists" id="list-1" style="display: none;">
+                                <div class="card-body">
+                                    <div class="container mt-5">
+                                        <h5>لیست اشخاص</h5>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>شماره</th>
+                                                    <th>تصویر</th>
+                                                    <th>نام</th>
+                                                    <th>نام خانوادگی</th>
+                                                    <th>شماره تلفن</th>
+                                                    <th>ایمیل</th>
+                                                    <th>کلمه عبور</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>10065</td>
+                                                    <td><img class="pictures-list" src="../assets/images/testimonials/pic2.jpg"></td>
+                                                    <td>علی</td>
+                                                    <td>محمدی</td>
+                                                    <td>09159336262</td>
+                                                    <td>ali.mohammadi@example.com</td>
+                                                    <td>FDxdffds522</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>20065</td>
+                                                    <td><img class="pictures-list" src="../assets/images/testimonials/pic1.jpg"></td>
+                                                    <td>فرزاد</td>
+                                                    <td>امیری</td>
+                                                    <td>09961902242</td>
+                                                    <td>farzad.amiri@example.com</td>
+                                                    <td>FDxdffds522</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search-box-container card lists" id="list-2" style="display: none;">
+                                <div class="card-body">
+                                    <div class="container mt-5">
+                                        <h5>لیست دانشجویان</h5>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>شماره دانشجویی</th>
+                                                    <th>نام</th>
+                                                    <th>نام خانوادگی</th>
+                                                    <th>پروفایل لینکدین</th>
+                                                    <th>مقطع تحصیلی</th>
+                                                    <th>حوزه فعالیت</th>
+                                                    <th>محدودیت</th>
+                                                    <th>مشاهده اطلاعات شخصی</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>10065</td>
+                                                    <td>علی</td>
+                                                    <td>محمدی</td>
+                                                    <td>ALIMOHAMMADI</td>
+                                                    <td>لیسانس</td>
+                                                    <td>برنامه نویس</td>
+                                                    <td>ندارد</td>
+                                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="ti ti-user"></i> مشاهده اطلاعات</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>20065</td>
+                                                    <td>فرزاد</td>
+                                                    <td>امیری</td>
+                                                    <td></td>
+                                                    <td>کارشناسی</td>
+                                                    <td>برنامه نویس</td>
+                                                    <td>ندارد</td>
+                                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="ti ti-user"></i> مشاهده اطلاعات</a></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search-box-container card lists" id="list-3" style="display: none;">
+                                <div class="card-body">
+                                    <div class="container mt-5">
+                                        <h5>لیست مدرسان</h5>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>شماره</th>
+                                                    <th>تصویر</th>
+                                                    <th>نام</th>
+                                                    <th>نام خانوادگی</th>
+                                                    <th>شماره تماس</th>
+                                                    <th>مشاهده</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>10065</td>
+                                                    <td><img class="pictures-list" src="../assets/images/testimonials/pic2.jpg"></td>
+                                                    <td>علی</td>
+                                                    <td>محمدی</td>
+                                                    <td>09336548585</td>
+                                                    <td><a class="btn btn-primary"><i class="ti ti-teacher"></i>مشاهده رزومه</a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>20065</td>
+                                                    <td><img class="pictures-list" src="../assets/images/testimonials/pic1.jpg"></td>
+                                                    <td>فرزاد</td>
+                                                    <td>امیری</td>
+                                                    <td>09336548585</td>
+                                                    <td><a class="btn btn-primary"><i class="ti ti-teacher"></i>مشاهده رزومه</a></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">اطلاعات شخصی</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="/assets/images/testimonials/pic3.jpg" class="profile-image" id="image">
+                            <label class="col-form-label profile-image">شماره شخص : 10006</label>
+                            <div class="modal-group">
+                                <div class="form-group col-6">
+                                    <p class="align"> نام و نام خانوادگی: </p>
+                                    <label class="col-form-label">فرزاد امیری</label>
+                                </div>
+                                <div class="form-group col-6">
+                                    <p class="align">ایمیل: </p>
+                                    <label class="col-form-label">amirifarzad2002@gmail.com</label>
+                                </div>
+                                <div class="form-group col-6">
+                                    <p class="align">شماره تلفن:</p>
+                                    <label class="col-form-label">09159961900</label>
+                                </div>
+                                <div class="form-group col-6">
+                                    <p class="align">کلمه عبور:</p>
+                                    <label class="col-form-label">ّFDkjhkFD52</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>

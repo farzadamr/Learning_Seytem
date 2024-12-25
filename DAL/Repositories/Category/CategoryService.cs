@@ -94,7 +94,6 @@ namespace DAL.Repositories.Category
                 }
             }
         }
-
         public async Task<ResultDto<CategoryDto?>> GetCategoryAsync(int categoryId)
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))
@@ -145,6 +144,20 @@ namespace DAL.Repositories.Category
                 return new ResultDto<List<CategoryDto>?>
                 {
                     Data = categories,
+                    isSuccess = true
+                };
+            }
+        }
+        public async Task<ResultDto<List<ParentChildDto>?>> GetChildCategoryListAsync()
+        {
+            using(SqlConnection connection =  new SqlConnection(_connectionString))
+            {
+                var categoriesEnum = await connection.QueryAsync<ParentChildDto>("GetChildCategoryList", commandType: CommandType.StoredProcedure);
+                var childCategories = categoriesEnum.AsList();
+
+                return new ResultDto<List<ParentChildDto>?>
+                {
+                    Data = childCategories,
                     isSuccess = true
                 };
             }

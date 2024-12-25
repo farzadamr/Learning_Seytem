@@ -25,6 +25,11 @@ namespace AdminPanel.EndPoint.Pages.Category
             {
                 Categories = findcategoryResult.Data;
             }
+            var findChildCategory = await _categoryService.GetChildCategoryListAsync();
+            if (findChildCategory.isSuccess)
+            {
+                ChildCategories = findChildCategory.Data;
+            }
         }
 
         public async Task<IActionResult> OnPostEditCategoryAsync(int editCategoryId, string editCategoryType)

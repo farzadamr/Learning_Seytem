@@ -41,8 +41,8 @@ namespace DAL.Repositories.Category
                     };
                 return new ResultDto
                 {
-                    isSuccess = false,
-                    Message = $"دسته بندی جدید با شناسه {category} ثبت شد"
+                    isSuccess = true,
+                    Message = $"دسته بندی جدید با شناسه {categoryId} ثبت شد"
                 };
             }
         }

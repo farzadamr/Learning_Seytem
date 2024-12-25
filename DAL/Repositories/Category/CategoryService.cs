@@ -86,18 +86,10 @@ namespace DAL.Repositories.Category
 
                     await connection.OpenAsync();
                     int rowsAffected = await command.ExecuteNonQueryAsync();
-                    if(rowsAffected > 0)
-                    {
-                        return new ResultDto
-                        {
-                            isSuccess = true,
-                            Message = "ویرایش اطلاعات انجام شد"
-                        };
-                    }
                     return new ResultDto
                     {
-                        isSuccess = false,
-                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                        isSuccess = true,
+                        Message = "ویرایش اطلاعات انجام شد"
                     };
                 }
             }

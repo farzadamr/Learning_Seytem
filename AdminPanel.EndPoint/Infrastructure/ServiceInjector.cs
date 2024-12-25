@@ -1,5 +1,6 @@
 ﻿using BLL.ExternalApi;
 using BLL.Interfaces;
+using DAL.Repositories.Category;
 using DAL.Repositories.Person;
 using DAL.Repositories.Student;
 using DAL.Repositories.Teacher;
@@ -31,6 +32,10 @@ namespace AdminPanel.EndPoint.Infrastructure
 			services.AddTransient<IWalletService>(provider =>
 			{
 				return new WalletService(connectionString);
+			});
+			services.AddTransient<ICategoryService>(provider =>
+			{
+				return new CategoryService(connectionString);
 			});
 			//file services
 			services.AddTransient<IFileUploadService, FileUploadService>();

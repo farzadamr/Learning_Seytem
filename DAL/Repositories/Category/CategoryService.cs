@@ -47,14 +47,60 @@ namespace DAL.Repositories.Category
             }
         }
 
-        public Task<ResultDto> DeleteCategoryAsync(int categoryId)
+        public async Task<ResultDto> DeleteCategoryAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("DeleteCategory", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("Id", categoryId);
+
+                    await connection.OpenAsync();
+
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    if (rowsAffected > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = "دسته بندی با موفقیت حذف شد"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
         }
 
-        public Task<ResultDto> EditCategoryAsync(CategoryDto category)
+        public async Task<ResultDto> EditCategoryAsync(CategoryDto category)
         {
-            throw new NotImplementedException();
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("UpdateCategory",connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("Id", category.Id);
+                    command.Parameters.AddWithValue("Type", category.Type);
+
+                    await connection.OpenAsync();
+                    int rowsAffected = await command.ExecuteNonQueryAsync();
+                    if(rowsAffected > 0)
+                    {
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = "ویرایش اطلاعات انجام شد"
+                        };
+                    }
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
         }
 
         public async Task<ResultDto<CategoryDto?>> GetCategoryAsync(int categoryId)
@@ -111,6 +157,5 @@ namespace DAL.Repositories.Category
                 };
             }
         }
-
     }
 }

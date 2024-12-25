@@ -51,12 +51,12 @@ namespace DAL.Repositories.SearchAndGet
             };
         }
 
-        public Task<ResultDto<StudentListDto?>> GetStudentByEmailSearch(string SearchKey)
+        Task<ResultDto<List<StudentListDto>?>> ISearchService.GetStudentByEmailSearch(string SearchKey)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ResultDto<TeacherListDto?>> GetTeacherByEmailSearch(string SearchKey)
+        Task<ResultDto<List<TeacherListDto>?>> ISearchService.GetTeacherByEmailSearch(string SearchKey)
         {
             throw new NotImplementedException();
         }

@@ -11,7 +11,7 @@ namespace BLL.Interfaces
     public interface ISearchService
     {
         Task<ResultDto<List<PersonDto>?>> GetPersonByEmailSearch(string SearchKey);
-        Task<ResultDto<StudentListDto?>> GetStudentByEmailSearch(string SearchKey);
-        Task<ResultDto<TeacherListDto?>> GetTeacherByEmailSearch(string SearchKey);
+        Task<ResultDto<List<StudentListDto>?>> GetStudentByEmailSearch(string SearchKey);
+        Task<ResultDto<List<TeacherListDto>?>> GetTeacherByEmailSearch(string SearchKey);
     }
 }

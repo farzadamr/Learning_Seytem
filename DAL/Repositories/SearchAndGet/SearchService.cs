@@ -37,7 +37,7 @@ namespace DAL.Repositories.SearchAndGet
                 {
                     personsEnum = await connection2.QueryAsync<PersonDto>(
                             "SearchPersonList",
-                            new { SearchKey = SearchKey },
+                            new { SeachKey = SearchKey },
                             commandType: CommandType.StoredProcedure);
                 }
             }

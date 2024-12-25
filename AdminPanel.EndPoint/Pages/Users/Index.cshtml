@@ -37,7 +37,7 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <label class="col-form-label cname">جستجو</label>
-                                            <input class="form-control" id="searchKey" name="SearchKey" type="email" placeholder="جستجو بر اساس پست الکترونیک">
+                                            <input class="form-control" id="searchKey" name="SearchKey" placeholder="جستجو بر اساس پست الکترونیک">
                                         </div>
                                         <div class="form-group col-4">
                                             <p id="warn"><i class="ti-alert"></i> در صورت تمایل نداشتن به جستجو مقدار فیلد آن را خالی بگذارید و دریافت لیست را کلیک کنید</p>
@@ -48,129 +48,145 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="search-box-container card lists" id="list-1" style="display: none;">
-                                <div class="card-body">
-                                    <div class="container mt-5">
-                                        <h5>لیست اشخاص</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>شماره</th>
-                                                    <th>تصویر</th>
-                                                    <th>نام</th>
-                                                    <th>نام خانوادگی</th>
-                                                    <th>شماره تلفن</th>
-                                                    <th>ایمیل</th>
-                                                    <th>کلمه عبور</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>10065</td>
-                                                    <td><img class="pictures-list" src="../assets/images/testimonials/pic2.jpg"></td>
-                                                    <td>علی</td>
-                                                    <td>محمدی</td>
-                                                    <td>09159336262</td>
-                                                    <td>ali.mohammadi@example.com</td>
-                                                    <td>FDxdffds522</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>20065</td>
-                                                    <td><img class="pictures-list" src="../assets/images/testimonials/pic1.jpg"></td>
-                                                    <td>فرزاد</td>
-                                                    <td>امیری</td>
-                                                    <td>09961902242</td>
-                                                    <td>farzad.amiri@example.com</td>
-                                                    <td>FDxdffds522</td>
-                                                </tr>
+                            @if (!string.IsNullOrWhiteSpace(Model.result.Message))
+                            {
+                                if (Model.result.isSuccess)
+                                {
+                                    <h6 id="text" style="color: rgba(45, 255, 0, 1); margin : 10px;"><i class="fa fa-check-square"></i> @Model.result.Message</h6>
+                                }
+                                else
+                                {
 
-                                            </tbody>
-                                        </table>
+                                    <h6 id="text" style="color: rgba(245, 0, 0, 0.64); margin : 10px;"><i class="ti-alert"></i> @Model.result.Message</h6>
+
+                                }
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.result.Message))
+                            {
+                                @if(Model.personsList != null)
+                                {
+                                   <div class="search-box-container card lists" id="list-1">
+                                    <div class="card-body">
+                                        <div class="container mt-5">
+                                            <h5>لیست اشخاص</h5>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>شماره</th>
+                                                        <th>تصویر</th>
+                                                        <th>نام</th>
+                                                        <th>نام خانوادگی</th>
+                                                        <th>شماره تلفن</th>
+                                                        <th>ایمیل</th>
+                                                        <th>کلمه عبور</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var person in Model.personsList)
+                                                    {
+                                                        <tr>
+                                                            <td>@person.Id</td>
+                                                            <td><img class="pictures-list" src="@person.AvatarPath"></td>
+                                                            <td>@person.FirstName</td>
+                                                            <td>@person.LastName</td>
+                                                            <td>@person.PhoneNumber</td>
+                                                            <td>@person.Email</td>
+                                                            <td>@person.Password</td>
+                                                        </tr>
+                                                    }
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> 
+                                }
+                                @if(Model.studentsList != null)
+                                {
+                                    <div class="search-box-container card lists" id="list-2">
+                                    <div class="card-body">
+                                        <div class="container mt-5">
+                                            <h5>لیست دانشجویان</h5>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>شماره دانشجویی</th>
+                                                        <th>نام</th>
+                                                        <th>نام خانوادگی</th>
+                                                        <th>پروفایل لینکدین</th>
+                                                        <th>مقطع تحصیلی</th>
+                                                        <th>حوزه فعالیت</th>
+                                                        <th>محدودیت</th>
+                                                        <th>مشاهده اطلاعات شخصی</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var student in Model.studentsList)
+                                                    {
+                                                        <tr>
+                                                            <td>@student.Id</td>
+                                                            <td>@student.Firstname</td>
+                                                            <td>@student.Lastname</td>
+                                                            <td>@student.LinkedId</td>
+                                                            <td>@student.Major</td>
+                                                            <td>@student.ActivityArea</td>
+                                                            @if (student.Lockout)
+                                                            {
+                                                                <td>دارد</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>ندارد</td>
+                                                            }
+                                                            <td><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="ti ti-user"></i> مشاهده اطلاعات</a></td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="search-box-container card lists" id="list-2" style="display: none;">
-                                <div class="card-body">
-                                    <div class="container mt-5">
-                                        <h5>لیست دانشجویان</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>شماره دانشجویی</th>
-                                                    <th>نام</th>
-                                                    <th>نام خانوادگی</th>
-                                                    <th>پروفایل لینکدین</th>
-                                                    <th>مقطع تحصیلی</th>
-                                                    <th>حوزه فعالیت</th>
-                                                    <th>محدودیت</th>
-                                                    <th>مشاهده اطلاعات شخصی</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>10065</td>
-                                                    <td>علی</td>
-                                                    <td>محمدی</td>
-                                                    <td>ALIMOHAMMADI</td>
-                                                    <td>لیسانس</td>
-                                                    <td>برنامه نویس</td>
-                                                    <td>ندارد</td>
-                                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="ti ti-user"></i> مشاهده اطلاعات</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>20065</td>
-                                                    <td>فرزاد</td>
-                                                    <td>امیری</td>
-                                                    <td></td>
-                                                    <td>کارشناسی</td>
-                                                    <td>برنامه نویس</td>
-                                                    <td>ندارد</td>
-                                                    <td><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="ti ti-user"></i> مشاهده اطلاعات</a></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
+                                }
+                                @if(Model.teachersList != null)
+                                {
+                                   <div class="search-box-container card lists" id="list-3">
+                                    <div class="card-body">
+                                        <div class="container mt-5">
+                                            <h5>لیست مدرسان</h5>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>شماره</th>
+                                                        <th>تصویر</th>
+                                                        <th>نام</th>
+                                                        <th>نام خانوادگی</th>
+                                                        <th>شماره تماس</th>
+                                                        <th>مشاهده</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var teacher in Model.teachersList)
+                                                    {
+                                                        <tr>
+                                                            <td>@teacher.Id</td>
+                                                            <td><img class="pictures-list" src="@teacher.AvatarPath"></td>
+                                                            <td>@teacher.Firstname</td>
+                                                            <td>@teacher.Lastname</td>
+                                                            <td>@teacher.PhoneNumber</td>
+                                                            <td><a class="btn btn-primary"><i class="ti ti-teacher"></i>مشاهده رزومه</a></td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="search-box-container card lists" id="list-3" style="display: none;">
-                                <div class="card-body">
-                                    <div class="container mt-5">
-                                        <h5>لیست مدرسان</h5>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>شماره</th>
-                                                    <th>تصویر</th>
-                                                    <th>نام</th>
-                                                    <th>نام خانوادگی</th>
-                                                    <th>شماره تماس</th>
-                                                    <th>مشاهده</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>10065</td>
-                                                    <td><img class="pictures-list" src="../assets/images/testimonials/pic2.jpg"></td>
-                                                    <td>علی</td>
-                                                    <td>محمدی</td>
-                                                    <td>09336548585</td>
-                                                    <td><a class="btn btn-primary"><i class="ti ti-teacher"></i>مشاهده رزومه</a></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>20065</td>
-                                                    <td><img class="pictures-list" src="../assets/images/testimonials/pic1.jpg"></td>
-                                                    <td>فرزاد</td>
-                                                    <td>امیری</td>
-                                                    <td>09336548585</td>
-                                                    <td><a class="btn btn-primary"><i class="ti ti-teacher"></i>مشاهده رزومه</a></td>
-                                                </tr>
+                                </div> 
+                                }
+                                
+                            }
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

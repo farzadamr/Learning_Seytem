@@ -209,18 +209,3 @@ Theme Version:	1.0.0
 })(jQuery);
 
 
-$('#search-users-list').click(function(){
-	$('.lists').css("display",'none');
-	//ajax request
-	var searchKey = $('#select-users').val();
-	switch(searchKey){
-		case "1" : 	$('#list-1').css("display","block");
-		 break;
-		case "2" : $('#list-2').css("display","block");
-		 break;
-		case "3" : $('#list-3').css("display","block");
-		 break;
-	}
-
-
-})

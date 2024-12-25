@@ -60,7 +60,7 @@
 
                                 </div>
                             </div>
-                            @if (!string.IsNullOrWhiteSpace(Model.FullName))
+                            @if (!string.IsNullOrWhiteSpace(Model.FullName) && Model.result.isSuccess)
                             {
                                 <div class="search-box-container card">
                                     <div class="card-body">

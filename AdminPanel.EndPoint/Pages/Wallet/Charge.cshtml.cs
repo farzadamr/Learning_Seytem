@@ -69,6 +69,10 @@ namespace AdminPanel.EndPoint.Pages.Wallet
                 {
                     FullName = findfullname.Data.FirstName + " " + findfullname.Data.LastName;
                     var credit = await walletService.GetWalletAsync(StudentId);
+                    if (!credit.isSuccess)
+                    {
+                        result = new ResultPageDto(false, credit.Message); return Page();
+                    }
                     Wallet.Credit = credit.Data.Credit;
                     result = new ResultPageDto(true, findfullname.Message);
                     return Page();

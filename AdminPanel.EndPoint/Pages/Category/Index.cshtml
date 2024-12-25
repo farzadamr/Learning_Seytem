@@ -46,6 +46,18 @@
                                                     </td>
                                                 </tr>
                                             }
+                                            @foreach(var childCategory in Model.ChildCategories)
+                                            {
+                                                <tr>
+                                                    <td>@childCategory.Id</td>
+                                                    <td>@childCategory.ChildType</td>
+                                                    <td>@childCategory.ParentType</td>
+                                                    <td>
+                                                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal" data-id="@childCategory.Id" data-type="@childCategory.ChildType">ویرایش</button>
+                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" data-id="@childCategory.Id">حذف</button>
+                                                    </td>
+                                                </tr>
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

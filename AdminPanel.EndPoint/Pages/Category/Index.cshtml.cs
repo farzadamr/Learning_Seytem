@@ -10,7 +10,7 @@ namespace AdminPanel.EndPoint.Pages.Category
     public class IndexModel : PageModel
     {
         public List<CategoryDto> Categories { get; set; }
-        public List<CategoryDto> ChildCategories { get; set; }
+        public List<ParentChildDto> ChildCategories { get; set; }
 
         private readonly ICategoryService _categoryService;
         public IndexModel(ICategoryService categoryService)

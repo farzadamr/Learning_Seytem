@@ -8,6 +8,7 @@ namespace BLL.Dtos.Category
 {
     public class ParentChildDto
     {
+        public int Id { get; set; }
         public string ParentType { get; set; }
         public string ChildType { get; set; }
     }

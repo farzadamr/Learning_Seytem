@@ -21,6 +21,8 @@ namespace BLL.Dtos.Course
         public int Time { get; set; }
         public int Rate { get; set; }
         public string Status { get; set; }
+        public int Price { get; set; }
+
 
     }
 }

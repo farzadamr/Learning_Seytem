@@ -1,0 +1,126 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Course.ListModel
+@{
+}
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>مدیریت دوره ها</li>
+                <li> دوره</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title">
+                        <h4 id="edit-entity">لیست دوره ها</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <div class="search-box-container card">
+                                <div class="card-body">
+                                    <div class="container mt-5">
+                                        <h2 class="mb-4">لیست دوره‌ها</h2>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>عنوان</th>
+                                                    <th>نام مدرس</th>
+                                                    <th>دسته‌بندی</th>
+                                                    <th>ظرفیت</th>
+                                                    <th>قیمت</th>
+                                                    <th>اطلاعات بیشتر</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- نمونه تکرار رکوردها -->
+                                                @foreach (var course in Model.Courses)
+                                                {
+                                                    <tr>
+                                                        <td>@course.Title</td>
+                                                        <td>@course.TeacherName</td>
+                                                        <td>@course.CategoryType</td>
+                                                        <td>@course.Capacity</td>
+                                                        <td>@course.Price</td>
+                                                        <td>
+
+                                                            <form method="post">
+                                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#courseModal@course.Id">
+                                                                    نمایش اطلاعات بیشتر
+                                                                </button>
+                                                                <input type="hidden" value="@course.Id" name="courseId" readonly/>
+                                                                <button type="submit" class="btn btn-danger">
+                                                                    حذف دوره
+                                                                </button>
+                                                            </form>
+                                                           <!-- مودال نمایش اطلاعات بیشتر -->
+                                                            <div class="modal fade" id="courseModal@course.Id" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel@course.Id" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="courseModalLabel@course.Id">@course.Title - اطلاعات بیشتر</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <p><strong>توضیحات: </strong>@course.Description</p>
+                                                                            <p><strong>تاریخ شروع دوره: </strong>@course.CreationDate</p>
+                                                                            <p><strong>تاریخ به‌روزرسانی: </strong>@course.UpdateTime</p>
+                                                                            <p><a href="@course.ThumbnailPath">مشاهده تصویر دوره</a></p><img src="@course.ThumbnailPath" />
+                                                                            <p><strong>مشاهده ویدئوی نمایشی: </strong>@course.DemoVideoPath</p>
+                                                                            <p><strong>زمان: </strong>@course.Time</p>
+                                                                            <p><strong>رتبه: </strong>@course.Rate</p>
+                                                                            <p><strong>وضعیت: </strong>@course.Status</p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>
+
+@section Scripts {
+    @if (Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+        <script>
+            swal.fire({
+                title: "عملیات موفق",
+                text: "@Html.Raw(Model.result.Message)",
+                icon: "success"
+            });
+        </script>
+    }
+    else if (!Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+        <script>
+            swal.fire({
+                title: "عملیات ناموفق",
+                text: "@Html.Raw(Model.result.Message)",
+                icon: "error"
+            });
+        </script>
+    }
+}

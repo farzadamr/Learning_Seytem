@@ -53,7 +53,7 @@ namespace DAL.Repositories.Course
                     return new ResultDto
                     {
                         isSuccess = true,
-                        Message = $"دوره با شناسه {courseId} با موفقیت ثبت شد"
+                        Message = $"دوره با شناسه {string.Join(" ",courseId)} با موفقیت ثبت شد"
                     };
                 }
             }

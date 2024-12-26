@@ -16,7 +16,7 @@ namespace AdminPanel.EndPoint.Pages.Course
             this.categoryService = categoryService;
         }
         [BindProperty]
-        public CourseDto AddCourseModel { get; set; }
+        public AddCourseDto AddCourseModel { get; set; }
 
         public SelectList Teachers { get; set; }
         public SelectList Categories { get; set; }

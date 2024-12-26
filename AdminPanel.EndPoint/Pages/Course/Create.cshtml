@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="search-box-container card">
                                 <div class="card-body">
-                                    <form class="edit-profile m-b30">
+                                    <form asp-antiforgery="true" enctype="multipart/form-data" method="post" class="edit-profile m-b30">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="ml-auto">
@@ -54,10 +54,29 @@
                                                 </div>
                                             </div>
                                             <div class="form-group col-6">
+                                                <label class="col-form-label">تایم دوره به دقیقه</label>
+                                                <div>
+                                                    <input class="form-control" type="number" placeholder="1320" asp-for="AddCourseModel.Time">
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6">
                                                 <label class="col-form-label">انتخاب استاد دوره</label>
                                                 <div>
                                                     <select class="form-control" asp-items="Model.Teachers" asp-for="AddCourseModel.TeacherId">
                                                         <option>انتخاب کنید</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label class="col-form-label">انتخاب وضعیت دوره</label>
+                                                <div>
+                                                    <select class="form-control" asp-for="AddCourseModel.Status">
+                                                        <option>انتخاب کنید</option>
+                                                        <option value="playing">در حال پخش</option>
+                                                        <option value="finish">به اتمام رسیده</option>
+                                                        <option value="registering">پیش ثبت نام</option>
                                                     </select>
 
                                                 </div>
@@ -75,7 +94,7 @@
                                             <div class="form-group col-6">
                                                 <label class="col-form-label">آپلود عکس و پوستر دوره</label>
                                                 <div>
-                                                    <input class="form-control" type="file" asp-for="AddCourseModel.TumbnailPath">
+                                                    <input class="form-control" type="file" asp-for="AddCourseModel.Tumbnail">
                                                 </div>
                                             </div>
                                             <div class="form-group col-6">
@@ -87,7 +106,7 @@
                                             <div class="form-group col-6" id="upload" style="display: none;">
                                                 <label class="col-form-label">آپلود ویدیو معرفی دوره</label>
                                                 <div>
-                                                    <input class="form-control" type="file" asp-for="AddCourseModel.DemoVideoPath">
+                                                    <input class="form-control" type="file" asp-for="AddCourseModel.DemoVideo">
                                                 </div>
                                             </div>
                                             <div class="seperator"></div>

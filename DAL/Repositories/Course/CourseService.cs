@@ -101,28 +101,35 @@ namespace DAL.Repositories.Course
 
         public async Task<ResultDto> EditCourseAsync(CourseDto course)
         {
+            var existCourse = await GetCourseAsync(course.Id);
+            if (!existCourse.isSuccess)
+            {
+                return new ResultDto
+                {
+                    isSuccess = false,
+                    Message = existCourse.Message,
+                };
+            }
             using(SqlConnection connection =  new SqlConnection(_connectionString))
             {
+                
                 using(SqlCommand command = new SqlCommand("EditCourse", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("Id", course.Id);
                     command.Parameters.AddWithValue("Title", course.Title);
-                    command.Parameters.AddWithValue("TeacherId", course.TeacherId);
-                    command.Parameters.AddWithValue("CategoryId", course.CategoryId);
-                    command.Parameters.AddWithValue("CreationDate", course.CreationDate);
-                    command.Parameters.AddWithValue("Price", course.Price);
-                    command.Parameters.AddWithValue("Status", course.Status);
-                    command.Parameters.AddWithValue("Capacity", course.Capacity);
-                    command.Parameters.AddWithValue("UpdateTime", course.UpdateTime);
                     command.Parameters.AddWithValue("Description", course.Description);
-                    command.Parameters.AddWithValue("TumbnailPath", course.ThumbnailPath);
+                    command.Parameters.AddWithValue("CreationDate", course.CreationDate);
+                    command.Parameters.AddWithValue("UpdateTime", DateTime.Now);
+                    command.Parameters.AddWithValue("Capacity", course.Capacity);
+                    command.Parameters.AddWithValue("ThumbnailPath", string.IsNullOrWhiteSpace(course.ThumbnailPath) ? existCourse.Data.ThumbnailPath : course.ThumbnailPath);
                     command.Parameters.AddWithValue("DemoVideoPath", string.IsNullOrWhiteSpace(course.DemoVideoPath) ? (string)null : course.DemoVideoPath);
-
+                    command.Parameters.AddWithValue("Time", course.Time);
+                    command.Parameters.AddWithValue("Status", course.Status);
+                    command.Parameters.AddWithValue("Price", course.Price);
+                    
                     await connection.OpenAsync();
-
                     int rows = await command.ExecuteNonQueryAsync();
-
                     if (rows > 0)
                         return new ResultDto
                         {

@@ -35,13 +35,14 @@ namespace AdminPanel.EndPoint.Pages.Course
         }
         public async Task<IActionResult> OnPostEditCourseAsync()
         {
-            if (!TryValidateModel(Course))
-            {
-                result = new ResultPageDto(false, "خطا در دریافت مقادیر");
-                return Page();
-            }
+            //if (!TryValidateModel(Course))
+            //{
+            //    result = new ResultPageDto(false, "خطا در دریافت مقادیر");
+            //    return Page();
+            //}
             CourseDto editCourseModel = new CourseDto
             {
+                Id = Course.Id,
                 Title = Course.Title,
                 Description = Course.Description,
                 Status = Course.Status,
@@ -57,15 +58,13 @@ namespace AdminPanel.EndPoint.Pages.Course
                 if (uploadResult.Status)
                     editCourseModel.ThumbnailPath = uploadResult.FileNameAddress;
             }
-            editCourseModel.ThumbnailPath = Course.ThumbnailPath;
+
             if(DemoVideoEdit != null)
             {
                 var uploadResult = await uploadService.UploadAsync("CourseImages", DemoVideoEdit);
                 if (uploadResult.Status)
                     editCourseModel.DemoVideoPath = uploadResult.FileNameAddress;
             }
-            editCourseModel.DemoVideoPath = Course.DemoVideoPath;
-
             var editResult = await courseService.EditCourseAsync(editCourseModel);
             if (editResult.isSuccess)
             {
@@ -90,9 +89,10 @@ namespace AdminPanel.EndPoint.Pages.Course
 
                 Course = new EditCourseModel
                 {
+                    Id = courseResult.Data.Id,
                     Title = courseResult.Data.Title,
                     Capacity = courseResult.Data.Capacity,
-                    DemoVideoPath = uriComposer.Compose(courseResult.Data.DemoVideoPath),
+                    DemoVideoPath = string.IsNullOrWhiteSpace(courseResult.Data.DemoVideoPath) ? null : uriComposer.Compose(courseResult.Data.DemoVideoPath),
                     Description = courseResult.Data.Description,
                     CreationDate = courseResult.Data.CreationDate,
                     Price = courseResult.Data.Price,
@@ -109,13 +109,14 @@ namespace AdminPanel.EndPoint.Pages.Course
         }
         public class EditCourseModel
         {
+            public int Id { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
             public DateTime CreationDate { get; set; }
             public DateTime UpdateTime { get; set; }
             public int Capacity { get; set; }
-            public string ThumbnailPath { get; set; }
-            public string? DemoVideoPath { get; set; }
+            public string? ThumbnailPath { get; set; } 
+            public string? DemoVideoPath { get; set; } 
             public int Time { get; set; }
             public string Status { get; set; }
             public int Price { get; set; }

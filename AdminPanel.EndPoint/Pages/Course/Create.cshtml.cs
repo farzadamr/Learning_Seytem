@@ -1,5 +1,6 @@
 ﻿using BLL.Dtos.Course;
 using BLL.Dtos.Utils;
+using BLL.ExternalApi;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,10 +12,18 @@ namespace AdminPanel.EndPoint.Pages.Course
     {
         private readonly ISearchService searchService;
         private readonly ICategoryService categoryService;
-        public CreateModel(ISearchService searchService,ICategoryService categoryService)
+        private readonly IFileUploadService uploadService;
+        private readonly ICourseService courseService;
+        public CreateModel(
+            ISearchService searchService,
+            ICategoryService categoryService,
+            ICourseService courseService,
+            IFileUploadService uploadService)
         {
             this.searchService = searchService;
             this.categoryService = categoryService;
+            this.courseService = courseService;
+            this.uploadService = uploadService;
         }
         [BindProperty]
         public AddCourseDto AddCourseModel { get; set; }
@@ -66,7 +75,33 @@ namespace AdminPanel.EndPoint.Pages.Course
                 result = new ResultPageDto(false, "اطلاعات را با دقت وارد کنید");
                 return Page();
             }
+            CourseDto courseModel = new CourseDto
+            {
+                TeacherId = AddCourseModel.TeacherId,
+                CategoryId = AddCourseModel.CategoryId,
+                Title = AddCourseModel.Title,
+                Description = AddCourseModel.Description,
+                Capacity = AddCourseModel.Capacity,
+                Status = AddCourseModel.Status,
+                Time = AddCourseModel.Time
+            };
+            var uploadImageResult = await uploadService.UploadAsync("CourseImages", AddCourseModel.Tumbnail);
+            if (uploadImageResult.Status)
+                courseModel.TumbnailPath = uploadImageResult.FileNameAddress;
+            if(AddCourseModel.DemoVideo != null)
+            {
+                var uploadVideoResult = await uploadService.UploadAsync("DemoVideos", AddCourseModel.DemoVideo);
+                if (uploadVideoResult.Status)
+                    courseModel.DemoVideoPath = uploadVideoResult.FileNameAddress;
+            }
 
+            var addResult = await courseService.AddCourseAsync(courseModel);
+            if (addResult.isSuccess)
+            {
+                result = new ResultPageDto(true, addResult.Message);
+                return Page();
+            }
+            result = new ResultPageDto(false, addResult.Message);
             return Page();
         }
 

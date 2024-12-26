@@ -1,6 +1,7 @@
 ﻿using BLL.ExternalApi;
 using BLL.Interfaces;
 using DAL.Repositories.Category;
+using DAL.Repositories.Course;
 using DAL.Repositories.Person;
 using DAL.Repositories.SearchAndGet;
 using DAL.Repositories.Student;
@@ -41,6 +42,10 @@ namespace AdminPanel.EndPoint.Infrastructure
 			services.AddTransient<ISearchService>(provider =>
 			{
 				return new SearchService(connectionString);
+			});
+			services.AddTransient<ICourseService>(provider =>
+			{
+				return new CourseService(connectionString);
 			});
 			//file services
 			services.AddTransient<IFileUploadService, FileUploadService>();

@@ -1,6 +1,7 @@
 ﻿using BLL.Dtos.Course;
 using BLL.Dtos.Utils;
 using BLL.Interfaces;
+using DAL.Entities.Courses;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,39 @@ namespace DAL.Repositories.Course
             }
 
 
+        }
+
+        public async Task<ResultDto<CourseDto?>> GetCourseAsync(int courseId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var existcourse = await connection.QuerySingleOrDefaultAsync<CourseDto>(
+                    "GetCourse",
+                    new
+                    {
+                        Id = courseId
+                    },
+                    commandType: CommandType.StoredProcedure
+                    );
+                if (existcourse == null)
+                    return new ResultDto<CourseDto?>
+                    {
+                        isSuccess = false,
+                        Message = "دوره مورد نظر یافت نشد"
+                    };
+                return new ResultDto<CourseDto?>
+                {
+                    Data = existcourse,
+                    isSuccess = true,
+                    Message = "دوره مورد نظر بازیابی شد"
+                };
+                
+            }
+        }
+
+        public async Task<ResultDto> EditCourseAsync(CourseDto course)
+        {
+            throw new Exception("");
         }
     }
 }

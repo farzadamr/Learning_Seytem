@@ -87,7 +87,7 @@ namespace AdminPanel.EndPoint.Pages.Course
             };
             var uploadImageResult = await uploadService.UploadAsync("CourseImages", AddCourseModel.Tumbnail);
             if (uploadImageResult.Status)
-                courseModel.TumbnailPath = uploadImageResult.FileNameAddress;
+                courseModel.ThumbnailPath = uploadImageResult.FileNameAddress;
             if(AddCourseModel.DemoVideo != null)
             {
                 var uploadVideoResult = await uploadService.UploadAsync("DemoVideos", AddCourseModel.DemoVideo);

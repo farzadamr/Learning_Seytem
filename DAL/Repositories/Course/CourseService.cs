@@ -37,7 +37,7 @@ namespace DAL.Repositories.Course
                             CreationDate = DateTime.Now,
                             UpdateTime = DateTime.Now,
                             Capacity = course.Capacity,
-                            TumbnailPath = course.TumbnailPath,
+                            TumbnailPath = course.ThumbnailPath,
                             DemoVideoPath = string.IsNullOrWhiteSpace(course.DemoVideoPath) ? (string)null : course.DemoVideoPath,
                             Time = course.Time,
                             Rate = 0,
@@ -116,7 +116,7 @@ namespace DAL.Repositories.Course
                     command.Parameters.AddWithValue("Capacity", course.Capacity);
                     command.Parameters.AddWithValue("UpdateTime", course.UpdateTime);
                     command.Parameters.AddWithValue("Description", course.Description);
-                    command.Parameters.AddWithValue("TumbnailPath", course.TumbnailPath);
+                    command.Parameters.AddWithValue("TumbnailPath", course.ThumbnailPath);
                     command.Parameters.AddWithValue("DemoVideoPath", string.IsNullOrWhiteSpace(course.DemoVideoPath) ? (string)null : course.DemoVideoPath);
 
                     await connection.OpenAsync();

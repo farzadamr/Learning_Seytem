@@ -1,0 +1,149 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Course.EditModel
+@{
+}
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>مدیریت دوره ها</li>
+                <li>تنظیمات دوره</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title">
+                        <h4 id="edit-entity">ویرایش دوره</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <div class="search-box-container card">
+                                <div class="card-header">
+                                    <h5>مشخصات دوره مورد نظر</h5>
+                                </div>
+                                <div class="card-body">
+
+                                    <form asp-page-handler="FindCourse" class="col-12 d-flex">
+                                        <label class="col-form-label cname">شماره دوره:</label>
+                                        <input name="CourseId" class="form-control col-4" type="number" placeholder="1001">
+                                        <div>
+                                            <button class="btn btn-success" type="submit"><i class="ti-search"></i> بازیابی دوره</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            @if (Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+                            {
+                                <div class="search-box-container card">
+                                    <div class="card-body">
+                                        <form asp-antiforgery="true" asp-page-handler="EditCourse" enctype="multipart/form-data" method="post" class="edit-profile m-b30">
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <h3>مشخصات دوره</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-4 form-group">
+                                                    <label class="col-form-label">نام دوره</label>
+                                                    <input asp-for="Course.Title" class="form-control" type="text" value="@Model.Course.Title">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">تاریخ ایجاد</label>
+                                                    <input asp-for="Course.CreationDate" class="form-control" type="datetime" value="@Model.Course.CreationDate">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">قیمت دوره</label>
+                                                    <input asp-for="Course.Price" class="form-control" type="text" value="@Model.Course.Price.ToString("n0") تومان">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">وضعیت دوره</label>
+                                                    <select class="form-control">
+                                                        <option value="playing">در حال پخش</option>
+                                                        <option value="finish">به اتمام رسیده</option>
+                                                        <option value="registering">پیش ثبت نام</option>
+                                                    </select>
+                                                    <h6 class="col-form-label">وضعیت فعلی : @Model.Course.Status</h6>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">ظرفیت دوره</label>
+                                                    <input class="form-control" type="number" asp-for="Course.Capacity" value="@Model.Course.Capacity">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">زمان دوره</label>
+                                                    <input class="form-control" type="number" asp-for="Course.Time" value="@Model.Course.Time">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">تاریخ آپدیت</label>
+                                                    <input class="form-control" type="datetime" asp-for="Course.UpdateTime" value="@Model.Course.UpdateTime">
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label class="col-form-label">متن درباره دوره</label>
+                                                    <textarea id="Description" class="form-control " asp-for="Course.Description" rows="5">
+                                                        @Html.Raw(Model.Course.Description)
+                                                </textarea>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">تصویر دوره</label>
+                                                    <input type="file" asp-for="ThumbnailEdit">
+                                                    <label class="col-form-label">ویدیو دوره</label>
+                                                    <input type="file" asp-for="DemoVideoEdit">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">تصویر فعلی</label>
+                                                    <img src="@Model.Course.ThumbnailPath">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="col-form-label">ویدیو فعلی</label>
+                                                    @if (!string.IsNullOrWhiteSpace(Model.Course.DemoVideoPath))
+                                                    {
+                                                        <video src="@Model.Course.DemoVideoPath"></video>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>ندارد</p>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <button id="addnew" class="btn btn-warning add-course" type="submit">ویرایش دوره</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>
+@section Scripts {
+    @if (Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+         <script>
+             swal.fire({ 
+                 title: "عملیات موفق",
+                 text: "@Html.Raw(Model.result.Message)",
+                 icon: "success"
+             });
+         </script>
+    }
+    else if (!Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+         <script>
+             swal.fire({
+                 title: "عملیات ناموفق",
+                 text: "@Html.Raw(Model.result.Message)",
+                 icon: "error"
+             });
+         </script>
+    }
+}

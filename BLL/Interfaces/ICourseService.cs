@@ -11,5 +11,7 @@ namespace BLL.Interfaces
     public interface ICourseService
     {
         Task<ResultDto> AddCourseAsync(CourseDto course);
+        Task<ResultDto<CourseDto?>> GetCourseAsync(int courseId);
+        Task<ResultDto> EditCourseAsync(CourseDto course);
     }
 }

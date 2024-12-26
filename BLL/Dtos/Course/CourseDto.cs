@@ -16,7 +16,7 @@ namespace BLL.Dtos.Course
         public DateTime CreationDate { get; set; }
         public DateTime UpdateTime { get; set; }
         public int Capacity { get; set; }
-        public string TumbnailPath { get; set; }
+        public string ThumbnailPath { get; set; }
         public string? DemoVideoPath { get; set; }
         public int Time { get; set; }
         public int Rate { get; set; }

@@ -138,7 +138,27 @@
     </div>
 </main>
 <div class="ttr-overlay"></div>
-@section Scripts{
+@section Scripts {
+    @if (Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+        <script>
+            swal.fire({
+                title: "عملیات موفق",
+                text: "@Html.Raw(Model.result.Message)",
+                icon: "success"
+            });
+        </script>
+    }
+    else if (!Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+        <script>
+            swal.fire({
+                title: "عملیات ناموفق",
+                text: "@Html.Raw(Model.result.Message)",
+                icon: "error"
+            });
+        </script>
+    }
     <script>
         $('#checkbox').change(function (e) {
             if ($('#upload').css('display') == 'block') {

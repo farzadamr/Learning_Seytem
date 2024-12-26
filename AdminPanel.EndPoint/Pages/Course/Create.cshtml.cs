@@ -1,4 +1,5 @@
-using BLL.Dtos.Course;
+﻿using BLL.Dtos.Course;
+using BLL.Dtos.Utils;
 using BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,6 +19,7 @@ namespace AdminPanel.EndPoint.Pages.Course
         [BindProperty]
         public AddCourseDto AddCourseModel { get; set; }
 
+        public ResultPageDto result { get; set; }
         public SelectList Teachers { get; set; }
         public SelectList Categories { get; set; }
         public async Task OnGetAsync()
@@ -54,14 +56,17 @@ namespace AdminPanel.EndPoint.Pages.Course
             }
             var combinedCategoryList = parentCategoryList.Concat(childCategoryList).ToList();
             Categories = new SelectList(combinedCategoryList, "Id", "Type");
+            result = new ResultPageDto(false, "");
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!TryValidateModel(AddCourseModel))
             {
-                return BadRequest();
+                result = new ResultPageDto(false, "اطلاعات را با دقت وارد کنید");
+                return Page();
             }
+
             return Page();
         }
 

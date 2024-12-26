@@ -144,5 +144,56 @@ namespace DAL.Repositories.Course
                 }
             }
         }
+
+        public async Task<ResultDto> DeleteCourseAsync(int courseId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("DeleteCourse", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("Id", courseId);
+
+                    await connection.OpenAsync();
+
+                    int rows = await command.ExecuteNonQueryAsync();
+                    if (rows > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = $"دوره با شناسه {string.Join("", courseId)} با موفقیت حذف شد"
+                        };
+                    return new ResultDto()
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
+        }
+
+        public async Task<ResultDto<List<CourseListDto>?>> GetCourseListAsync()
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var coursesListEnum = await connection.QueryAsync<CourseListDto>(
+                    "GetCourseList",
+                    commandType: CommandType.StoredProcedure
+                    );
+                var coursesList = coursesListEnum.ToList();
+                if (coursesList == null)
+                    return new ResultDto<List<CourseListDto>?>
+                    {
+                        isSuccess = false,
+                        Message = "خطا در بازیابی اطلاعات"
+                    };
+                return new ResultDto<List<CourseListDto>?>
+                {
+                    Data = coursesList,
+                    isSuccess = true,
+                    Message = "اطلاعات بازیابی شد"
+                };
+            }
+        }
     }
 }

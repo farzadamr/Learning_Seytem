@@ -387,7 +387,6 @@ namespace DAL.Repositories.Course
                     command.Parameters.AddWithValue("Id", episode.Id);
                     command.Parameters.AddWithValue("number", episode.number);
                     command.Parameters.AddWithValue("time", episode.Time);
-                    command.Parameters.AddWithValue("fileSize", episode.FileSize);
                     command.Parameters.AddWithValue("filePath", episode.FilePath);
 
                     await connection.OpenAsync();

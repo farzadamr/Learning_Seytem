@@ -19,10 +19,11 @@ namespace AdminPanel.EndPoint.Pages.Episode
         }
         [BindProperty]
         public AddEpisodeDto addEpisodeModel { get; set; }
+        [BindProperty]
+        public IFormFile File { get; set; }
         public ResultPageDto result { get; set; }
         public SelectList Sections { get; set; }
         public string CourseName { get; set; }
-        [BindProperty]
         public int CourseId { get; set; }
         public void OnGet()
         {
@@ -30,11 +31,11 @@ namespace AdminPanel.EndPoint.Pages.Episode
         }
         public async Task<IActionResult> OnPostAddEpisodeAsync()
         {
-            //if (!TryValidateModel(addEpisodeModel))
-            //{
-            //    result = new ResultPageDto(false, "خطا در دریافت اطلاعات");
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                result = new ResultPageDto(false, "خطا در دریافت اطلاعات");
+                return Page();
+            }
             EpisodeDto episode = new EpisodeDto
             {
                 number = addEpisodeModel.number,
@@ -43,7 +44,7 @@ namespace AdminPanel.EndPoint.Pages.Episode
                 CourseId = addEpisodeModel.CourseId,
                 Visit = 0,
             };
-            var uploadResult = await uploadService.UploadAsync("Episodes", addEpisodeModel.File);
+            var uploadResult = await uploadService.UploadAsync("Episodes", File);
             if (uploadResult.Status)
                 episode.FilePath = uploadResult.FileNameAddress;
             else
@@ -103,7 +104,6 @@ namespace AdminPanel.EndPoint.Pages.Episode
             public int CourseId { get; set; }
             public int Time { get; set; }
             public int Visit { get; set; }
-            public IFormFile File{ get; set; }
         }
     }
 }

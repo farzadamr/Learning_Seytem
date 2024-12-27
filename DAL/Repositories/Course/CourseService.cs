@@ -284,5 +284,35 @@ namespace DAL.Repositories.Course
                 }
             }
         }
+    
+        public async Task<ResultDto> EditSectionAsync(EditSectionDto section)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("EditSection", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("Id", section.Id);
+                    command.Parameters.AddWithValue("Title", section.Title);
+                    command.Parameters.AddWithValue("Number", section.number);
+
+                    await connection.OpenAsync();
+
+                    int rows = await command.ExecuteNonQueryAsync();
+
+                    if (rows > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = $"فصل {section.Id} با موفقیت ویرایش شد"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace DAL.Repositories.Course
         {
             this._connectionString = _connectionString;
         }
+        //course services
         public async Task<ResultDto> AddCourseAsync(CourseDto course)
         {
             try
@@ -195,6 +196,7 @@ namespace DAL.Repositories.Course
                 };
             }
         }
+        //section services
 
         public async Task<ResultDto> AddSectionAsync(AddSectionDto section)
         {
@@ -305,6 +307,124 @@ namespace DAL.Repositories.Course
                         {
                             isSuccess = true,
                             Message = $"فصل {section.Id} با موفقیت ویرایش شد"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
+        }
+        //episode services
+        public async Task<ResultDto> AddEpisodeAsync(EpisodeDto episode)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var InsertedId = await connection.QueryAsync<int>(
+                    "AddEpisode",
+                    new
+                    {
+                        number = episode.number,
+                        sectionId = episode.sectionId,
+                        courseId = episode.CourseId,
+                        time = episode.Time,
+                        visit = episode.Visit,
+                        filePath = episode.FilePath
+                    },
+                    commandType: CommandType.StoredProcedure
+                    );
+                if (InsertedId == null)
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                return new ResultDto
+                {
+                    isSuccess = true,
+                    Message = $"قسمت جدید با شماره {InsertedId} با موفقیت ثبت شد"
+                };
+            }
+        }
+
+        public async Task<ResultDto<List<EpisodeDto>?>> GetEpisodeListAsync(int CourseId, int SectionId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var EpisodesEnum = await connection.QueryAsync<EpisodeDto>(
+                    "GetEpisodeList",
+                    new
+                    {
+                        courseId = CourseId,
+                        sectionId = SectionId
+                    },
+                    commandType: CommandType.StoredProcedure
+                    );
+                var Episodes = EpisodesEnum.ToList();
+                if (Episodes == null)
+                    return new ResultDto<List<EpisodeDto>?>
+                    {
+                        isSuccess = false,
+                        Message = "اطلاعات مورد نظر یافت نشد"
+                    };
+                return new ResultDto<List<EpisodeDto>?>
+                {
+                    Data = Episodes,
+                    isSuccess = true,
+                    Message = "اطلاعات بازیابی شد"
+                };
+            }
+        }
+
+        public async Task<ResultDto> EditEpisodeAsync(EditEpisodeDto episode)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("EditEpisode", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("Id", episode.Id);
+                    command.Parameters.AddWithValue("number", episode.number);
+                    command.Parameters.AddWithValue("time", episode.Time);
+                    command.Parameters.AddWithValue("fileSize", episode.FileSize);
+                    command.Parameters.AddWithValue("filePath", episode.FilePath);
+
+                    await connection.OpenAsync();
+
+                    int rows = await command.ExecuteNonQueryAsync();
+                    if (rows > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = $"قسمت شماره {episode.number} با موفقیت ویرایش شد"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
+        }
+
+        public async Task<ResultDto> DeleteEpisodeAsync(int episodeId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("DeleteEpisode", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("Id", episodeId);
+
+                    await connection.OpenAsync();
+
+                    int rows = await command.ExecuteNonQueryAsync();
+                    if (rows > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = "حذف قسمت با موفقیت انجام شد"
                         };
                     return new ResultDto
                     {

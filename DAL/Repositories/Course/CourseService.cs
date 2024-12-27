@@ -348,27 +348,26 @@ namespace DAL.Repositories.Course
             }
         }
 
-        public async Task<ResultDto<List<EpisodeDto>?>> GetEpisodeListAsync(int CourseId, int SectionId)
+        public async Task<ResultDto<List<EpisodeListDto>?>> GetEpisodeListAsync(int CourseId)
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
-                var EpisodesEnum = await connection.QueryAsync<EpisodeDto>(
+                var EpisodesEnum = await connection.QueryAsync<EpisodeListDto>(
                     "GetEpisodeList",
                     new
                     {
                         courseId = CourseId,
-                        sectionId = SectionId
                     },
                     commandType: CommandType.StoredProcedure
                     );
                 var Episodes = EpisodesEnum.ToList();
                 if (Episodes == null)
-                    return new ResultDto<List<EpisodeDto>?>
+                    return new ResultDto<List<EpisodeListDto>?>
                     {
                         isSuccess = false,
                         Message = "اطلاعات مورد نظر یافت نشد"
                     };
-                return new ResultDto<List<EpisodeDto>?>
+                return new ResultDto<List<EpisodeListDto>?>
                 {
                     Data = Episodes,
                     isSuccess = true,
@@ -376,9 +375,38 @@ namespace DAL.Repositories.Course
                 };
             }
         }
-
+        public async Task<ResultDto<EpisodeDto?>> GetEpisodeAsync(int episodeId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var episode = await connection.QueryFirstOrDefaultAsync<EpisodeDto>(
+                    "GetEpisode",
+                    new { episodeId = episodeId },
+                    commandType: CommandType.StoredProcedure
+                    );
+                if (episode == null)
+                    return new ResultDto<EpisodeDto?>
+                    {
+                        isSuccess = false,
+                        Message = "قسمت مورد نظر یافت نشد"
+                    };
+                return new ResultDto<EpisodeDto?>
+                {
+                    Data = episode,
+                    isSuccess = true,
+                    Message = "اطلاعات مورد نظر بازیابی شد"
+                };
+            }
+        }
         public async Task<ResultDto> EditEpisodeAsync(EditEpisodeDto episode)
         {
+            var existEpisode = await GetEpisodeAsync(episode.Id);
+            if (!existEpisode.isSuccess)
+                return new ResultDto
+                {
+                    isSuccess = false,
+                    Message = "خطا در دریافت اطلاعات"
+                };
             using(SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using(SqlCommand command = new SqlCommand("EditEpisode", connection))
@@ -387,7 +415,7 @@ namespace DAL.Repositories.Course
                     command.Parameters.AddWithValue("Id", episode.Id);
                     command.Parameters.AddWithValue("number", episode.number);
                     command.Parameters.AddWithValue("time", episode.Time);
-                    command.Parameters.AddWithValue("filePath", episode.FilePath);
+                    command.Parameters.AddWithValue("filePath", string.IsNullOrWhiteSpace(episode.FilePath) ? existEpisode.Data.FilePath : episode.FilePath);
 
                     await connection.OpenAsync();
 

@@ -1,5 +1,5 @@
 ﻿@page
-@model AdminPanel.EndPoint.Pages.Section.ListModel
+@model AdminPanel.EndPoint.Pages.Episode.ListModel
 @{
 }
 <main class="ttr-wrapper">
@@ -8,7 +8,7 @@
             <ul class="db-breadcrumb-list">
                 <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
                 <li>مدیریت دوره ها</li>
-                <li>فصل</li>
+                <li>قسمت</li>
             </ul>
         </div>
         <div class="row">
@@ -16,17 +16,17 @@
             <div class="col-lg-12 m-b30">
                 <div class="widget-box">
                     <div class="wc-title">
-                        <h4>افزودن فصل</h4>
+                        <h4>افزودن قسمت جدید</h4>
                     </div>
                     <div class="widget-inner">
 
                         <div class="row">
-                            <form class="search-box-container card" asp-page-handler="FindCourse">
+                            <div class="search-box-container card">
                                 <div class="card-header">
                                     <h5>مشخصات دوره مورد نظر</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="col-12 d-flex">
+                                    <form class="col-12 d-flex" asp-page-handler="FindCourse">
                                         <label class="col-form-label cname">شماره دوره:</label>
                                         <input class="form-control col-4" type="number" name="courseId" placeholder="1001">
                                         <div>
@@ -39,10 +39,10 @@
                                             </div>
                                         }
 
-                                    </div>
+                                    </form>
                                 </div>
-                            </form>
-                            @if (Model.Sections != null)
+                            </div>
+                            @if (Model.Episodes != null)
                             {
                                 <div class="search-box-container card">
                                     <div class="card-body">
@@ -51,51 +51,61 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>شناسه فصل</th>
-                                                        <th>شماره فصل</th>
+                                                        <th>شناسه قسمت</th>
+                                                        <th>شماره قسمت</th>
                                                         <th>نام فصل</th>
+                                                        <th>زمان</th>
+                                                        <th>بازدید</th>
+                                                        <th>مشاهده</th>
                                                         <th>عملیات</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var sectione in Model.Sections)
+                                                    @foreach (var episode in Model.Episodes)
                                                     {
                                                         <tr>
-                                                            <td>@sectione.Id</td>
-                                                            <td>@sectione.number</td>
-                                                            <td>@sectione.Title</td>
+                                                            <td>@episode.Id</td>
+                                                            <td>@episode.number</td>
+                                                            <td>@episode.SectionTitle</td>
+                                                            <td>@episode.Time</td>
+                                                            <td>@episode.Visit</td>
+                                                            <td><a href="@episode.FilePath" target="_blank">مشاهده ویدیو</a></td>
                                                             <td>
                                                                 <!-- دکمه ویرایش -->
-                                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal-@sectione.Id">
+                                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal-@episode.Id">
                                                                     ویرایش
                                                                 </button>
 
                                                                 <!-- دکمه حذف -->
-                                                                <form asp-page-handler="DeleteSection" method="post" class="d-inline">
-                                                                    <input type="hidden" name="sectionId" value="@sectione.Id" readonly />
+                                                                <form asp-page-handler="DeleteEpisode" method="post" class="d-inline">
+                                                                    <input type="hidden" name="episodeId" value="@episode.Id" readonly />
                                                                     <button type="submit" class="btn btn-danger">حذف</button>
                                                                 </form>
 
                                                                 <!-- مودال ویرایش -->
-                                                                <div class="modal fade" id="editModal-@sectione.Id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-@sectione.Id" aria-hidden="true">
+                                                                <div class="modal fade" id="editModal-@episode.Id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel-@episode.Id" aria-hidden="true">
                                                                     <div class="modal-dialog" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
-                                                                                <h5 class="modal-title" id="editModalLabel-@sectione.Id">ویرایش فصل @sectione.Id</h5>
+                                                                                <h5 class="modal-title" id="editModalLabel-@episode.Id">ویرایش فصل @episode.Id</h5>
                                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                     <span aria-hidden="true">&times;</span>
                                                                                 </button>
                                                                             </div>
                                                                             <div class="modal-body">
-                                                                                <form asp-page-handler="EditSection" method="post">
-                                                                                    <input type="hidden" asp-for="sectionEditModel.Id" value="@sectione.Id" readonly />
+                                                                                <form asp-page-handler="EditEpisode" method="post" enctype="multipart/form-data">
+                                                                                    <input type="hidden" asp-for="editEpisodeModel.Id" value="@episode.Id" readonly />
                                                                                     <div class="form-group">
-                                                                                        <label for="chapterNumber">شماره فصل</label>
-                                                                                        <input type="number" class="form-control" asp-for="sectionEditModel.number" value="@sectione.number" />
+                                                                                        <label>زمان قسمت</label>
+                                                                                        <input type="number" class="form-control" asp-for="editEpisodeModel.Time" value="@episode.Time" />
                                                                                     </div>
                                                                                     <div class="form-group">
-                                                                                        <label for="chapterName">نام فصل</label>
-                                                                                        <input type="text" class="form-control" asp-for="sectionEditModel.Title" value="@sectione.Title" />
+                                                                                        <label>شماره قسمت</label>
+                                                                                        <input type="number" class="form-control" asp-for="editEpisodeModel.number" value="@episode.number" />
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <label>فایل قسمت</label>
+                                                                                        <input type="file" class="form-control" asp-for="File" />
                                                                                     </div>
                                                                                     <button type="submit" class="btn btn-primary">ذخیره</button>
                                                                                 </form>
@@ -119,6 +129,9 @@
 
 
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
@@ -126,8 +139,8 @@
         </div>
     </div>
 </main>
-
 <div class="ttr-overlay"></div>
+
 @section Scripts {
     @if (Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
     {
@@ -149,6 +162,4 @@
             });
         </script>
     }
-
 }
-

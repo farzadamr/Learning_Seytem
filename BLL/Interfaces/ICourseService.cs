@@ -23,9 +23,10 @@ namespace BLL.Interfaces
         Task<ResultDto> EditSectionAsync(EditSectionDto section);
         //episode
         Task<ResultDto> AddEpisodeAsync(EpisodeDto episode);
-        Task<ResultDto<List<EpisodeDto>?>> GetEpisodeListAsync(int CourseId, int SectionId);
+        Task<ResultDto<List<EpisodeListDto>?>> GetEpisodeListAsync(int CourseId);
         Task<ResultDto> EditEpisodeAsync(EditEpisodeDto episode);
         Task<ResultDto> DeleteEpisodeAsync(int episodeId);
+        Task<ResultDto<EpisodeDto?>> GetEpisodeAsync(int episodeId);
 
     }
 }

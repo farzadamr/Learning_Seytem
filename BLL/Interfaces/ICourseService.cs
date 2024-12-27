@@ -15,5 +15,6 @@ namespace BLL.Interfaces
         Task<ResultDto> EditCourseAsync(CourseDto course);
         Task<ResultDto> DeleteCourseAsync(int courseId);
         Task<ResultDto<List<CourseListDto>?>> GetCourseListAsync();
+        Task<ResultDto> AddSectionAsync(AddSectionDto section);
     }
 }

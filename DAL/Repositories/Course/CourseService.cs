@@ -195,5 +195,32 @@ namespace DAL.Repositories.Course
                 };
             }
         }
+
+        public async Task<ResultDto> AddSectionAsync(AddSectionDto section)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var InsertedId = await connection.QueryAsync<int>("AddSection", new
+                {
+                    CourseId = section.courseId,
+                    Number = section.number,
+                    Title = section.Title
+                },
+                commandType: CommandType.StoredProcedure);
+                if(InsertedId != null)
+                {
+                    return new ResultDto
+                    {
+                        isSuccess = true,
+                        Message = $"فصل با شناسه {string.Join("", InsertedId)} با موفقیت ثبت شد"
+                    };
+                }
+                return new ResultDto
+                {
+                    isSuccess = false,
+                    Message = "خطا در برقراری ارتباط با پایگاه داده"
+                };
+            }
+        }
     }
 }

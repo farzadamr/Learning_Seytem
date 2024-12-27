@@ -1,0 +1,107 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Section.CreateModel
+@{
+}
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>مدیریت دوره ها</li>
+                <li>فصل</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title">
+                        <h4>افزودن فصل</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <form class="search-box-container card" asp-page-handler="FindCourse">
+                                <div class="card-header">
+                                    <h5>مشخصات دوره مورد نظر</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-12 d-flex">
+                                        <label class="col-form-label cname">شماره دوره:</label>
+                                        <input class="form-control col-4" type="number" name="courseId" placeholder="1001">
+                                        <div>
+                                            <button class="btn btn-success" type="submit"><i class="ti-search"></i> بازیابی دوره</button>
+                                        </div>
+                                        @if (!string.IsNullOrWhiteSpace(Model.CourseName))
+                                        {
+                                            <div class="col-4">
+                                                <input class="form-control" type="text" value="@Model.CourseName" disabled>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </form>
+                            @if (!string.IsNullOrWhiteSpace(Model.CourseName))
+                            {
+                                <div class="search-box-container card">
+                                <div class="card-body">
+                                    <form class="edit-profile m-b30" asp-page-handler="AddSection">
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <h3>مشخصات فصل</h3>
+                                                <input type="hidden" asp-for="AddSection.courseId" value="@Model.CourseId" readonly />
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">شماره فصل</label>
+                                                <div>
+                                                    <input asp-for="AddSection.number" class="form-control" type="number" placeholder="1">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label class="col-form-label">نام فصل</label>
+                                                <div>
+                                                    <input asp-for="AddSection.Title" class="form-control" type="text" placeholder="آشنایی با مقدمات SQL">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button id="addnew" class="btn btn-warning add-course" type="submit">افزودن فصل</button>
+                                    </form>
+                                </div>
+                            </div>
+                            }
+                            
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="ttr-overlay"></div>
+@section Scripts {
+    @if (Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+        <script>
+            swal.fire({
+                title: "عملیات موفق",
+                text: "@Html.Raw(Model.result.Message)",
+                icon: "success"
+            });
+        </script>
+    }
+    else if (!Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+        <script>
+            swal.fire({
+                title: "عملیات ناموفق",
+                text: "@Html.Raw(Model.result.Message)",
+                icon: "error"
+            });
+        </script>
+    }
+}

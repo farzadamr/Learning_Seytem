@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                             </form>
-                            @if (!string.IsNullOrWhiteSpace(Model.CourseName))
+                            @if (Model.Sections != null)
                             {
                                 <div class="search-box-container card">
                                     <div class="card-body">
@@ -51,31 +51,64 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th>شماره فصل</th>
                                                         <th>شناسه فصل</th>
+                                                        <th>شماره فصل</th>
                                                         <th>نام فصل</th>
                                                         <th>عملیات</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>chapter.ChapterNumber</td>
-                                                        <td>chapter.ChapterId</td>
-                                                        <td>chapter.ChapterName</td>
-                                                        <td>
-                                                            <!-- دکمه ویرایش -->
-                                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal@chapter.ChapterId">
-                                                                ویرایش
-                                                            </button>
+                                                    @foreach (var sectione in Model.Sections)
+                                                    {
+                                                        <tr>
+                                                            <td>@sectione.Id</td>
+                                                            <td>@sectione.number</td>
+                                                            <td>@sectione.Title</td>
+                                                            <td>
+                                                                <!-- دکمه ویرایش -->
+                                                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal@sectione.Id">
+                                                                    ویرایش
+                                                                </button>
 
-                                                            <!-- دکمه حذف -->
-                                                            <form asp-action="DeleteChapter" method="post" class="d-inline">
-                                                                <input type="hidden" name="chapterId" value="chapter.ChapterId" />
-                                                                <button type="submit" class="btn btn-danger">حذف</button>
-                                                            </form>
+                                                                <!-- دکمه حذف -->
+                                                                <form asp-action="DeleteSection" id="form-delete" method="post" class="d-inline">
+                                                                    <input type="hidden" name="sectionId" value="@sectione.Id" readonly />
+                                                                    <button type="button" id="submit-btn" class="btn btn-danger">حذف</button>
+                                                                </form>
 
-                                                        </td>
-                                                    </tr>
+                                                            </td>
+                                                        </tr>
+                                                        <div class="modal fade" id="editModal@sectione.Id" tabindex="-1" role="dialog" aria-labelledby="editModalLabel@sectione.Id" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="editModalLabel@sectione.Id">ویرایش فصل @sectione.Id</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form asp-action="EditChapter" method="post">
+                                                                            <input type="hidden" name="chapterId" value="@sectione.Id" />
+                                                                            <div class="form-group">
+                                                                                <label for="chapterNumber">شماره فصل</label>
+                                                                                <input type="number" class="form-control" name="chapterNumber" value="@sectione.number" />
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="chapterName">نام فصل</label>
+                                                                                <input type="text" class="form-control" id="chapterName" name="chapterName" value="@sectione.Title" />
+                                                                            </div>
+                                                                            <button type="submit" class="btn btn-primary">ذخیره</button>
+                                                                        </form>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+
 
                                                 </tbody>
                                             </table>
@@ -94,35 +127,7 @@
         </div>
     </div>
 </main>
-<div class="modal fade" id="editModal@chapter.ChapterId" tabindex="-1" role="dialog" aria-labelledby="editModalLabel@chapter.ChapterId" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel@chapter.ChapterId">ویرایش فصل chapter.ChapterId</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form asp-action="EditChapter" method="post">
-                    <input type="hidden" name="chapterId" value="chapter.ChapterId" />
-                    <div class="form-group">
-                        <label for="chapterNumber">شماره فصل</label>
-                        <input type="number" class="form-control" id="chapterNumber" name="chapterNumber" value="chapter.ChapterNumber" />
-                    </div>
-                    <div class="form-group">
-                        <label for="chapterName">نام فصل</label>
-                        <input type="text" class="form-control" id="chapterName" name="chapterName" value="chapter.ChapterName" />
-                    </div>
-                    <button type="submit" class="btn btn-primary">ذخیره</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="ttr-overlay"></div>
 @section Scripts {
     @if (Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))

@@ -256,5 +256,33 @@ namespace DAL.Repositories.Course
             }
 
         }
+
+        public async Task<ResultDto> DeleteSectionAsync(int sectionId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("DeleteSection", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("Id", sectionId);
+
+                    await connection.OpenAsync();
+
+                    int rows = await command.ExecuteNonQueryAsync();
+
+                    if (rows > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = $"فصل {sectionId} با موفقیت حذف شذ"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در برقراری ارتباط با پایگاه داده"
+                    };
+                }
+            }
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace DAL.Repositories.Course
                     return new ResultDto
                     {
                         isSuccess = true,
-                        Message = $"دوره با شناسه {string.Join(" ",courseId)} با موفقیت ثبت شد"
+                        Message = $"دوره با شناسه {string.Join(" ", courseId)} با موفقیت ثبت شد"
                     };
                 }
             }
@@ -73,7 +73,7 @@ namespace DAL.Repositories.Course
 
         public async Task<ResultDto<CourseDto?>> GetCourseAsync(int courseId)
         {
-            using(SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 var existcourse = await connection.QuerySingleOrDefaultAsync<CourseDto>(
                     "GetCourse",
@@ -95,7 +95,7 @@ namespace DAL.Repositories.Course
                     isSuccess = true,
                     Message = "دوره مورد نظر بازیابی شد"
                 };
-                
+
             }
         }
 
@@ -110,10 +110,10 @@ namespace DAL.Repositories.Course
                     Message = existCourse.Message,
                 };
             }
-            using(SqlConnection connection =  new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                
-                using(SqlCommand command = new SqlCommand("EditCourse", connection))
+
+                using (SqlCommand command = new SqlCommand("EditCourse", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("Id", course.Id);
@@ -127,7 +127,7 @@ namespace DAL.Repositories.Course
                     command.Parameters.AddWithValue("Time", course.Time);
                     command.Parameters.AddWithValue("Status", course.Status);
                     command.Parameters.AddWithValue("Price", course.Price);
-                    
+
                     await connection.OpenAsync();
                     int rows = await command.ExecuteNonQueryAsync();
                     if (rows > 0)
@@ -147,9 +147,9 @@ namespace DAL.Repositories.Course
 
         public async Task<ResultDto> DeleteCourseAsync(int courseId)
         {
-            using(SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                using(SqlCommand command = new SqlCommand("DeleteCourse", connection))
+                using (SqlCommand command = new SqlCommand("DeleteCourse", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("Id", courseId);
@@ -174,7 +174,7 @@ namespace DAL.Repositories.Course
 
         public async Task<ResultDto<List<CourseListDto>?>> GetCourseListAsync()
         {
-            using(SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 var coursesListEnum = await connection.QueryAsync<CourseListDto>(
                     "GetCourseList",
@@ -198,7 +198,7 @@ namespace DAL.Repositories.Course
 
         public async Task<ResultDto> AddSectionAsync(AddSectionDto section)
         {
-            using(SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 var InsertedId = await connection.QueryAsync<int>("AddSection", new
                 {
@@ -207,7 +207,7 @@ namespace DAL.Repositories.Course
                     Title = section.Title
                 },
                 commandType: CommandType.StoredProcedure);
-                if(InsertedId != null)
+                if (InsertedId != null)
                 {
                     return new ResultDto
                     {
@@ -221,6 +221,40 @@ namespace DAL.Repositories.Course
                     Message = "خطا در برقراری ارتباط با پایگاه داده"
                 };
             }
+        }
+
+        public async Task<ResultDto<List<SectionDto>?>> GetSectionListAsync(int CourseId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var sectionsEnum = await connection.QueryAsync<SectionDto>("GetSectionList", new { CourseId }, commandType: CommandType.StoredProcedure);
+                    var sectionList = sectionsEnum.ToList();
+                    if (sectionList == null)
+                        return new ResultDto<List<SectionDto>?>
+                        {
+                            isSuccess = false,
+                            Message = "اطلاعاتی موجود نیست"
+                        };
+                    return new ResultDto<List<SectionDto>?>
+                    {
+                        Data = sectionList,
+                        isSuccess = true,
+                        Message = "اطلاعات بازیابی شد"
+                    };
+                }
+                catch(Exception ex)
+                {
+                    return new ResultDto<List<SectionDto>?>
+                    {
+                        isSuccess = false,
+                        Message = $"خطایی رخ داد {string.Join("=", ex.Message)}"
+                    };
+                }
+                
+            }
+
         }
     }
 }

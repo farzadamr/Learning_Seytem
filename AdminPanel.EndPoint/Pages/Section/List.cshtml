@@ -1,0 +1,149 @@
+﻿@page
+@model AdminPanel.EndPoint.Pages.Section.ListModel
+@{
+}
+<main class="ttr-wrapper">
+    <div class="container-fluid">
+        <div class="db-breadcrumb">
+            <ul class="db-breadcrumb-list">
+                <li><a href="#"><i class="fa fa-home"></i>صفحه اصلی</a></li>
+                <li>مدیریت دوره ها</li>
+                <li>فصل</li>
+            </ul>
+        </div>
+        <div class="row">
+            <!-- Your Profile Views Chart -->
+            <div class="col-lg-12 m-b30">
+                <div class="widget-box">
+                    <div class="wc-title">
+                        <h4>افزودن فصل</h4>
+                    </div>
+                    <div class="widget-inner">
+
+                        <div class="row">
+                            <form class="search-box-container card" asp-page-handler="FindCourse">
+                                <div class="card-header">
+                                    <h5>مشخصات دوره مورد نظر</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col-12 d-flex">
+                                        <label class="col-form-label cname">شماره دوره:</label>
+                                        <input class="form-control col-4" type="number" name="courseId" placeholder="1001">
+                                        <div>
+                                            <button class="btn btn-success" type="submit"><i class="ti-search"></i> بازیابی دوره</button>
+                                        </div>
+                                        @if (!string.IsNullOrWhiteSpace(Model.CourseName))
+                                        {
+                                            <div class="col-4">
+                                                <input class="form-control" type="text" value="@Model.CourseName" disabled>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </form>
+                            @if (!string.IsNullOrWhiteSpace(Model.CourseName))
+                            {
+                                <div class="search-box-container card">
+                                    <div class="card-body">
+                                        <div class="container mt-5">
+                                            <h2 class="mb-4">لیست فصل‌ها</h2>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>شماره فصل</th>
+                                                        <th>شناسه فصل</th>
+                                                        <th>نام فصل</th>
+                                                        <th>عملیات</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>chapter.ChapterNumber</td>
+                                                        <td>chapter.ChapterId</td>
+                                                        <td>chapter.ChapterName</td>
+                                                        <td>
+                                                            <!-- دکمه ویرایش -->
+                                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editModal@chapter.ChapterId">
+                                                                ویرایش
+                                                            </button>
+
+                                                            <!-- دکمه حذف -->
+                                                            <form asp-action="DeleteChapter" method="post" class="d-inline">
+                                                                <input type="hidden" name="chapterId" value="chapter.ChapterId" />
+                                                                <button type="submit" class="btn btn-danger">حذف</button>
+                                                            </form>
+
+                                                        </td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Your Profile Views Chart END-->
+        </div>
+    </div>
+</main>
+<div class="modal fade" id="editModal@chapter.ChapterId" tabindex="-1" role="dialog" aria-labelledby="editModalLabel@chapter.ChapterId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel@chapter.ChapterId">ویرایش فصل chapter.ChapterId</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="EditChapter" method="post">
+                    <input type="hidden" name="chapterId" value="chapter.ChapterId" />
+                    <div class="form-group">
+                        <label for="chapterNumber">شماره فصل</label>
+                        <input type="number" class="form-control" id="chapterNumber" name="chapterNumber" value="chapter.ChapterNumber" />
+                    </div>
+                    <div class="form-group">
+                        <label for="chapterName">نام فصل</label>
+                        <input type="text" class="form-control" id="chapterName" name="chapterName" value="chapter.ChapterName" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">ذخیره</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ttr-overlay"></div>
+@section Scripts {
+    @if (Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+        <script>
+            swal.fire({
+                title: "عملیات موفق",
+                text: "@Html.Raw(Model.result.Message)",
+                icon: "success"
+            });
+        </script>
+    }
+    else if (!Model.result.isSuccess && !string.IsNullOrWhiteSpace(Model.result.Message))
+    {
+        <script>
+            swal.fire({
+                title: "عملیات ناموفق",
+                text: "@Html.Raw(Model.result.Message)",
+                icon: "error"
+            });
+        </script>
+    }
+}
+

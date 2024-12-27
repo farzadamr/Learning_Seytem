@@ -343,7 +343,7 @@ namespace DAL.Repositories.Course
                 return new ResultDto
                 {
                     isSuccess = true,
-                    Message = $"قسمت جدید با شماره {InsertedId} با موفقیت ثبت شد"
+                    Message = $"قسمت جدید با شماره {string.Join(" ", InsertedId)} با موفقیت ثبت شد"
                 };
             }
         }

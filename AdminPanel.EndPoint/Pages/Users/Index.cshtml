@@ -118,7 +118,6 @@
                                                         <th>مقطع تحصیلی</th>
                                                         <th>حوزه فعالیت</th>
                                                         <th>محدودیت</th>
-                                                        <th>مشاهده اطلاعات شخصی</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -139,7 +138,7 @@
                                                             {
                                                                 <td>ندارد</td>
                                                             }
-                                                            <td><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="ti ti-user"></i> مشاهده اطلاعات</a></td>
+                                                            
                                                         </tr>
                                                     }
 
@@ -175,7 +174,22 @@
                                                             <td>@teacher.Firstname</td>
                                                             <td>@teacher.Lastname</td>
                                                             <td>@teacher.PhoneNumber</td>
-                                                            <td><a class="btn btn-primary"><i class="ti ti-teacher"></i>مشاهده رزومه</a></td>
+                                                            <td><a class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong-@teacher.Id"><i class="ti ti-user"></i> مشاهده رزومه</a></td>
+                                                                <div class="modal fade" id="exampleModalLong-@teacher.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLongTitle">رزومه @teacher.Firstname @teacher.Lastname</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                @Html.Raw(teacher.Resume)
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                         </tr>
                                                     }
                                                 </tbody>
@@ -194,41 +208,7 @@
 
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">اطلاعات شخصی</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <img src="/assets/images/testimonials/pic3.jpg" class="profile-image" id="image">
-                            <label class="col-form-label profile-image">شماره شخص : 10006</label>
-                            <div class="modal-group">
-                                <div class="form-group col-6">
-                                    <p class="align"> نام و نام خانوادگی: </p>
-                                    <label class="col-form-label">فرزاد امیری</label>
-                                </div>
-                                <div class="form-group col-6">
-                                    <p class="align">ایمیل: </p>
-                                    <label class="col-form-label">amirifarzad2002@gmail.com</label>
-                                </div>
-                                <div class="form-group col-6">
-                                    <p class="align">شماره تلفن:</p>
-                                    <label class="col-form-label">09159961900</label>
-                                </div>
-                                <div class="form-group col-6">
-                                    <p class="align">کلمه عبور:</p>
-                                    <label class="col-form-label">ّFDkjhkFD52</label>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <!-- Your Profile Views Chart END-->
         </div>
     </div>

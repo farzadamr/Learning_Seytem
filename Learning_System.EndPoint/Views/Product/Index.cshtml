@@ -1,0 +1,128 @@
+﻿@using BLL.Dtos.Course
+@model List<PLP>
+@{
+}
+<div class="page-content bg-white">
+	<!-- inner page banner -->
+	<div class="page-banner ovbl-dark" style="background-image:url(assets/images/banner/banner3.jpg);">
+		<div class="container">
+			<div class="page-banner-entry">
+				<h1 class="text-white">دوره‌های ما</h1>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcrumb row -->
+	<div class="breadcrumb-row">
+		<div class="container">
+			<ul class="list-inline">
+				<li><a href="#">صفحه اصلی</a></li>
+				<li>دوره‌های ما</li>
+			</ul>
+		</div>
+	</div>
+	<!-- Breadcrumb row END -->
+	<!-- inner page banner END -->
+	<div class="content-block">
+		<!-- About Us -->
+		<div class="section-area section-sp1">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-4 col-sm-12 m-b30">
+						<div class="widget courses-search-bx placeani  d-flex">
+							<div class="form-group">
+								<div class="input-group">
+									<label>جستجو دوره‌ها</label>
+									<input name="name" type="text" required class="form-control">
+									
+								</div>
+								
+							</div>
+							<a style="margin-top:15px;"><i class="ti ti-search"></i></a>
+						</div>
+						<div class="widget widget_archive">
+							<h5 class="widget-title style-1">همه‌ی دوره‌ها</h5>
+							<ul>
+								<li><a href="/product?categoryId=0">عمومی</a></li>
+								@foreach(var category in ViewBag.Categories)
+								{
+									<li><a href="/product?categoryId=@category.Id">@category.ParentType - @category.ChildType</a></li>
+								}
+								
+							</ul>
+						</div>
+					
+					</div>
+					<div class="col-lg-9 col-md-8 col-sm-12">
+						<div class="row">
+							@if(Model.Count>0)
+							{
+								foreach(var course in Model)
+								{
+									<div class="col-md-6 col-lg-4 col-sm-6 m-b30">
+										<div class="cours-bx">
+											<div class="action-box">
+												<img src="@course.ThumbnailPath" alt="">
+												<a href="#" class="btn">بیشتر بخوانید</a>
+											</div>
+											<div class="info-bx text-center">
+												<h5><a href="#">@course.Title</a></h5>
+												<span>@course.Type</span>
+											</div>
+											<div class="cours-more-info">
+												<div class="review">
+													<span>@course.Time دقیقه</span>
+													<ul class="cours-star">
+														@for(int i = 0; i < 5 - course.Rate; i++)
+														{
+															for(int j = 0; j < course.Rate; j++)
+															{
+																<li class="active"><i class="fa fa-star"></i></li>
+															}
+															<li><i class="fa fa-star"></i></li>
+														}
+													</ul>
+												</div>
+												<div class="price">
+													<del> @((course.Price + 250).ToString("n0")) تومان </del>
+													<h5> @course.Price.ToString("n0") تومان </h5>
+												</div>
+											</div>
+										</div>
+									</div>
+								}
+							}
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- contact area END -->
+
+</div>
+
+
+
+@section Scripts {
+    @if (ViewBag.Response.isSuccess)
+    {
+        <script>
+            swal.fire({
+                title: "عملیات موفق",
+                text: @Html.Raw(Json.Serialize(ViewBag.Response.Message)),
+                icon: "success"
+            });
+        </script>
+    }
+    else
+    {
+        <script>
+            swal.fire({
+                title: "عملیات ناموفق",
+                text: @Html.Raw(Json.Serialize(ViewBag.Response.Message)),
+                icon: "error"
+            });
+        </script>
+    }
+}

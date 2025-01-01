@@ -35,5 +35,17 @@ namespace Learning_System.EndPoint.Controllers
 			return View();
 
 		}
+		public async Task<IActionResult> Detail(int CourseId)
+		{
+			var course = await productService.GetPDPAsync(CourseId);
+			if (course.isSuccess)
+			{
+				course.Data.ThumbnailPath = uriComposer.Compose(course.Data.ThumbnailPath);
+				course.Data.PersonAvatar = uriComposer.Compose(course.Data.PersonAvatar);
+				return View(course.Data);
+			}
+			ViewBag.Response = course;
+			return View();
+		}
 	}
 }

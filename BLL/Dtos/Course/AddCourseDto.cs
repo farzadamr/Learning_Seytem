@@ -18,5 +18,6 @@ namespace BLL.Dtos.Course
         public IFormFile? DemoVideo { get; set; }
         public int Time { get; set; }
         public string Status { get; set; }
+        public int Price { get; set; }
     }
 }

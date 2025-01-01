@@ -75,25 +75,26 @@ $(document).ready(function () {
     });
 
 });
-function addPersonValidation() {
-    if (
-        isNameValid("first") &&
-        isNameValid("last") &&
-        isPhoneValid($('#phonenumber').val()) &&
-        isEmailValid($('#email').val()) &&
-        isPasswordValid($('#password').val()) &&
-        isImageValid($('#person-profile').val())
-    ) {
-        $('#personForm').submit();
-    }
-    else {
-        swal.fire({
-            title: "اخطار",
-            text: "ابتدا خطا های فرم را بررسی کنید",
-            icon: "warning"
-        });
-    }
-}
+//function addPersonValidation() {
+//    alert("hi");
+//    if (
+//        isNameValid("first") &&
+//        isNameValid("last") &&
+//        isPhoneValid($('#phonenumber').val()) &&
+//        isEmailValid($('#email').val()) &&
+//        isPasswordValid($('#password').val()) &&
+//        isImageValid($('#person-profile').val())
+//    ) {
+//        $('#personForm').submit();
+//    }
+//    else {
+//        swal.fire({
+//            title: "اخطار",
+//            text: "ابتدا خطا های فرم را بررسی کنید",
+//            icon: "warning"
+//        });
+//    }
+//}
 
 
 

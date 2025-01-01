@@ -28,6 +28,7 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
+                                                    <th>شناسه</th>
                                                     <th>عنوان</th>
                                                     <th>نام مدرس</th>
                                                     <th>دسته‌بندی</th>
@@ -41,6 +42,7 @@
                                                 @foreach (var course in Model.Courses)
                                                 {
                                                     <tr>
+                                                        <td>@course.Id</td>
                                                         <td>@course.Title</td>
                                                         <td>@course.TeacherName</td>
                                                         <td>@course.CategoryType</td>
@@ -49,7 +51,7 @@
                                                         <td>
 
                                                             <form method="post">
-                                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#courseModal@course.Id">
+                                                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#courseModal-@course.Id">
                                                                     نمایش اطلاعات بیشتر
                                                                 </button>
                                                                 <input type="hidden" value="@course.Id" name="courseId" readonly/>
@@ -58,11 +60,11 @@
                                                                 </button>
                                                             </form>
                                                            <!-- مودال نمایش اطلاعات بیشتر -->
-                                                            <div class="modal fade" id="courseModal@course.Id" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel@course.Id" aria-hidden="true">
+                                                            <div class="modal fade" id="courseModal-@course.Id" tabindex="-1" role="dialog" aria-labelledby="courseModalLabel-@course.Id" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h5 class="modal-title" id="courseModalLabel@course.Id">@course.Title - اطلاعات بیشتر</h5>
+                                                                            <h5 class="modal-title" id="courseModalLabel-@course.Id">@course.Title - اطلاعات بیشتر</h5>
                                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">&times;</span>
                                                                             </button>

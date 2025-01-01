@@ -10,6 +10,7 @@ namespace BLL.Interfaces
 {
     public interface IProductService
     {
-        Task<ResultDto<List<PLP>?>> GetPLPAsync(int categoryId); 
+        Task<ResultDto<List<PLP>?>> GetPLPAsync(int categoryId);
+        Task<ResultDto<PDP?>> GetPDPAsync(int courseId);
     }
 }

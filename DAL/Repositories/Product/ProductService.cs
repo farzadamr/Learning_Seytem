@@ -56,5 +56,24 @@ namespace DAL.Repositories.Product
 			}
 			
 		}
+		public async Task<ResultDto<PDP?>> GetPDPAsync(int courseId)
+		{
+			using(SqlConnection connection = new SqlConnection(_connectionString))
+			{
+				var pdp = await connection.QuerySingleOrDefaultAsync<PDP>("GetPDPList", new { ID = courseId }, commandType: CommandType.StoredProcedure);
+				if (pdp == null)
+					return new ResultDto<PDP?>
+					{
+						isSuccess = false,
+						Message = "دوره مورد نظر یافت نشد"
+					};
+				return new ResultDto<PDP?>
+				{
+					Data = pdp,
+					isSuccess = true,
+					Message = "اطلاعات بازیابی شد"
+				};
+			}
+		}
 	}
 }

@@ -434,7 +434,6 @@ namespace DAL.Repositories.Course
                 }
             }
         }
-
         public async Task<ResultDto> DeleteEpisodeAsync(int episodeId)
         {
             using(SqlConnection connection = new SqlConnection(_connectionString))

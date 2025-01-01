@@ -1,0 +1,217 @@
+﻿@using BLL.Dtos.Course
+@model PDP
+@{
+}
+<div class="page-content bg-white">
+    <!-- inner page banner -->
+    <div class="page-banner ovbl-dark" style="background-image: url('assets/images/background/bg2.jpg');">
+        <div class="container">
+            <div class="page-banner-entry">
+                <h1 class="text-white">جزییات دوره</h1>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb row -->
+    <div class="breadcrumb-row">
+        <div class="container">
+            <ul class="list-inline">
+                <li><a href="#">صفحه اصلی</a></li>
+                <li>جزییات دوره</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Breadcrumb row END -->
+    <!-- inner page banner END -->
+    <div class="content-block">
+        <!-- About Us -->
+        <div class="section-area section-sp1">
+            <div class="container">
+                <div class="row d-flex flex-row-reverse">
+                    <div class="col-lg-3 col-md-4 col-sm-12 m-b30">
+                        <div class="course-detail-bx">
+                            <div class="course-price">
+                                <del> @((Model.Price + 250000).ToString("n0"))  تومان </del>
+                                <h4 class="price"> @Model.Price.ToString("n0") تومان </h4>
+                            </div>
+                            <div class="course-buy-now text-center">
+                                <a href="#" class="btn radius-xl text-uppercase">خرید دوره</a>
+                            </div>
+                            <div class="teacher-bx">
+                                <div class="teacher-info">
+                                    <div class="teacher-thumb">
+                                        <img src="assets/images/testimonials/pic1.jpg" alt="" />
+                                    </div>
+                                    <div class="teacher-name">
+                                        <h5>@Model.FirstName @Model.LastName</h5>
+                                        <span>مدرس </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cours-more-info">
+                                <div class="review">
+                                    <span>@Model.CreationDate.Year/@Model.CreationDate.Month/@Model.CreationDate.Day  تاریخ شروع</span>
+                                    <ul class="cours-star">
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li class="active"><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                        <li><i class="fa fa-star"></i></li>
+                                    </ul>
+                                </div>
+                                <div class="price categories">
+                                    <span>دسته‌بندی‌</span>
+                                    <h5 class="text-primary">@Model.Type</h5>
+                                </div>
+                            </div>
+                            <div class="course-info-list scroll-page">
+                                <ul class="navbar">
+                                    <li><a class="nav-link" href="#overview"><i class="ti-zip"></i>بررسی اجمالی</a></li>
+                                    <li><a class="nav-link" href="#curriculum"><i class="ti-bookmark-alt"></i>برنامه تحصیلی</a></li>
+                                    <li><a class="nav-link" href="#instructor"><i class="ti-user"></i>ظرفیت @Model.Capacity</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-md-8 col-sm-12">
+                        <div class="courses-post">
+                            <div class="ttr-post-media media-effect">
+                                <a href="#"><img src="@Model.ThumbnailPath" alt=""></a>
+                            </div>
+                            <div class="ttr-post-info">
+                                <div class="ttr-post-title ">
+                                    <h2 class="post-title">@Model.Title</h2>
+                                </div>
+                                <div class="ttr-post-text">
+                                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="courese-overview" id="overview">
+                            <h4>بررسی اجمالی</h4>
+                            <div class="row">
+                                <div class="col-md-12 col-lg-4">
+                                    <ul class="course-features">
+                                        <li>
+                                            <i class="ti-book"></i> <span class="label">درس</span> <span class="value">8</span>
+                                        </li>
+                                        <li>
+                                            <i class="ti-help-alt"></i> <span class="label">امتحان</span> <span class="value">1</span>
+                                        </li>
+                                        <li>
+                                            <i class="ti-time"></i> <span class="label">مدت زمان</span> <span class="value">
+                                                @(Model.Time / 60)
+                                                ساعت
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <i class="ti-user"></i> <span class="label">دانشجویان</span> <span class="value">32</span>
+                                        </li>
+                                        <li>
+                                            <i class="ti-check-box"></i> <span class="label">ظرفیت</span> <span class="value">@Model.Capacity</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-12 col-lg-8">
+                                    @Html.Raw(Model.Description)                          
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-b30" id="curriculum">
+                            <h4>برنامه تحصیلی</h4>
+                            <ul class="curriculum-list">
+                                <li>
+                                    <h5>مرحله اول</h5>
+                                    <ul>
+                                        <li>
+                                            <div class="curriculum-list-box">
+                                                <span>درس 1.</span> آشنایی با طراحی رابط کاربری
+                                            </div>
+                                            <span>120 دقیقه</span>
+                                        </li>
+                                        <li>
+                                            <div class="curriculum-list-box">
+                                                <span>درس 2.</span> تحقیق و طراحی کاربر
+                                            </div>
+                                            <span>60 دقیقه</span>
+                                        </li>
+                                        <li>
+                                            <div class="curriculum-list-box">
+                                                <span>درس 3.</span> ارزیابی رابط های کاربر قسمت 1
+                                            </div>
+                                            <span>85 دقیقه</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h5>مرحله دو</h5>
+                                    <ul>
+                                        <li>
+                                            <div class="curriculum-list-box">
+                                                <span>درس 1.</span> نمونه سازی و طراحی
+                                            </div>
+                                            <span>110 دقیقه</span>
+                                        </li>
+                                        <li>
+                                            <div class="curriculum-list-box">
+                                                <span>درس 2.</span> سنگفرش طراحی رابط کاربری
+                                            </div>
+                                            <span>120 دقیقه</span>
+                                        </li>
+                                        <li>
+                                            <div class="curriculum-list-box">
+                                                <span>درس 3.</span> ارزیابی رابط های کاربر قسمت 2
+                                            </div>
+                                            <span>120 دقیقه</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <h5>نهایی</h5>
+                                    <ul>
+                                        <li>
+                                            <div class="curriculum-list-box">
+                                                <span>قسمت 1.</span> تست نهایی
+                                            </div>
+                                            <span>120 دقیقه</span>
+                                        </li>
+                                        <li>
+                                            <div class="curriculum-list-box">
+                                                <span>قسمت 2.</span> آزمون آنلاین
+                                            </div>
+                                            <span>120 دقیقه</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="" id="instructor">
+                            <h4>مدرس</h4>
+                            <div class="instructor-bx">
+                                <div class="instructor-author">
+                                    <img src="@Model.PersonAvatar" alt="">
+                                </div>
+                                <div class="instructor-info">
+                                    <h6> @Model.FirstName @Model.LastName </h6>
+                                    <span>مدرس</span>
+                                    <ul class="list-inline m-tb10">
+                                        <li><a href="#" class="btn sharp-sm facebook"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#" class="btn sharp-sm twitter"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#" class="btn sharp-sm linkedin"><i class="fa fa-linkedin"></i></a></li>
+                                        <li><a href="#" class="btn sharp-sm google-plus"><i class="fa fa-google-plus"></i></a></li>
+                                    </ul>
+                                    <p class="m-b0">درباره @Model.FirstName @Model.LastName بیشتر بخوانید... <a href="#">صفحه مدرس</a></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- contact area END -->
+
+</div>

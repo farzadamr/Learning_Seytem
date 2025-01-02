@@ -1,4 +1,5 @@
-﻿using BLL.Dtos.Users;
+﻿using BLL.Dtos.Course;
+using BLL.Dtos.Users;
 using BLL.Dtos.Utils;
 using BLL.Interfaces;
 using Dapper;
@@ -216,6 +217,14 @@ namespace DAL.Repositories.Student
                     isSuccess = true,
                     Message = "کاربر یافت شد"
                 };
+            }
+        }
+        public async Task<List<PLP>?> GetStudentCourses(int StudentId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                var courses = await connection.QueryAsync<PLP>("GetStudentCourses", new { ID = StudentId }, commandType: CommandType.StoredProcedure);
+                return courses.ToList();
             }
         }
     }

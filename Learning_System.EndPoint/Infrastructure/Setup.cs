@@ -4,8 +4,10 @@ using DAL.Repositories.Category;
 using DAL.Repositories.Person;
 using DAL.Repositories.Product;
 using DAL.Repositories.SearchAndGet;
+using DAL.Repositories.Student;
 using DAL.Repositories.Teacher;
 using DAL.Repositories.Users;
+using DAL.Repositories.Wallet;
 using Learning_System.EndPoint.Mapper;
 using Microsoft.AspNetCore.Identity;
 
@@ -42,7 +44,15 @@ namespace Learning_System.EndPoint.Infrastructure
             {
                 return new SearchService(connectionString);
             });
-            services.AddTransient<IUriComposer, UriComposer>();
+			services.AddTransient<IStudentService>(provider =>
+			{
+				return new StudentService(connectionString);
+			});
+			services.AddTransient<IWalletService>(provider =>
+			{
+				return new WalletService(connectionString);
+			});
+			services.AddTransient<IUriComposer, UriComposer>();
             services.AddAutoMapper(typeof(AuthMappingProfile)); 
             return services;
         }

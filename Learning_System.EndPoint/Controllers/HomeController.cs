@@ -1,4 +1,6 @@
-﻿using Learning_System.EndPoint.Models;
+﻿using BLL.Interfaces;
+using Learning_System.EndPoint.Models;
+using Learning_System.EndPoint.Utility;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,14 +9,18 @@ namespace Learning_System.EndPoint.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IWalletService _walletService;
+        private readonly IStudentService _studentService;
+        public HomeController(ILogger<HomeController> logger, IStudentService studentService, IWalletService walletService)
         {
             _logger = logger;
+            _walletService = walletService;
+            _studentService = studentService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+
             return View();
         }
 

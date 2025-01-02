@@ -1,4 +1,5 @@
-﻿using BLL.Dtos.Users;
+﻿using BLL.Dtos.Course;
+using BLL.Dtos.Users;
 using BLL.Dtos.Utils;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace BLL.Interfaces
         Task<ResultDto<StudentDto?>> GetStudentById(int studentId);
         Task<ResultDto> EditStudentById(StudentDto studentModel);
         Task<ResultDto> DeleteStudentById(int StudentID);
+        Task<List<PLP>?> GetStudentCourses(int StudentId);
     }
 }

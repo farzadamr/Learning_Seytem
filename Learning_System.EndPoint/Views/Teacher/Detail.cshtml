@@ -1,0 +1,63 @@
+﻿@using Learning_System.EndPoint.Models
+@model TeacherViewModel
+@{
+}
+<div class="page-content bg-white container mb-5 mt-4 text-right">
+    <div class="row master-profile">
+        <div class="col-12 col-lg-3 col-md-4 mb-3">
+            <img src="@Model.Avatar" />
+            <div class="mt-3 row">
+                <div class="col-6 p-1">
+                    <a class="btn btn-block btn-primary ml-2" href="#">
+                        <i class="fa fa-user-plus"></i> دنبال کردن
+                    </a>
+                </div>
+                <div class="col-6 p-1">
+                    <a class="btn btn-block btn-success" href="#">
+                        <i class="fa fa-send"></i> ارسال پیام
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-12 col-lg-9 col-md-8 about-master">
+            <h1 class="mb-1">@Model.FullName</h1>
+            @Html.Raw(Model.Resume)
+        </div>
+    </div>
+    <hr />
+    <h4>دوره های استاد @Model.FullName</h4>
+    <div class="row">
+        @foreach(var course in Model.Courses)
+        {
+            <div class="col-md-6 col-lg-3 col-sm-6 m-b30">
+                <div class="cours-bx">
+                    <div class="action-box">
+                        <img src="@course.ThumbnailPath" alt="">
+                        <a href="/product/detail?CourseId=@course.Id" class="btn">بیشتر بخوانید</a>
+                    </div>
+                    <div class="info-bx text-center">
+                        <h5><a href="/product/detail?CourseId=@course.Id">@course.Title</a></h5>
+                        <span>@course.Type</span>
+                    </div>
+                    <div class="cours-more-info">
+                        <div class="review">
+                            <span>@(course.Time/60) ساعت</span>
+                            <ul class="cours-star">
+                                <li class="active"><i class="fa fa-star"></i></li>
+                                <li class="active"><i class="fa fa-star"></i></li>
+                                <li class="active"><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                                <li><i class="fa fa-star"></i></li>
+                            </ul>
+                        </div>
+                        <div class="price">
+                            <del> @((course.Price+250000).ToString("n0")) تومان </del>
+                            <h5> @course.Price.ToString("n0") تومان </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

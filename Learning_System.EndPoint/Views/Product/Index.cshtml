@@ -103,26 +103,3 @@
 </div>
 
 
-
-@section Scripts {
-    @if (ViewBag.Response.isSuccess)
-    {
-        <script>
-            swal.fire({
-                title: "عملیات موفق",
-                text: @Html.Raw(Json.Serialize(ViewBag.Response.Message)),
-                icon: "success"
-            });
-        </script>
-    }
-    else
-    {
-        <script>
-            swal.fire({
-                title: "عملیات ناموفق",
-                text: @Html.Raw(Json.Serialize(ViewBag.Response.Message)),
-                icon: "error"
-            });
-        </script>
-    }
-}

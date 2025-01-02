@@ -1,0 +1,23 @@
+﻿@using BLL.Dtos.Users
+@model List<TeacherListDto>
+@{
+}
+<div class="page-content bg-white container mb-5">
+    <div class="row">
+        @foreach (var teacher in Model)
+        {
+            <div class="col-12 col-lg-3 col-md-4 col-sm-6">
+                <div class="master-card text-center">
+                    <div class="image-wraper">
+                        <a href="/teacher/detail?Id=@teacher.Id" class="image-cover"></a>
+                        <img src="@teacher.AvatarPath" alt="t" />
+                    </div>
+                    <div class="title">
+                        <a href="/teacher/detail?Id=@teacher.Id">@teacher.Firstname @teacher.Lastname</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

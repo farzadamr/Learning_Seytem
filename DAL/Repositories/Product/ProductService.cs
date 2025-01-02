@@ -75,5 +75,25 @@ namespace DAL.Repositories.Product
 				};
 			}
 		}
-	}
+		public async Task<List<EpisodeSectionDto>?> GetEpisodes(int CourseId)
+		{
+			using(SqlConnection connection = new SqlConnection(_connectionString))
+			{
+				var episodes = await connection.QueryAsync<EpisodeSectionDto>("GetEpisodes", new { ID = CourseId }, commandType: CommandType.StoredProcedure);
+				if (episodes == null)
+					return null;
+				
+				return episodes.ToList();
+			}
+		}
+
+        public async Task<List<PLP>?> GetCoursesByTeacherIdAsync(int TeacherId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+			{
+				var courses = await connection.QueryAsync<PLP>("GetCoursesByTeacher", new { ID = TeacherId }, commandType: CommandType.StoredProcedure);
+				return courses.ToList();
+			}
+        }
+    }
 }

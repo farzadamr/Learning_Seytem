@@ -12,5 +12,7 @@ namespace BLL.Interfaces
     {
         Task<ResultDto<List<PLP>?>> GetPLPAsync(int categoryId);
         Task<ResultDto<PDP?>> GetPDPAsync(int courseId);
+        Task<List<EpisodeSectionDto>> GetEpisodes(int CourseId);
+        Task<List<PLP>?> GetCoursesByTeacherIdAsync(int TeacherId);
     }
 }

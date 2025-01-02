@@ -1,5 +1,5 @@
-﻿@using BLL.Dtos.Course
-@model PDP
+﻿@using Learning_System.EndPoint.Models.Product
+@model PDPViewModel
 @{
 }
 <div class="page-content bg-white">
@@ -30,8 +30,8 @@
                     <div class="col-lg-3 col-md-4 col-sm-12 m-b30">
                         <div class="course-detail-bx">
                             <div class="course-price">
-                                <del> @((Model.Price + 250000).ToString("n0"))  تومان </del>
-                                <h4 class="price"> @Model.Price.ToString("n0") تومان </h4>
+                                <del> @((Model.pdpData.Price + 250000).ToString("n0"))  تومان </del>
+                                <h4 class="price"> @Model.pdpData.Price.ToString("n0") تومان </h4>
                             </div>
                             <div class="course-buy-now text-center">
                                 <a href="#" class="btn radius-xl text-uppercase">خرید دوره</a>
@@ -42,14 +42,14 @@
                                         <img src="assets/images/testimonials/pic1.jpg" alt="" />
                                     </div>
                                     <div class="teacher-name">
-                                        <h5>@Model.FirstName @Model.LastName</h5>
+                                        <h5>@Model.pdpData.FirstName @Model.pdpData.LastName</h5>
                                         <span>مدرس </span>
                                     </div>
                                 </div>
                             </div>
                             <div class="cours-more-info">
                                 <div class="review">
-                                    <span>@Model.CreationDate.Year/@Model.CreationDate.Month/@Model.CreationDate.Day  تاریخ شروع</span>
+                                    <span>@Model.pdpData.CreationDate.Year/@Model.pdpData.CreationDate.Month/@Model.pdpData.CreationDate.Day  تاریخ شروع</span>
                                     <ul class="cours-star">
                                         <li class="active"><i class="fa fa-star"></i></li>
                                         <li class="active"><i class="fa fa-star"></i></li>
@@ -60,14 +60,14 @@
                                 </div>
                                 <div class="price categories">
                                     <span>دسته‌بندی‌</span>
-                                    <h5 class="text-primary">@Model.Type</h5>
+                                    <h5 class="text-primary">@Model.pdpData.Type</h5>
                                 </div>
                             </div>
                             <div class="course-info-list scroll-page">
                                 <ul class="navbar">
                                     <li><a class="nav-link" href="#overview"><i class="ti-zip"></i>بررسی اجمالی</a></li>
                                     <li><a class="nav-link" href="#curriculum"><i class="ti-bookmark-alt"></i>برنامه تحصیلی</a></li>
-                                    <li><a class="nav-link" href="#instructor"><i class="ti-user"></i>ظرفیت @Model.Capacity</a></li>
+                                    <li><a class="nav-link" href="#instructor"><i class="ti-user"></i>ظرفیت @Model.pdpData.Capacity</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -76,11 +76,11 @@
                     <div class="col-lg-9 col-md-8 col-sm-12">
                         <div class="courses-post">
                             <div class="ttr-post-media media-effect">
-                                <a href="#"><img src="@Model.ThumbnailPath" alt=""></a>
+                                <a href="#"><img src="@Model.pdpData.ThumbnailPath" alt=""></a>
                             </div>
                             <div class="ttr-post-info">
                                 <div class="ttr-post-title ">
-                                    <h2 class="post-title">@Model.Title</h2>
+                                    <h2 class="post-title">@Model.pdpData.Title</h2>
                                 </div>
                                 <div class="ttr-post-text">
                                     <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
@@ -93,14 +93,14 @@
                                 <div class="col-md-12 col-lg-4">
                                     <ul class="course-features">
                                         <li>
-                                            <i class="ti-book"></i> <span class="label">درس</span> <span class="value">8</span>
+                                            <i class="ti-book"></i> <span class="label">درس</span> <span class="value">@Model.episodes.Count</span>
                                         </li>
                                         <li>
-                                            <i class="ti-help-alt"></i> <span class="label">امتحان</span> <span class="value">1</span>
+                                            <i class="ti-help-alt"></i> <span class="label">امتحان</span> <span class="value">2</span>
                                         </li>
                                         <li>
                                             <i class="ti-time"></i> <span class="label">مدت زمان</span> <span class="value">
-                                                @(Model.Time / 60)
+                                                @(Model.pdpData.Time / 60)
                                                 ساعت
                                             </span>
                                         </li>
@@ -108,92 +108,50 @@
                                             <i class="ti-user"></i> <span class="label">دانشجویان</span> <span class="value">32</span>
                                         </li>
                                         <li>
-                                            <i class="ti-check-box"></i> <span class="label">ظرفیت</span> <span class="value">@Model.Capacity</span>
+                                            <i class="ti-check-box"></i> <span class="label">ظرفیت</span> <span class="value">@Model.pdpData.Capacity</span>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-md-12 col-lg-8">
-                                    @Html.Raw(Model.Description)                          
+                                    @Html.Raw(Model.pdpData.Description)
 
                                 </div>
                             </div>
                         </div>
+
                         <div class="m-b30" id="curriculum">
                             <h4>برنامه تحصیلی</h4>
                             <ul class="curriculum-list">
-                                <li>
-                                    <h5>مرحله اول</h5>
-                                    <ul>
-                                        <li>
-                                            <div class="curriculum-list-box">
-                                                <span>درس 1.</span> آشنایی با طراحی رابط کاربری
-                                            </div>
-                                            <span>120 دقیقه</span>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list-box">
-                                                <span>درس 2.</span> تحقیق و طراحی کاربر
-                                            </div>
-                                            <span>60 دقیقه</span>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list-box">
-                                                <span>درس 3.</span> ارزیابی رابط های کاربر قسمت 1
-                                            </div>
-                                            <span>85 دقیقه</span>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <h5>مرحله دو</h5>
-                                    <ul>
-                                        <li>
-                                            <div class="curriculum-list-box">
-                                                <span>درس 1.</span> نمونه سازی و طراحی
-                                            </div>
-                                            <span>110 دقیقه</span>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list-box">
-                                                <span>درس 2.</span> سنگفرش طراحی رابط کاربری
-                                            </div>
-                                            <span>120 دقیقه</span>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list-box">
-                                                <span>درس 3.</span> ارزیابی رابط های کاربر قسمت 2
-                                            </div>
-                                            <span>120 دقیقه</span>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <h5>نهایی</h5>
-                                    <ul>
-                                        <li>
-                                            <div class="curriculum-list-box">
-                                                <span>قسمت 1.</span> تست نهایی
-                                            </div>
-                                            <span>120 دقیقه</span>
-                                        </li>
-                                        <li>
-                                            <div class="curriculum-list-box">
-                                                <span>قسمت 2.</span> آزمون آنلاین
-                                            </div>
-                                            <span>120 دقیقه</span>
-                                        </li>
-                                    </ul>
-                                </li>
+                                @foreach (var sectione in Model.episodes.GroupBy(s => s.SectionNumber))
+                                {
+                                    <li>
+                                        <h5>فصل @sectione.Key - @sectione.FirstOrDefault().SectionTitle</h5>
+                                        <ul>
+                                            @foreach (var episode in sectione)
+                                            {
+                                                <li>
+                                                    <div class="curriculum-list-box">
+                                                        <span>جلسه @episode.EPNum.</span>
+                                                    </div>
+                                                    <span>@episode.Time دقیقه</span>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
                             </ul>
                         </div>
+
+
+
                         <div class="" id="instructor">
                             <h4>مدرس</h4>
                             <div class="instructor-bx">
                                 <div class="instructor-author">
-                                    <img src="@Model.PersonAvatar" alt="">
+                                    <img src="@Model.pdpData.PersonAvatar" alt="">
                                 </div>
                                 <div class="instructor-info">
-                                    <h6> @Model.FirstName @Model.LastName </h6>
+                                    <h6> @Model.pdpData.FirstName @Model.pdpData.LastName </h6>
                                     <span>مدرس</span>
                                     <ul class="list-inline m-tb10">
                                         <li><a href="#" class="btn sharp-sm facebook"><i class="fa fa-facebook"></i></a></li>
@@ -201,7 +159,7 @@
                                         <li><a href="#" class="btn sharp-sm linkedin"><i class="fa fa-linkedin"></i></a></li>
                                         <li><a href="#" class="btn sharp-sm google-plus"><i class="fa fa-google-plus"></i></a></li>
                                     </ul>
-                                    <p class="m-b0">درباره @Model.FirstName @Model.LastName بیشتر بخوانید... <a href="#">صفحه مدرس</a></p>
+                                    <p class="m-b0">درباره @Model.pdpData.FirstName @Model.pdpData.LastName بیشتر بخوانید... <a href="/Teacher/Detail?Id=4">صفحه مدرس</a></p>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 ﻿using BLL.ExternalApi;
 using BLL.Interfaces;
-
+using Learning_System.EndPoint.Models.Product;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Learning_System.EndPoint.Controllers
@@ -28,10 +28,8 @@ namespace Learning_System.EndPoint.Controllers
 				{
 					course.ThumbnailPath = uriComposer.Compose(course.ThumbnailPath);
 				}
-				ViewBag.Response = courses;
 				return View(courses.Data);
 			}
-			ViewBag.Response = courses;
 			return View();
 
 		}
@@ -42,9 +40,23 @@ namespace Learning_System.EndPoint.Controllers
 			{
 				course.Data.ThumbnailPath = uriComposer.Compose(course.Data.ThumbnailPath);
 				course.Data.PersonAvatar = uriComposer.Compose(course.Data.PersonAvatar);
-				return View(course.Data);
+
+				var episodes = await productService.GetEpisodes(CourseId);
+				if (episodes == null && episodes.Count == 0)
+				{
+					return View();
+                }
+                foreach (var ep in episodes)
+                {
+                    ep.FilePath = uriComposer.Compose(ep.FilePath);
+                }
+                var viewModel = new PDPViewModel
+                {
+                    pdpData = course.Data,
+                    episodes = episodes
+                };
+                return View(viewModel);
 			}
-			ViewBag.Response = course;
 			return View();
 		}
 	}

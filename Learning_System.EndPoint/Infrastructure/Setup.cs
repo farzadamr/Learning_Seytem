@@ -1,6 +1,7 @@
 ﻿using BLL.ExternalApi;
 using BLL.Interfaces;
 using DAL.Repositories.Category;
+using DAL.Repositories.Course;
 using DAL.Repositories.Person;
 using DAL.Repositories.Product;
 using DAL.Repositories.SearchAndGet;
@@ -52,7 +53,11 @@ namespace Learning_System.EndPoint.Infrastructure
 			{
 				return new WalletService(connectionString);
 			});
-			services.AddTransient<IUriComposer, UriComposer>();
+            services.AddTransient<ICourseService>(provider =>
+            {
+                return new CourseService(connectionString);
+            });
+            services.AddTransient<IUriComposer, UriComposer>();
             services.AddAutoMapper(typeof(AuthMappingProfile)); 
             return services;
         }

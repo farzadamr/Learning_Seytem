@@ -34,7 +34,8 @@
                                 <h4 class="price"> @Model.pdpData.Price.ToString("n0") تومان </h4>
                             </div>
                             <div class="course-buy-now text-center">
-                                <a href="#" class="btn radius-xl text-uppercase">خرید دوره</a>
+                                <input type="hidden" value="@Model.pdpData.Id" id="CourseId"/>
+                                <button data-toggle="modal" data-target="#AddCourseModal" class="btn radius-xl text-uppercase">خرید دوره</button>
                             </div>
                             <div class="teacher-bx">
                                 <div class="teacher-info">
@@ -141,7 +142,23 @@
                                 }
                             </ul>
                         </div>
+                        <div class="modal fade" id="AddCourseModal" tabindex="-1" role="dialog" aria-labelledby="AddCourseModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">خرید دوره</h5>
 
+                                    </div>
+                                    <div class="modal-body">
+                                        آیا از خرید این دوره اطمینان دارید؟
+                                        <div>
+                                            <button type="submit" class="btn btn-danger" onclick="addCourse(@Model.pdpData.Id)">بله</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">خیر</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                         <div class="" id="instructor">
@@ -173,3 +190,36 @@
     <!-- contact area END -->
 
 </div>
+
+@section Scripts {
+    <script>
+        function addCourse(courseId) {
+            $.ajax({
+                url: '/profile/AddCourse?CourseId=@Model.pdpData.Id',
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                    if(result.isSuccess){
+                        swal.fire({
+                            title: "عملیات موفق",
+                            text: result.message,
+                            icon: "success"
+                        });
+                    }
+                    else{
+                        swal.fire({
+                            title: "عملیات ناموفق",
+                            text: result.message,
+                            icon: "error"
+                        });
+                    }
+
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    </script>
+
+}

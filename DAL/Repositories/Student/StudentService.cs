@@ -227,5 +227,37 @@ namespace DAL.Repositories.Student
                 return courses.ToList();
             }
         }
-    }
+        public async Task<ResultDto> AddCourseToStudentAsync(int CourseId, int StudentId)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                try
+                {
+                    var id = await connection.QueryAsync<int>("AddCourseToStudent", new { SID = StudentId, CID = CourseId }, commandType: CommandType.StoredProcedure);
+                    if (id == null)
+                        return new ResultDto
+                        {
+                            isSuccess = false,
+                            Message = "خطا در برقراری ارتباط با پایگاه داده"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = true,
+                        Message = "دوره مورد نظر با موفقیت خریداری شد"
+                    };
+                }
+                catch(Exception ex)
+                {
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = $"خطا در اجرای پراسیجر {ex.Message}"
+                    };
+                }
+               
+                
+            }
+        }
+
+	}
 }

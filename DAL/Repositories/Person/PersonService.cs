@@ -209,6 +209,31 @@ namespace DAL.Repositories.Person
                 };
             }
         }
+        public async Task<ResultDto> ChangePassword(int personId, string Password)
+        {
+            using(SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                using(SqlCommand command = new SqlCommand("ChangePersonPass", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("ID", personId);
+                    command.Parameters.AddWithValue("PASSWORD", Password);
+                    await connection.OpenAsync();
+                    int rows = await command.ExecuteNonQueryAsync();
+                    if (rows > 0)
+                        return new ResultDto
+                        {
+                            isSuccess = true,
+                            Message = "تغییر پسورد با موفقیت انجام شد"
+                        };
+                    return new ResultDto
+                    {
+                        isSuccess = false,
+                        Message = "خطا در تغییر رمز عبور رخ داد"
+                    };
+                }
+            }
+        }
         
     }
 }

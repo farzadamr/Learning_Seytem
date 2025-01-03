@@ -15,5 +15,6 @@ namespace BLL.Interfaces
 		Task<ResultDto> EditPerson(PersonDto Person);
 		Task<ResultDto> DeletePerson(int PersonId);
         Task<ResultDto<PersonDto?>> GetPersonById(int PersonId);
-    }
+		Task<ResultDto> ChangePassword(int personId, string Password);
+	}
 }

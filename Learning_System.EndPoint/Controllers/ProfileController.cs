@@ -56,7 +56,7 @@ namespace Learning_System.EndPoint.Controllers
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> AddCourseAsync(int CourseId, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddCourseAsync(int CourseId)
         {
             int userId = ClaimUtility.GetUserId(User);
             var student = await studentService.GetStudentByPersonId(userId);
@@ -92,6 +92,39 @@ namespace Learning_System.EndPoint.Controllers
             }
             return Json(resultAdd);
         }
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody]ChangePasswordModel passwordModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var result = new ResultDto
+                {
+                    isSuccess = false,
+                    Message = "خطا در دریافت اطلاعات"
+                };
+                return Json(result);
+            }
+            var userId = ClaimUtility.GetUserId(User);
 
+            var person = await personService.GetPersonById(userId);
+            if(person.isSuccess && person.Data.Password == passwordModel.CurrentPassword)
+            {
+				var editResult = await personService.ChangePassword(userId, passwordModel.Password);
+				return Json(editResult);
+			}
+            var error = new ResultDto
+            {
+                isSuccess = false,
+                Message = "رمز اشتباه است"
+            };
+            return Json(error);
+
+        }
+        public class ChangePasswordModel
+        {
+            public string CurrentPassword { get; set; }
+            public string Password { get; set; }
+        }
     }
 }

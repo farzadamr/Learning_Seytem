@@ -19,7 +19,7 @@ namespace DAL.Repositories.Product
 		{
 			this._connectionString = _connectionString;
 		}
-		public async Task<ResultDto<List<PLP>?>> GetPLPAsync(int categoryId)
+		public async Task<ResultDto<List<PLP>?>> GetPLPAsync(int? categoryId = 0)
 		{
 			using (SqlConnection connection = new SqlConnection(_connectionString))
 			{
